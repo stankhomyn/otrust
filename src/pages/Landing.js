@@ -10,6 +10,7 @@ import ledger from '../assets/images/ledger.png';
 import coinbase from '../assets/images/coinbase.png';
 import walletConnect from '../assets/images/walletConnect.png';
 import { SUPPORTED_WALLETS } from '../connectors';
+import { responsive } from 'theme/constants';
 
 export const wallets = [
   { title: 'Metamask', img: metamask },
@@ -29,6 +30,12 @@ const StyledHeader = styled.header`
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   color: white;
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    background-image: none;
+    background-color: ${props => props.theme.colors.bgDarkest};
+    overflow: hidden;
+  }
 `;
 
 const StyledTopPart = styled.div`
@@ -39,6 +46,9 @@ const StyledTopPart = styled.div`
   height: 20vh;
   background-color: ${props => props.theme.colors.bgDarken};
   width: 100%;
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    background-color: transparent;
+  }
 `;
 
 const StyledLogo = styled.img`
@@ -99,6 +109,10 @@ const WalletWrapper = styled(AccentButton)`
   padding: 24px;
   border-radius: 8px;
   margin-bottom: 16px;
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    width: 300px;
+  }
 `;
 
 const StyledModal = styled.div`
@@ -112,6 +126,13 @@ const StyledModal = styled.div`
   margin: 36px auto;
   border-radius: 8px;
   box-shadow: 0 13px 26px 0 rgba(0, 0, 0, 0.16);
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    padding: 4px;
+  }
 `;
 
 const IconWrapper = styled.div`
