@@ -129,9 +129,10 @@ const StyledModal = styled.div`
 
   @media screen and (max-width: ${responsive.smartphoneLarge}) {
     width: 100%;
+    padding: 4px;
     background-color: transparent;
     border: none;
-    padding: 4px;
+    box-shadow: none;
   }
 `;
 
