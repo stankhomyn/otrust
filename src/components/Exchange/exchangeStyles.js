@@ -164,7 +164,7 @@ export const BridgeMaxBtn = styled(MaxBtn)`
 `;
 
 export const ExchangeInput = styled.input`
-  width: ${props => (props.value ? '100%' : '120px')};
+  width: 100%;
 
   background: none;
   border: none;
@@ -179,8 +179,6 @@ export const ExchangeInput = styled.input`
   }
 
   @media screen and (max-width: ${responsive.tabletSmall}) {
-    width: 150px;
-
     font-size: 12px;
   }
 
