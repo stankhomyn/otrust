@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
-import { dark, light } from 'Theme/theme';
-import { GlobalStyle } from 'Theme/GlobalStyle';
+import { dark, light } from 'theme/theme';
+import { GlobalStyle } from 'theme/GlobalStyle';
 import { FullBackgroundContainer } from '../../components/UI/Container';
 import landingImg from 'Assets/images/landing.svg';
 import hLogo from 'Assets/images/hlogo.svg';
