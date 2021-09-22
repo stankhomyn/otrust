@@ -94,8 +94,8 @@ const periods = [
 ];
 
 const chartTypes = [
-  { key: 'bondingCurve', value: 'Bonding Curve Chart' },
   { key: 'lineChart', value: 'Historical Chart' },
+  { key: 'bondingCurve', value: 'Bonding Curve Chart' },
   { key: 'candleView', value: 'Candles View' },
 ];
 

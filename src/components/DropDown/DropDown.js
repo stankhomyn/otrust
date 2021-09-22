@@ -5,7 +5,7 @@ const DropDownWrapper = styled.div`
   color: ${props => props.theme.colors.textPrimary};
   background-color: ${props =>
     props.isOpened ? props.theme.colors.bgHighlightBorder : 'transparent'};
-  border-radius: ${props => (props.isOpened ? '6px 6px 0 0' : '6px')};
+  border-radius: 6px;
 `;
 
 const DropDownText = styled.div`
