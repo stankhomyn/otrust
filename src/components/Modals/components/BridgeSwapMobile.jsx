@@ -378,7 +378,7 @@ export default function BridgeSwapMobile({ ...props }) {
               Swap wNOM for NOM
             </Modal.FullWidthButton>
             <Modal.SecondaryButton
-              style={{ width: '100%' }}
+              style={{ width: '100%', height: 52 }}
               onClick={() => {
                 setInfoModal(true);
               }}
