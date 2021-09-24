@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   padding: 4px;
 
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
 
   background-color: ${props => props.theme.colors.bgNormal};
@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
     width: 100%;
     border-radius: 0;
 
-    top: 5%;
+    top: unset;
     left: 0;
     bottom: 0;
 
@@ -404,7 +404,6 @@ export const BridgeModalWrapper = styled(Wrapper)`
     top: 50px;
     transform: translate(-50%, 0);
     max-height: calc(100% - 100px);
-    overflow-y: scroll;
   }
 `;
 

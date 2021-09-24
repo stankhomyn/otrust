@@ -6,7 +6,7 @@ exports[`Given the BridgeSwapModalDisconnected component when the component is r
   width: 500px;
   padding: 4px;
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
   background-color: #201d2a;
   border-radius: 8px;
@@ -336,7 +336,7 @@ exports[`Given the BridgeSwapModalDisconnected component when the component is r
   .c0 {
     width: 100%;
     border-radius: 0;
-    top: 5%;
+    top: unset;
     left: 0;
     bottom: 0;
     -webkit-transform: none;
@@ -403,7 +403,6 @@ exports[`Given the BridgeSwapModalDisconnected component when the component is r
     -ms-transform: translate(-50%,0);
     transform: translate(-50%,0);
     max-height: calc(100% - 100px);
-    overflow-y: scroll;
   }
 }
 

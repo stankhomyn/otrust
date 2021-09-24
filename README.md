@@ -12,6 +12,15 @@ wNOM will be continuously distributed through a bonding curve until all 100,000,
 
 In the project directory, you can run:
 
+### `npm install --global yarn`
+
+Yarn installation on your system globally (if you haven't installed it before)
+
+### `yarn`
+
+(Delete node_modules folder and yarn.lock file before running this command)
+Installation node modules for libraries from package.json file
+
 ### `yarn start`
 
 Runs the app in the development mode.\
