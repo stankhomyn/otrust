@@ -16,7 +16,7 @@ In the project directory, you can run:
 
 Yarn installation on your system globally (if you haven't installed it before)
 
-### `yarn install`
+### `yarn`
 
 (Delete node_modules folder and yarn.lock file before running this command)
 Installation node modules for libraries from package.json file
