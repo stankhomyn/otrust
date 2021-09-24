@@ -20,6 +20,7 @@ import { ConnectionStatus } from '../../UI/ConnectionStatus';
 import * as Modal from '../styles';
 import oneWayBridgeImg from '../assets/one-way-bridge.svg';
 import whyBridgeImg from '../assets/why-bridge.svg';
+import useLockBodyScroll from '../../../hooks/useLockBodyScroll';
 
 const BridgeSwapModalWrapper = styled.div`
   @media screen and (min-width: 701px) {
@@ -185,6 +186,8 @@ export default function BridgeSwapMobile({ ...props }) {
   const { values, flags, handlers } = { ...props };
 
   const [infoModal, setInfoModal] = useState(false);
+
+  useLockBodyScroll();
 
   return (
     <BridgeSwapModalWrapper>

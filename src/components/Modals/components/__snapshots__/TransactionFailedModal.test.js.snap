@@ -6,7 +6,7 @@ exports[`Given the TransactionFailedModal component when the component is render
   width: 500px;
   padding: 4px;
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
   background-color: #201d2a;
   border-radius: 8px;
@@ -150,7 +150,7 @@ exports[`Given the TransactionFailedModal component when the component is render
   .c0 {
     width: 100%;
     border-radius: 0;
-    top: 5%;
+    top: unset;
     left: 0;
     bottom: 0;
     -webkit-transform: none;
