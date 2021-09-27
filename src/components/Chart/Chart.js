@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { responsive } from 'theme/constants';
 import BondLineChart from 'components/Chart/BondLineChart';
-import Dropdown from 'components/Dropdown/Dropdown';
+import Dropdown from 'components/DropdownTemp/DropdownTemp';
 import LineChart from 'components/Chart/HistoricalLineChart';
 import CandleChart from 'components/Chart/CandleChart';
 import { candleHeaderDefault, tempCandlestickData } from 'components/Chart/defaultChartData';
