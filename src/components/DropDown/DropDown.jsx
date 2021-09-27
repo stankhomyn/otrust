@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
-const DropDownWrapper = styled.div`
+const DropdownWrapper = styled.div`
   background-color: ${props =>
     props.isOpened ? props.theme.colors.bgHighlightBorder : 'transparent'};
   border-radius: 6px;
@@ -11,7 +11,7 @@ const DropDownWrapper = styled.div`
   color: ${props => props.theme.colors.textPrimary};
 `;
 
-const DropDownText = styled.div`
+const DropdownText = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -39,7 +39,7 @@ const DropDownText = styled.div`
   }
 `;
 
-const DropDownItem = styled.div`
+const DropdownItem = styled.div`
   padding: ${props => (props.isOpened ? '6px 18px 10px' : 0)};
   height: ${props => (props.isOpened ? 'auto' : 0)};
 
@@ -62,7 +62,7 @@ const DropDownItem = styled.div`
   }
 `;
 
-export default function DropDown({ selectItems, selectHandler }) {
+export default function Dropdown({ selectItems, selectHandler }) {
   const [isOpened, setIsOpened] = useState(false);
   const [selectedText, setSelectedText] = useState(selectItems[0].value);
 
@@ -80,20 +80,20 @@ export default function DropDown({ selectItems, selectHandler }) {
   };
 
   return (
-    <DropDownWrapper isOpened={isOpened}>
-      <DropDownText isOpened={isOpened} onClick={toggleDropdown}>
+    <DropdownWrapper isOpened={isOpened}>
+      <DropdownText isOpened={isOpened} onClick={toggleDropdown}>
         <span>{selectedText}</span>
         <FontAwesomeIcon icon={faChevronDown} />
-      </DropDownText>
+      </DropdownText>
       {selectItems.map(item => (
-        <DropDownItem
+        <DropdownItem
           isOpened={isOpened}
           onClick={event => selectActiveItem(event, item.key)}
           key={item.key}
         >
           {item.value}
-        </DropDownItem>
+        </DropdownItem>
       ))}
-    </DropDownWrapper>
+    </DropdownWrapper>
   );
 }
