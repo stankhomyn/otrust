@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { responsive } from 'theme/constants';
 import BondLineChart from 'components/Chart/BondLineChart';
-import DropDown from 'components/DropDown/DropDown';
+import Dropdown from 'components/Dropdown/Dropdown';
 import LineChart from 'components/Chart/HistoricalLineChart';
 import CandleChart from 'components/Chart/CandleChart';
 import { candleHeaderDefault, tempCandlestickData } from 'components/Chart/defaultChartData';
@@ -21,6 +21,7 @@ const ChartWrapper = styled.div`
 const ChartHeader = styled.header`
   display: flex;
   justify-content: space-between;
+
   min-height: 35px;
 `;
 
@@ -188,12 +189,12 @@ export default function Chart() {
           </span>
         ) : (
           <ChartSelectorWrapper>
-            <DropDown selectItems={chartTypes} selectHandler={selectChartTypeHandler} />
+            <Dropdown selectItems={chartTypes} selectHandler={selectChartTypeHandler} />
           </ChartSelectorWrapper>
         )}
         {chartType === 'lineChart' && (
           <LineChartSelectorWrapper>
-            <DropDown selectItems={periods} selectHandler={selectPeriodHandler} />
+            <Dropdown selectItems={periods} selectHandler={selectPeriodHandler} />
           </LineChartSelectorWrapper>
         )}
       </ChartHeader>

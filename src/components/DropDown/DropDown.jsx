@@ -1,47 +1,64 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const DropDownWrapper = styled.div`
-  color: ${props => props.theme.colors.textPrimary};
   background-color: ${props =>
     props.isOpened ? props.theme.colors.bgHighlightBorder : 'transparent'};
   border-radius: 6px;
+
+  color: ${props => props.theme.colors.textPrimary};
 `;
 
 const DropDownText = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   min-width: 120px;
-  color: white;
-  font-size: 12px;
   padding: 13px 16px;
-  cursor: pointer;
-  height: auto;
+  height: 44px;
+
   border-radius: ${props => (props.isOpened ? '6px 6px 0 0' : '6px')};
   background-color: ${props => props.theme.colors.bgHighlightBorder};
 
-  &::after {
-    content: '';
-    transition: all 0.3s;
-    border: solid #ccc;
-    border-width: 0 1px 1px 0;
-    float: right;
-    padding: 5px;
-    margin: ${props => (props.isOpened ? '1px 6px 8px 0' : '8px 6px 8px 0')};
-    transform: ${props => (props.isOpened ? 'rotate(45deg)' : 'rotate(-135deg)')};
+  color: white;
+  font-size: 12px;
+
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background-color: ${props => props.theme.colors.bgHighlightBorder_lighten};
+  }
+
+  > svg {
+    transform: ${props => (props.isOpened ? 'rotate(180deg)' : 'rotate(0)')};
+    transition: transform 0.15s;
   }
 `;
 
 const DropDownItem = styled.div`
-  cursor: pointer;
-  font-size: 12px;
-  position: relative;
-  padding: ${props => (props.isOpened ? '6px 18px' : 0)};
+  padding: ${props => (props.isOpened ? '6px 18px 10px' : 0)};
   height: ${props => (props.isOpened ? 'auto' : 0)};
+
+  position: relative;
   visibility: ${props => (props.isOpened ? 'visible' : 'hidden')};
   opacity: ${props => (props.isOpened ? 1 : 0)};
+
+  font-size: 12px;
+
   transition: ${props =>
-    props.isOpened ? 'max-height 0.7s, opacity 2s, visibility 3s ease' : 'all 0s ease 0s'};
+    props.isOpened ? 'max-height 0.5s, opacity 1s, visibility 2s ease' : 'all 0s ease 0s'};
+  cursor: pointer;
+
   &:hover {
-    background-color: ${props => props.theme.colors.textThirdly_darken};
+    background-color: ${props => props.theme.colors.bgHighlightBorder_lighten};
+  }
+
+  &:last-child {
+    border-radius: 0 0 6px 6px;
   }
 `;
 
@@ -49,11 +66,11 @@ export default function DropDown({ selectItems, selectHandler }) {
   const [isOpened, setIsOpened] = useState(false);
   const [selectedText, setSelectedText] = useState(selectItems[0].value);
 
-  const handleClick = () => {
+  const toggleDropdown = () => {
     setIsOpened(!isOpened);
   };
 
-  const handleText = (event, key) => {
+  const selectActiveItem = (event, key) => {
     if (isOpened) {
       const textValue = event.currentTarget.textContent;
       setSelectedText(textValue);
@@ -64,13 +81,14 @@ export default function DropDown({ selectItems, selectHandler }) {
 
   return (
     <DropDownWrapper isOpened={isOpened}>
-      <DropDownText isOpened={isOpened} onClick={handleClick}>
-        {selectedText}
+      <DropDownText isOpened={isOpened} onClick={toggleDropdown}>
+        <span>{selectedText}</span>
+        <FontAwesomeIcon icon={faChevronDown} />
       </DropDownText>
       {selectItems.map(item => (
         <DropDownItem
           isOpened={isOpened}
-          onClick={event => handleText(event, item.key)}
+          onClick={event => selectActiveItem(event, item.key)}
           key={item.key}
         >
           {item.value}
