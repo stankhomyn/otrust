@@ -106,6 +106,7 @@ function ChainProvider({ theme, children }) {
 
   const contextValue = {
     ...state,
+    client,
     theme,
   };
 

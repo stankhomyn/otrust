@@ -2,6 +2,8 @@
 import * as React from 'react';
 
 import { widget } from '../../charting_library';
+import { ChartData } from 'utils/ChartData';
+import { ChainContext } from 'context/chain/ChainContext';
 
 function getLanguageFromURL() {
   const regex = new RegExp('[\\?&]lang=([^&#]*)');
@@ -31,10 +33,11 @@ export class TVChartContainer extends React.PureComponent {
   }
 
   componentDidMount() {
+    const { client } = this.context;
     const widgetOptions = {
       symbol: this.state.symbol,
       // BEWARE: no trailing slash is expected in feed URL
-      datafeed: new window.Datafeeds.UDFCompatibleDatafeed(this.state.datafeedUrl),
+      datafeed: new ChartData(client, this.state.datafeedUrl),
       interval: this.state.interval,
       container_id: this.state.containerId,
       library_path: this.state.libraryPath,
@@ -86,3 +89,5 @@ export class TVChartContainer extends React.PureComponent {
     return <div id={this.state.containerId} />;
   }
 }
+
+TVChartContainer.contextType = ChainContext;
