@@ -37,7 +37,11 @@ export class TVChartContainer extends React.PureComponent {
       library_path: this.state.libraryPath,
 
       locale: getLanguageFromURL() || 'en',
-      disabled_features: ['use_localstorage_for_settings'],
+      disabled_features: [
+        'use_localstorage_for_settings',
+        'header_compare',
+        'header_symbol_search',
+      ],
       enabled_features: [],
       theme: 'Dark',
       fullscreen: this.state.fullscreen,
