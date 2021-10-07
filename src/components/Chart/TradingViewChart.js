@@ -17,15 +17,10 @@ export class TVChartContainer extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      symbol: 'AAPL',
-      interval: 'D',
+      symbol: 'NOM',
+      interval: '1D',
       containerId: 'tv_chart_container',
-      datafeedUrl: 'https://demo_feed.tradingview.com',
       libraryPath: '../../charting_library/',
-      chartsStorageUrl: 'https://saveload.tradingview.com',
-      chartsStorageApiVersion: '1.1',
-      clientId: 'tradingview.com',
-      userId: 'public_user_id',
       fullscreen: false,
       autosize: true,
       studiesOverrides: {},
@@ -36,19 +31,15 @@ export class TVChartContainer extends React.PureComponent {
     const { client } = this.context;
     const widgetOptions = {
       symbol: this.state.symbol,
-      // BEWARE: no trailing slash is expected in feed URL
-      datafeed: new ChartData(client, this.state.datafeedUrl),
+      datafeed: new ChartData(client),
       interval: this.state.interval,
       container_id: this.state.containerId,
       library_path: this.state.libraryPath,
 
       locale: getLanguageFromURL() || 'en',
       disabled_features: ['use_localstorage_for_settings'],
-      enabled_features: ['study_templates'],
-      charts_storage_url: this.state.chartsStorageUrl,
-      charts_storage_api_version: this.state.chartsStorageApiVersion,
-      client_id: this.state.clientId,
-      user_id: this.state.userId,
+      enabled_features: [],
+      theme: 'Dark',
       fullscreen: this.state.fullscreen,
       autosize: this.state.autosize,
       studies_overrides: this.state.studiesOverrides,
@@ -58,6 +49,7 @@ export class TVChartContainer extends React.PureComponent {
     const tvWidget = new widget(widgetOptions);
     this.tvWidget = tvWidget;
 
+    /*
     tvWidget.onChartReady(() => {
       tvWidget.headerReady().then(() => {
         const button = tvWidget.createButton();
@@ -76,6 +68,7 @@ export class TVChartContainer extends React.PureComponent {
         button.innerHTML = 'Check API';
       });
     });
+    */
   }
 
   componentWillUnmount() {
