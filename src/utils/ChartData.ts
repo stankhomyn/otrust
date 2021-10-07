@@ -69,7 +69,7 @@ const NOM_SYMBOL_INFO: LibrarySymbolInfo = {
   type: 'crypto',
   session: '24x7',
   minmov: 1,
-  pricescale: 1000,
+  pricescale: 10000000000,
 };
 
 function formatPrice(price: string) {
@@ -168,6 +168,8 @@ export class ChartData implements IDatafeedChartApi {
           volume: 0,
         })
       );
+
+      console.log('bars', bars);
 
       if (periodParams.firstDataRequest) {
         onResult(bars, { noData: false });
