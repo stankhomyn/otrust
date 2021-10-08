@@ -1,3 +1,5 @@
+import { EventEmitter } from 'events';
+
 import { ApolloClient, NormalizedCacheObject, gql } from '@apollo/client';
 import { BigNumber } from 'bignumber.js';
 
@@ -76,36 +78,81 @@ function formatPrice(price: string) {
   return new BigNumber(price).shiftedBy(-18).toFixed(10);
 }
 
+type BarSubscription = {
+  symbolInfo: LibrarySymbolInfo;
+  resolution: ResolutionString;
+  onTick: SubscribeBarsCallback;
+  listenerGuid: string;
+  onResetCacheNeededCallback: () => void;
+};
+
 // @ts-ignore
 export class ChartData implements IDatafeedChartApi {
   private apolloClient: ApolloClient<NormalizedCacheObject>;
 
-  constructor(apolloClient: ApolloClient<NormalizedCacheObject>) {
+  private web3Library: EventEmitter;
+
+  private barSubs: Record<string, BarSubscription>;
+
+  constructor(apolloClient: ApolloClient<NormalizedCacheObject>, web3Library: EventEmitter) {
     this.apolloClient = apolloClient;
+    this.web3Library = web3Library;
+    this.barSubs = {};
+    this.onBlockMined = this.onBlockMined.bind(this);
+    this.web3Library.on('block', this.onBlockMined);
   }
 
-  public async onReady(cb: OnReadyCallback) {
-    cb({
-      exchanges: [
-        {
-          value: NOM_SYMBOL_INFO.exchange,
-          name: NOM_SYMBOL_INFO.exchange,
-          desc: NOM_SYMBOL_INFO.exchange,
+  private async onBlockMined() {
+    const subs = Object.values(this.barSubs);
+
+    // TODO: may make sense to wait 1-2 seconds to give graph time to update?
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const { symbolInfo, resolution, onTick } of subs) {
+      this.getBars(
+        symbolInfo,
+        resolution,
+        { countBack: 1, from: 0, to: 0, firstDataRequest: true },
+        res => {
+          const last = res.pop();
+          if (last) onTick(last);
         },
-      ],
-      symbols_types: [
-        {
-          value: NOM_SYMBOL_INFO.type,
-          name: NOM_SYMBOL_INFO.type,
-        },
-      ],
-      supported_resolutions: NOM_SYMBOL_INFO.supported_resolutions,
-      currency_codes: ['ETH'],
-      units: {},
-      supports_marks: false,
-      supports_timescale_marks: false,
-      supports_time: true,
-    });
+        err => console.error(err)
+      );
+    }
+  }
+
+  public destroy() {
+    this.web3Library.removeListener('block', this.onBlockMined);
+  }
+
+  public onReady(cb: OnReadyCallback) {
+    // TradingView requires this setTimeout
+    setTimeout(
+      () =>
+        cb({
+          exchanges: [
+            {
+              value: NOM_SYMBOL_INFO.exchange,
+              name: NOM_SYMBOL_INFO.exchange,
+              desc: NOM_SYMBOL_INFO.exchange,
+            },
+          ],
+          symbols_types: [
+            {
+              value: NOM_SYMBOL_INFO.type,
+              name: NOM_SYMBOL_INFO.type,
+            },
+          ],
+          supported_resolutions: NOM_SYMBOL_INFO.supported_resolutions,
+          currency_codes: ['ETH'],
+          units: {},
+          supports_marks: false,
+          supports_timescale_marks: false,
+          supports_time: true,
+        }),
+      0
+    );
   }
 
   public async searchSymbols(
@@ -169,8 +216,7 @@ export class ChartData implements IDatafeedChartApi {
         })
       );
 
-      console.log('bars', bars);
-
+      // TODO: Figure out periodParams and do better requests
       if (periodParams.firstDataRequest) {
         onResult(bars, { noData: false });
       } else {
@@ -181,7 +227,7 @@ export class ChartData implements IDatafeedChartApi {
     }
   }
 
-  public async subscribeBars(
+  public subscribeBars(
     symbolInfo: LibrarySymbolInfo,
     resolution: ResolutionString,
     onTick: SubscribeBarsCallback,
@@ -195,11 +241,16 @@ export class ChartData implements IDatafeedChartApi {
       onResetCacheNeededCallback,
     });
 
-    // TODO: implement data subscription
+    this.barSubs[listenerGuid] = {
+      symbolInfo,
+      resolution,
+      onTick,
+      listenerGuid,
+      onResetCacheNeededCallback,
+    };
   }
 
-  public async unsubscribeBars(listenerGuid: string) {
-    console.log('unsubscribeBars', listenerGuid);
-    // TODO: implement data unsubscribe
+  public unsubscribeBars(listenerGuid: string) {
+    delete this.barSubs[listenerGuid];
   }
 }

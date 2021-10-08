@@ -11,6 +11,8 @@ function getLanguageFromURL() {
   return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
+const HEIGHT = 364;
+
 export class TVChartContainer extends React.PureComponent {
   tvWidget = null;
 
@@ -19,21 +21,24 @@ export class TVChartContainer extends React.PureComponent {
     this.state = {
       symbol: 'NOM',
       interval: '1D',
+      datafeed: null,
       containerId: 'tv_chart_container',
       libraryPath: '../../charting_library/',
       fullscreen: false,
-      autosize: true,
+      autosize: false,
       studiesOverrides: {},
     };
   }
 
   componentDidMount() {
-    const { client } = this.context;
+    const { client, library } = this.context;
+    const datafeed = new ChartData(client, library);
+    this.setState({ datafeed });
     const widgetOptions = {
       symbol: this.state.symbol,
-      datafeed: new ChartData(client),
+      datafeed: new ChartData(client, library),
       interval: this.state.interval,
-      container_id: this.state.containerId,
+      container: this.state.containerId,
       library_path: this.state.libraryPath,
 
       locale: getLanguageFromURL() || 'en',
@@ -44,6 +49,8 @@ export class TVChartContainer extends React.PureComponent {
       ],
       enabled_features: [],
       theme: 'Dark',
+      height: HEIGHT,
+      width: '100%',
       fullscreen: this.state.fullscreen,
       autosize: this.state.autosize,
       studies_overrides: this.state.studiesOverrides,
@@ -80,10 +87,11 @@ export class TVChartContainer extends React.PureComponent {
       this.tvWidget.remove();
       this.tvWidget = null;
     }
+    if (this.state.datafeed) this.state.datafeed.destroy();
   }
 
   render() {
-    return <div id={this.state.containerId} />;
+    return <div id={this.state.containerId} style={{ height: HEIGHT }} />;
   }
 }
 
