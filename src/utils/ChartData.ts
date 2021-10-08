@@ -17,13 +17,13 @@ import {
 } from 'charting_library/charting_library';
 
 const WNOM_HISTORICAL_DATA_QUERY = gql`
-  query transactions($filter: String!, $skipped: Int!) {
+  query transactions($filter: String!, $skipped: Int!, $first: Int, $from: Int, $to: Int) {
     wnomhistoricalFrames(
-      first: 1000
+      first: $first
       skip: $skipped
-      where: { type: $filter }
+      where: { type: $filter, startTime_lte: $to }
       orderBy: startTime
-      orderDirection: asc
+      orderDirection: desc
     ) {
       startTime
       endTime
@@ -94,16 +94,24 @@ export class ChartData implements IDatafeedChartApi {
 
   private barSubs: Record<string, BarSubscription>;
 
+  private lastBlock = 0;
+
+  private lastTick: Record<string, number>;
+
   constructor(apolloClient: ApolloClient<NormalizedCacheObject>, web3Library: EventEmitter) {
     this.apolloClient = apolloClient;
     this.web3Library = web3Library;
     this.barSubs = {};
+    this.lastTick = {};
     this.onBlockMined = this.onBlockMined.bind(this);
     this.web3Library.on('block', this.onBlockMined);
   }
 
-  private async onBlockMined() {
+  private async onBlockMined(bnum: number) {
+    if (bnum <= this.lastBlock) return;
+    this.lastBlock = bnum;
     const subs = Object.values(this.barSubs);
+    console.log('block mined', bnum);
 
     // TODO: may make sense to wait 1-2 seconds to give graph time to update?
 
@@ -112,9 +120,10 @@ export class ChartData implements IDatafeedChartApi {
       this.getBars(
         symbolInfo,
         resolution,
-        { countBack: 1, from: 0, to: 0, firstDataRequest: true },
+        { countBack: 1, from: 0, to: 0, firstDataRequest: false },
         res => {
           const last = res.pop();
+          console.log('last', this.lastTick[resolution], resolution, last);
           if (last) onTick(last);
         },
         err => console.error(err)
@@ -185,6 +194,7 @@ export class ChartData implements IDatafeedChartApi {
     onResult: HistoryCallback,
     onError: ErrorCallback
   ) {
+    console.log('periodParams', periodParams);
     try {
       const resp = await this.apolloClient.query({
         query: WNOM_HISTORICAL_DATA_QUERY,
@@ -192,6 +202,9 @@ export class ChartData implements IDatafeedChartApi {
           // @ts-ignore
           filter: PERIOD_MAP[resolution] || 'Hour',
           skipped: 0,
+          from: Math.round(periodParams.from),
+          to: Math.round(periodParams.to || 60 + new Date().getTime() / 1000),
+          first: Math.min(1000, periodParams.countBack),
         },
       });
 
@@ -199,30 +212,39 @@ export class ChartData implements IDatafeedChartApi {
         data: { wnomhistoricalFrames: frames },
       } = resp;
 
-      const bars = frames.map(
-        (frame: {
-          startTime: any;
-          startPrice: any;
-          maxPrice: any;
-          minPrice: any;
-          endPrice: any;
-        }) => ({
-          time: parseInt(frame.startTime, 10) * 1000,
-          open: formatPrice(frame.startPrice),
-          high: formatPrice(frame.maxPrice),
-          low: formatPrice(frame.minPrice),
-          close: formatPrice(frame.endPrice),
-          volume: 0,
-        })
-      );
+      const bars = frames
+        .slice()
+        .reverse()
+        .map(
+          (frame: {
+            startTime: any;
+            startPrice: any;
+            maxPrice: any;
+            minPrice: any;
+            endPrice: any;
+          }) => {
+            const time = parseInt(frame.startTime, 10) * 1000;
+            if (!this.lastTick[resolution] || this.lastTick[resolution] < time) {
+              this.lastTick[resolution] = time;
+            }
 
-      // TODO: Figure out periodParams and do better requests
-      if (periodParams.firstDataRequest) {
+            return {
+              time,
+              open: formatPrice(frame.startPrice),
+              high: formatPrice(frame.maxPrice),
+              low: formatPrice(frame.minPrice),
+              close: formatPrice(frame.endPrice),
+              volume: 0,
+            };
+          }
+        );
+      if (bars.length > 0) {
         onResult(bars, { noData: false });
       } else {
         onResult([], { noData: true });
       }
     } catch (e) {
+      console.error(e);
       onError(`${e}`);
     }
   }
@@ -234,13 +256,6 @@ export class ChartData implements IDatafeedChartApi {
     listenerGuid: string,
     onResetCacheNeededCallback: () => void
   ) {
-    console.log('subscribeBars', {
-      symbolInfo,
-      resolution,
-      listenerGuid,
-      onResetCacheNeededCallback,
-    });
-
     this.barSubs[listenerGuid] = {
       symbolInfo,
       resolution,
