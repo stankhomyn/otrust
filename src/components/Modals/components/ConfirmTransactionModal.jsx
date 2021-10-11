@@ -253,13 +253,15 @@ export default function ConfirmTransactionModal({ isApproving, submitTrans }) {
           ))}
         </Options>
 
-        <Modal.DetailsButton
-          active={showSlippageDetails}
-          onClick={() => setShowSlippageDetails(!showSlippageDetails)}
-          data-testid="confirm-modal-slippage-button"
-        >
-          Slippage Limit <Caret />
-        </Modal.DetailsButton>
+        {!isApproving && (
+          <Modal.DetailsButton
+            active={showSlippageDetails}
+            onClick={() => setShowSlippageDetails(!showSlippageDetails)}
+            data-testid="confirm-modal-slippage-button"
+          >
+            Slippage Limit <Caret />
+          </Modal.DetailsButton>
+        )}
 
         {showSlippageDetails && (
           <>
