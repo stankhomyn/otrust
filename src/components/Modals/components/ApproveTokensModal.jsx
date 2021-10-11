@@ -151,9 +151,9 @@ export default function ApproveTokensModal({ onConfirmApprove }) {
         <Caption>Approve Tokens</Caption>
 
         <Message>
-          You want to sell <strong>{input} wNOM</strong>, but you approved for sale only{' '}
-          {format18(NOMallowance).toFixed()} wNOM. To sell this amount, please approve{' '}
-          <strong>{format18(initialApproveAmount).toFixed()} wNOM</strong> or more.
+          You have approved the Bonding Curve to sell up to <strong>{input} wNOM</strong>. To sell{' '}
+          <strong>{input} wNOM</strong>, you must approve at least an additional{' '}
+          <strong>{format18(initialApproveAmount).toFixed()} wNOM</strong>.
         </Message>
 
         <ApproveTokensWrapper>
