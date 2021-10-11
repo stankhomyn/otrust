@@ -9,6 +9,7 @@ import LineChart from 'components/Chart/HistoricalLineChart';
 import CandleChart from 'components/Chart/CandleChart';
 import { candleHeaderDefault, tempCandlestickData } from 'components/Chart/defaultChartData';
 import { HISTORICAL_CHART_TYPE } from '../../constants/ChartSelections';
+import { TVChartContainer } from './TradingViewChart';
 
 const ChartWrapper = styled.div`
   padding: 20px;
@@ -73,6 +74,7 @@ const axisLabels = {
   lineChart: { x: '', y: 'Price (ETH)' },
   candleView: { x: '', y: 'Price (ETH)' },
   bondingCurve: { x: 'NOM supply', y: 'Price (ETH)' },
+  tradingView: { x: 'Time', y: 'Price' },
 };
 
 const ChartSelectorWrapper = styled.div`
@@ -99,6 +101,7 @@ const chartTypes = [
   { key: 'lineChart', value: 'Historical Chart' },
   { key: 'bondingCurve', value: 'Bonding Curve Chart' },
   { key: 'candleView', value: 'Candles View' },
+  { key: 'tradingView', value: 'Trayding View' },
 ];
 
 export default function Chart() {
@@ -129,6 +132,8 @@ export default function Chart() {
     switch (type) {
       case 'lineChart':
         return <LineChart historicalChartType={historicalChartType} />;
+      case 'tradingView':
+        return <TVChartContainer />;
       case 'candleView':
         return (
           <CandleChart
@@ -165,6 +170,12 @@ export default function Chart() {
               active={chartType === 'candleView'}
             >
               Candles View
+            </ChartTypeBtn>
+            <ChartTypeBtn
+              onClick={() => setChartType('tradingView')}
+              active={chartType === 'tradingView'}
+            >
+              Trading View
             </ChartTypeBtn>
           </span>
         ) : (
