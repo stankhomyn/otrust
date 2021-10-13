@@ -173,6 +173,8 @@ export default function ConfirmTransactionModal({ isApproving, submitTrans }) {
 
   useInterval(increaseCount, delay);
 
+  const approveDisplay = parseFloat(approve || 0).toFixed(6);
+
   return (
     <Modal.Wrapper>
       <Modal.CloseIcon onClick={() => handleModal()} data-testid="confirm-modal-close-icon">
@@ -188,7 +190,7 @@ export default function ConfirmTransactionModal({ isApproving, submitTrans }) {
           </Modal.ExchangeResultDescription>
           ~ {/* eslint-disable-next-line no-nested-ternary */}
           {isApproving
-            ? approve
+            ? approveDisplay
             : BigNumber.isBigNumber(askAmount)
             ? format18(askAmount).toFixed(6)
             : ''}{' '}
@@ -211,7 +213,7 @@ export default function ConfirmTransactionModal({ isApproving, submitTrans }) {
         <TransactionDetailsRow>
           <span>{isApproving ? "You're approving" : "You're sending"}</span>
           <strong>
-            {isApproving ? approve : format18(bidAmount).toFixed(6)}{' '}
+            {isApproving ? approveDisplay : format18(bidAmount).toFixed(6)}{' '}
             {bidDenom === 'strong' ? strong : weak}
           </strong>
         </TransactionDetailsRow>
