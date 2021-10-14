@@ -141,6 +141,9 @@ export default function ApproveTokensModal({ onConfirmApprove }) {
     });
   };
 
+  const inputDisplay = parseFloat(input || 0).toFixed(6);
+  const initApproveAmountDisplay = format18(initialApproveAmount || 0).toFixed(6);
+
   return (
     <Modal.Wrapper>
       <Modal.CloseIcon onClick={() => handleModal()} data-testid="approve-tokens-modal-close-icon">
@@ -151,9 +154,9 @@ export default function ApproveTokensModal({ onConfirmApprove }) {
         <Caption>Approve Tokens</Caption>
 
         <Message>
-          You have approved the Bonding Curve to sell up to <strong>{input} wNOM</strong>. To sell{' '}
-          <strong>{input} wNOM</strong>, you must approve at least an additional{' '}
-          <strong>{format18(initialApproveAmount).toFixed()} wNOM</strong>.
+          You have approved the Bonding Curve to sell up to <strong>{inputDisplay} wNOM</strong>. To
+          sell <strong>{inputDisplay} wNOM</strong>, you must approve at least an additional{' '}
+          <strong>{initApproveAmountDisplay} wNOM</strong>.
         </Message>
 
         <ApproveTokensWrapper>
