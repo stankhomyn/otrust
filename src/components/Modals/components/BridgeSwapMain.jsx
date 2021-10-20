@@ -12,6 +12,7 @@ import BridgeSwapModal from './BridgeSwapModal';
 import { contAddrs } from '../../../context/chain/contracts';
 import { NOTIFICATION_MESSAGES } from '../../../constants/NotificationMessages';
 import { responsive } from 'theme/constants';
+import { useKeplr } from 'hooks/use-keplr';
 
 export const initialErrorsState = { amountError: '', onomyWalletError: '', transactionError: '' };
 
@@ -31,6 +32,7 @@ export const initialGasOptions = [
 ];
 
 export default function BridgeSwapMain({ closeBridgeModal }) {
+  const keplrWallet = useKeplr();
   const [onomyWalletValue, setOnomyWalletValue] = useState('');
   const [amountValue, setAmountValue] = useState('');
   const [errors, setErrors] = useState(initialErrorsState);
@@ -55,28 +57,39 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
   const NOMContract = useMemo(() => NOMCont(library), [library]);
 
   useEffect(() => {
+    if (!keplrWallet) return;
+    console.log('keplrWallet', keplrWallet);
+    const [acct] = keplrWallet.accounts;
+    setOnomyWalletValue(acct.address);
+  }, [keplrWallet]);
+
+  useEffect(() => {
     const getGasPrices = async () => {
-      const prices = await fetch('https://www.gasnow.org/api/v3/gas/price?utm_source=onomy');
-      const result = await prices.json();
-      const fetchedGasOptions = [
-        {
-          id: 0,
-          text: `${(result.data.standard / 1e9).toPrecision(4)} (Standard)`,
-          gas: new BigNumber(result.data.standard.toString()),
-        },
-        {
-          id: 1,
-          text: `${(result.data.fast / 1e9).toPrecision(4)} (Fast)`,
-          gas: new BigNumber(result.data.fast.toString()),
-        },
-        {
-          id: 2,
-          text: `${(result.data.rapid / 1e9).toPrecision(4)} (Instant)`,
-          gas: new BigNumber(result.data.rapid.toString()),
-        },
-      ];
-      setGasOptions(fetchedGasOptions);
-      setGasPrice(fetchedGasOptions[gasPriceChoice].gas);
+      try {
+        const prices = await fetch('https://www.gasnow.org/api/v3/gas/price?utm_source=onomy');
+        const result = await prices.json();
+        const fetchedGasOptions = [
+          {
+            id: 0,
+            text: `${(result.data.standard / 1e9).toPrecision(4)} (Standard)`,
+            gas: new BigNumber(result.data.standard.toString()),
+          },
+          {
+            id: 1,
+            text: `${(result.data.fast / 1e9).toPrecision(4)} (Fast)`,
+            gas: new BigNumber(result.data.fast.toString()),
+          },
+          {
+            id: 2,
+            text: `${(result.data.rapid / 1e9).toPrecision(4)} (Instant)`,
+            gas: new BigNumber(result.data.rapid.toString()),
+          },
+        ];
+        setGasOptions(fetchedGasOptions);
+        setGasPrice(fetchedGasOptions[gasPriceChoice].gas);
+      } catch (e) {
+        console.error('Failure fetching gas prices', e);
+      }
     };
     getGasPrices();
     // eslint-disable-next-line react-hooks/exhaustive-deps
