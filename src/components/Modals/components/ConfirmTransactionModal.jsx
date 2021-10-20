@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import useInterval from '@use-it/interval';
 import { BigNumber } from 'bignumber.js';
@@ -11,6 +11,7 @@ import { useModal } from 'context/modal/ModalContext';
 import * as Modal from 'components/Modals/styles';
 import 'components/Modals/loadingBar.css';
 import { useExchange } from 'context/exchange/ExchangeContext';
+import { useGasPriceSelection } from 'hooks/useGasPriceSelection';
 
 const TransactionDetailsRow = styled.div`
   display: flex;
@@ -118,26 +119,9 @@ const limitOptions = [
   },
 ];
 
-const gasOptions = [
-  {
-    id: 0,
-    text: '0 (Standard)',
-  },
-  {
-    id: 1,
-    text: '0 (Fast)',
-  },
-  {
-    id: 2,
-    text: '0 (Instant)',
-  },
-];
-
 export default function ConfirmTransactionModal({ isApproving, submitTrans }) {
   const [slippage, setSlippage] = useState(0);
   const [showSlippageDetails, setShowSlippageDetails] = useState(false);
-  const [gasPriceChoice, setGasPriceChoice] = useState(2);
-  const [gasPrice, setGasPrice] = useState(0);
   const { handleModal } = useModal();
   const { account } = useWeb3React();
 
@@ -155,21 +139,7 @@ export default function ConfirmTransactionModal({ isApproving, submitTrans }) {
     }
   };
 
-  const getGasPrices = useCallback(async () => {
-    const prices = await fetch('https://www.gasnow.org/api/v3/gas/price?utm_source=onomy');
-    const result = await prices.json();
-    gasOptions[0].text = `${(result.data.standard / 1e9).toPrecision(4)} (Standard)`;
-    gasOptions[1].text = `${(result.data.fast / 1e9).toPrecision(4)} (Fast)`;
-    gasOptions[2].text = `${(result.data.rapid / 1e9).toPrecision(4)} (Instant)`;
-    gasOptions[0].gas = new BigNumber(result.data.standard.toString());
-    gasOptions[1].gas = new BigNumber(result.data.fast.toString());
-    gasOptions[2].gas = new BigNumber(result.data.rapid.toString());
-    setGasPrice(gasOptions[gasPriceChoice].gas);
-  }, [gasPriceChoice]);
-
-  useEffect(() => {
-    getGasPrices();
-  }, [getGasPrices]);
+  const { gasPriceChoice, setGasPriceChoice, gasOptions, gasPrice } = useGasPriceSelection();
 
   useInterval(increaseCount, delay);
 
@@ -243,10 +213,9 @@ export default function ConfirmTransactionModal({ isApproving, submitTrans }) {
         <Options>
           {gasOptions.map(gasPriceOption => (
             <OptionBtn
-              active={gasPrice === gasPriceOption.gas}
+              active={gasPriceChoice === gasPriceOption.id}
               key={gasPriceOption.text}
               onClick={() => {
-                setGasPrice(gasPriceOption.gas);
                 setGasPriceChoice(gasPriceOption.id);
               }}
             >
