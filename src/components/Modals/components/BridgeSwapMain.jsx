@@ -5,6 +5,7 @@ import cosmos from 'cosmos-lib';
 import { ethers } from 'ethers';
 import { useMediaQuery } from 'react-responsive';
 
+import { useKeplr } from 'hooks/useKeplr';
 import { useChain } from 'context/chain/ChainContext';
 import { GravityCont, NOMCont } from 'context/chain/contracts';
 import BridgeSwapMobile from './BridgeSwapMobile';
@@ -12,6 +13,7 @@ import BridgeSwapModal from './BridgeSwapModal';
 import { contAddrs } from '../../../context/chain/contracts';
 import { NOTIFICATION_MESSAGES } from '../../../constants/NotificationMessages';
 import { responsive } from 'theme/constants';
+import { useGasPriceSelection } from 'hooks/useGasPriceSelection';
 
 export const initialErrorsState = { amountError: '', onomyWalletError: '', transactionError: '' };
 
@@ -31,12 +33,10 @@ export const initialGasOptions = [
 ];
 
 export default function BridgeSwapMain({ closeBridgeModal }) {
+  const keplrWallet = useKeplr();
   const [onomyWalletValue, setOnomyWalletValue] = useState('');
   const [amountValue, setAmountValue] = useState('');
   const [errors, setErrors] = useState(initialErrorsState);
-  const [gasPrice, setGasPrice] = useState(0);
-  const [gasPriceChoice, setGasPriceChoice] = useState(2);
-  const [gasOptions, setGasOptions] = useState(initialGasOptions);
   const [formattedWeakBalance, setFormattedWeakBalance] = useState(0);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isTransactionPending, setIsTransactionPending] = useState(false);
@@ -45,6 +45,7 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
   const [showApproveModal, setShowApproveModal] = useState(false);
   const [showTransactionCompleted, setShowTransactionCompleted] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+  const { gasPriceChoice, setGasPriceChoice, gasOptions, gasPrice } = useGasPriceSelection();
 
   const standardBrigdeBreakpoint = useMediaQuery({ minWidth: responsive.smartphoneLarge });
 
@@ -55,32 +56,11 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
   const NOMContract = useMemo(() => NOMCont(library), [library]);
 
   useEffect(() => {
-    const getGasPrices = async () => {
-      const prices = await fetch('https://www.gasnow.org/api/v3/gas/price?utm_source=onomy');
-      const result = await prices.json();
-      const fetchedGasOptions = [
-        {
-          id: 0,
-          text: `${(result.data.standard / 1e9).toPrecision(4)} (Standard)`,
-          gas: new BigNumber(result.data.standard.toString()),
-        },
-        {
-          id: 1,
-          text: `${(result.data.fast / 1e9).toPrecision(4)} (Fast)`,
-          gas: new BigNumber(result.data.fast.toString()),
-        },
-        {
-          id: 2,
-          text: `${(result.data.rapid / 1e9).toPrecision(4)} (Instant)`,
-          gas: new BigNumber(result.data.rapid.toString()),
-        },
-      ];
-      setGasOptions(fetchedGasOptions);
-      setGasPrice(fetchedGasOptions[gasPriceChoice].gas);
-    };
-    getGasPrices();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gasPriceChoice, showApproveModal]);
+    if (!keplrWallet) return;
+    console.log('keplrWallet', keplrWallet);
+    const [acct] = keplrWallet.accounts;
+    setOnomyWalletValue(acct.address);
+  }, [keplrWallet]);
 
   useEffect(() => {
     setFormattedWeakBalance(weakBalance.shiftedBy(-18));
@@ -250,7 +230,6 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
       onCancelClickHandler,
       closeModal,
       setGasPriceChoice,
-      setGasPrice,
     },
   };
 
