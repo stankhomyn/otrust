@@ -57,7 +57,6 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
 
   useEffect(() => {
     if (!keplrWallet) return;
-    console.log('keplrWallet', keplrWallet);
     const [acct] = keplrWallet.accounts;
     setOnomyWalletValue(acct.address);
   }, [keplrWallet]);

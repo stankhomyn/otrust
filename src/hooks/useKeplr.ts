@@ -1,4 +1,4 @@
-import { AccountData, OfflineSigner } from '@cosmjs/launchpad';
+import { AccountData, OfflineSigner, SigningCosmosClient } from '@cosmjs/launchpad';
 import { Keplr } from '@keplr-wallet/types';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -12,7 +12,6 @@ export function useKeplr() {
   const [state, setState] = useState<KeplrUtils | null>(null);
   const connectKeplr = useCallback(async () => {
     const chainId = 'ochain-testnet';
-    console.log('keplr', window.keplr);
     try {
       if (window.keplr) {
         await window.keplr.experimentalSuggestChain({
@@ -72,11 +71,28 @@ export function useKeplr() {
         if (!window.getOfflineSigner) throw new Error('No Offline Signer');
         const offlineSigner = window.getOfflineSigner(chainId);
         const accounts = await offlineSigner.getAccounts();
+        (async () => {
+          try {
+            const cosmJS = new SigningCosmosClient(
+              'https://lcd-cosmoshub.keplr.app/rest',
+              accounts[0].address,
+              offlineSigner
+            );
+            const ca = await cosmJS.getAccount(accounts[0].address);
+            // eslint-disable-next-line no-console
+            console.log('balance', ca?.balance);
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error('Error fetching keplr balance', e);
+          }
+        })();
         setState({ keplr: window.keplr, offlineSigner, accounts });
       } else {
+        // eslint-disable-next-line no-console
         console.error('Install keplr chrome extension');
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error('keplr error', e);
     }
   }, []);

@@ -18,6 +18,7 @@ export function AutoLogin({ children }) {
         }
       });
     } catch (error) {
+      // eslint-disable-next-line no-alert
       alert('Failed to connect.');
     }
   };

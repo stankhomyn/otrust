@@ -91,12 +91,12 @@ export default function ApproveTokensModal({ onConfirmApprove }) {
   const onTextChange = async event => {
     event.preventDefault();
 
-    console.log('Approve Amount:-approve ', approve);
+    // console.log('Approve Amount:-approve ', approve);
 
     const floatRegExp = new RegExp(/(^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$)|(^\d\.$)/);
 
     if (floatRegExp.test(event.target.value.toString())) {
-      console.log('Approve Amount:-pass ', approve);
+      // console.log('Approve Amount:-pass ', approve);
 
       const approvalAmount = parse18(new BigNumber(parseFloat(event.target.value).toString()));
 
@@ -116,7 +116,7 @@ export default function ApproveTokensModal({ onConfirmApprove }) {
         value: strUpdate,
       });
     } else {
-      console.log('Text Change: ', 'regex failed');
+      // console.log('Text Change: ', 'regex failed');
       handleModal(<RequestFailedModal error="Please enter numbers only. Thank you!" />);
     }
   };

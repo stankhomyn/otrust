@@ -93,8 +93,9 @@ function ChainProvider({ theme, children }) {
             }
             dispatch({ type: 'updateAll', value: update });
           });
-        } catch {
-          console.log('Failed Chain Promise');
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error('Failed Chain Promise', e);
         }
       }
     }

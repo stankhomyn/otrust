@@ -111,7 +111,7 @@ export class ChartData implements IDatafeedChartApi {
     if (bnum <= this.lastBlock) return;
     this.lastBlock = bnum;
     const subs = Object.values(this.barSubs);
-    console.log('block mined', bnum);
+    // console.log('block mined', bnum);
 
     // TODO: may make sense to wait 1-2 seconds to give graph time to update?
 
@@ -123,9 +123,10 @@ export class ChartData implements IDatafeedChartApi {
         { countBack: 1, from: 0, to: 0, firstDataRequest: false },
         res => {
           const last = res.pop();
-          console.log('last', this.lastTick[resolution], resolution, last);
+          // console.log('last', this.lastTick[resolution], resolution, last);
           if (last) onTick(last);
         },
+        // eslint-disable-next-line no-console
         err => console.error(err)
       );
     }
@@ -194,7 +195,7 @@ export class ChartData implements IDatafeedChartApi {
     onResult: HistoryCallback,
     onError: ErrorCallback
   ) {
-    console.log('periodParams', periodParams);
+    // console.log('periodParams', periodParams);
     try {
       const resp = await this.apolloClient.query({
         query: WNOM_HISTORICAL_DATA_QUERY,
@@ -244,6 +245,7 @@ export class ChartData implements IDatafeedChartApi {
         onResult([], { noData: true });
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       onError(`${e}`);
     }
