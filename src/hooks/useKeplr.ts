@@ -1,13 +1,10 @@
-import { AccountData, OfflineSigner, SigningCosmosClient } from '@cosmjs/launchpad';
+import { StargateClient } from '@cosmjs/stargate';
 import { Keplr } from '@keplr-wallet/types';
 import { useCallback, useEffect, useState } from 'react';
 
-import { COSMOS_REST, KEPLR_REST, KEPLR_RPC } from 'constants/env';
-
 type KeplrUtils = {
   keplr: Keplr;
-  offlineSigner: OfflineSigner;
-  accounts: readonly AccountData[];
+  stargate: StargateClient;
 };
 
 export function useKeplr() {
@@ -22,9 +19,9 @@ export function useKeplr() {
           // The name of the chain to be displayed to the user.
           chainName: 'Onomy',
           // RPC endpoint of the chain.
-          rpc: KEPLR_RPC,
+          rpc: '/keplr_rpc',
           // REST endpoint of the chain.
-          rest: KEPLR_REST,
+          rest: '/keplr_rest',
           stakeCurrency: {
             // Coin denomination to be displayed to the user.
             coinDenom: 'NOM',
@@ -73,18 +70,20 @@ export function useKeplr() {
         if (!window.getOfflineSigner) throw new Error('No Offline Signer');
         const offlineSigner = window.getOfflineSigner(chainId);
         const accounts = await offlineSigner.getAccounts();
+        const stargate = await StargateClient.connect(
+          `https://${window.location.host}/cosmos_rest`
+        );
         (async () => {
           try {
-            const cosmJS = new SigningCosmosClient(COSMOS_REST, accounts[0].address, offlineSigner);
-            const ca = await cosmJS.getAccount(accounts[0].address);
+            const ca = await stargate.getBalance(accounts[0].address, 'onomy');
             // eslint-disable-next-line no-console
-            console.log('balance', ca?.balance);
+            console.log('balance', ca);
           } catch (e) {
             // eslint-disable-next-line no-console
             console.error('Error fetching keplr balance', e);
           }
         })();
-        setState({ keplr: window.keplr, offlineSigner, accounts });
+        setState({ keplr: window.keplr, stargate });
       } else {
         // eslint-disable-next-line no-console
         console.error('Install keplr chrome extension');
