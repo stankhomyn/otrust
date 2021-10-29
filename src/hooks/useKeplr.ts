@@ -2,6 +2,8 @@ import { AccountData, OfflineSigner, SigningCosmosClient } from '@cosmjs/launchp
 import { Keplr } from '@keplr-wallet/types';
 import { useCallback, useEffect, useState } from 'react';
 
+import { COSMOS_REST, KEPLR_REST, KEPLR_RPC } from 'constants/env';
+
 type KeplrUtils = {
   keplr: Keplr;
   offlineSigner: OfflineSigner;
@@ -20,9 +22,9 @@ export function useKeplr() {
           // The name of the chain to be displayed to the user.
           chainName: 'Onomy',
           // RPC endpoint of the chain.
-          rpc: 'http://64.227.98.168:26657',
+          rpc: KEPLR_RPC,
           // REST endpoint of the chain.
-          rest: 'http://64.227.98.168:9091',
+          rest: KEPLR_REST,
           stakeCurrency: {
             // Coin denomination to be displayed to the user.
             coinDenom: 'NOM',
@@ -73,11 +75,7 @@ export function useKeplr() {
         const accounts = await offlineSigner.getAccounts();
         (async () => {
           try {
-            const cosmJS = new SigningCosmosClient(
-              'https://lcd-cosmoshub.keplr.app/rest',
-              accounts[0].address,
-              offlineSigner
-            );
+            const cosmJS = new SigningCosmosClient(COSMOS_REST, accounts[0].address, offlineSigner);
             const ca = await cosmJS.getAccount(accounts[0].address);
             // eslint-disable-next-line no-console
             console.log('balance', ca?.balance);
