@@ -1,0 +1,3 @@
+/keplr_rpc/*   http://64.227.98.168:26657/:splat  200
+/keplr_rest/*  http://64.227.98.168:9091/:splat   200
+/tendermint/*  http://157.245.90.45:26657/:splat  200

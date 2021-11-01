@@ -13,7 +13,16 @@ function useOnomyState() {
   const [amount, setAmount] = useState('0');
 
   const [stargate] = useAsyncValue(
-    useCallback(() => StargateClient.connect(`wss://${window.location.hostname}/tendermint`), []),
+    // useCallback(() => StargateClient.connect(`wss://${window.location.hostname}/tendermint`), []),
+    useCallback(
+      () =>
+        StargateClient.connect(
+          `ws${window.location.protocol === 'https:' ? 's' : ''}://${
+            window.location.hostname
+          }/tendermint`
+        ),
+      []
+    ),
     null
   );
 
