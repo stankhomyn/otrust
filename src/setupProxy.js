@@ -3,7 +3,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const {
   KEPLR_RPC = 'http://64.227.98.168:26657',
   KEPLR_REST = 'http://64.227.98.168:9091',
-  COSMOS_REST = 'http://157.245.90.45:1317',
+  TENDERMINT_RPC = 'http://157.245.90.45:26657',
 } = process.env;
 
 module.exports = function (app) {
@@ -24,10 +24,11 @@ module.exports = function (app) {
     })
   );
   app.use(
-    createProxyMiddleware('/cosmos_rest', {
-      target: COSMOS_REST,
+    createProxyMiddleware('/tendermint', {
+      target: TENDERMINT_RPC,
+      ws: true,
       pathRewrite: {
-        '^/cosmos_rest/': '/',
+        '^/tendermint/': '/',
       },
     })
   );

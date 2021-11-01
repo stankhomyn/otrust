@@ -1,10 +1,11 @@
+import { AccountData } from '@cosmjs/launchpad';
 import { StargateClient } from '@cosmjs/stargate';
 import { Keplr } from '@keplr-wallet/types';
 import { useCallback, useEffect, useState } from 'react';
 
 type KeplrUtils = {
   keplr: Keplr;
-  stargate: StargateClient;
+  accounts: readonly AccountData[];
 };
 
 export function useKeplr() {
@@ -19,9 +20,9 @@ export function useKeplr() {
           // The name of the chain to be displayed to the user.
           chainName: 'Onomy',
           // RPC endpoint of the chain.
-          rpc: '/keplr_rpc',
+          rpc: `${window.location.origin}/keplr_rpc`,
           // REST endpoint of the chain.
-          rest: '/keplr_rest',
+          rest: `${window.location.origin}/keplr_rest`,
           stakeCurrency: {
             // Coin denomination to be displayed to the user.
             coinDenom: 'NOM',
@@ -70,12 +71,12 @@ export function useKeplr() {
         if (!window.getOfflineSigner) throw new Error('No Offline Signer');
         const offlineSigner = window.getOfflineSigner(chainId);
         const accounts = await offlineSigner.getAccounts();
-        const stargate = await StargateClient.connect(
-          `https://${window.location.host}/cosmos_rest`
-        );
         (async () => {
           try {
-            const ca = await stargate.getBalance(accounts[0].address, 'onomy');
+            const stargate = await StargateClient.connect(
+              `wss://${window.location.hostname}/tendermint`
+            );
+            const ca = await stargate.getBalance(accounts[0].address, `anom`);
             // eslint-disable-next-line no-console
             console.log('balance', ca);
           } catch (e) {
@@ -83,7 +84,7 @@ export function useKeplr() {
             console.error('Error fetching keplr balance', e);
           }
         })();
-        setState({ keplr: window.keplr, stargate });
+        setState({ keplr: window.keplr, accounts });
       } else {
         // eslint-disable-next-line no-console
         console.error('Install keplr chrome extension');
