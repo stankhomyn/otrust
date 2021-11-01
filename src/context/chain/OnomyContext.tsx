@@ -1,15 +1,42 @@
-import { AccountData } from '@cosmjs/launchpad';
 import { StargateClient } from '@cosmjs/stargate';
-import { Keplr } from '@keplr-wallet/types';
-import { useCallback, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
-type KeplrUtils = {
-  keplr: Keplr;
-  accounts: readonly AccountData[];
-};
+import { useAsyncValue } from 'hooks/useAsyncValue';
+import { useStateRef } from 'hooks/useStateRef';
 
-export function useKeplr() {
-  const [state, setState] = useState<KeplrUtils | null>(null);
+// This is lame, but can't find a way to subscribe to cosmos events
+const POLLING_INTERVAL = 1000;
+const DENOM = 'anom';
+
+function useOnomyState() {
+  const [address, setAddress, addressRef] = useStateRef('');
+  const [amount, setAmount] = useState('0');
+
+  const [stargate] = useAsyncValue(
+    useCallback(() => StargateClient.connect(`wss://${window.location.hostname}/tendermint`), []),
+    null
+  );
+
+  useEffect(() => {
+    if (!stargate) return;
+
+    async function updateBalance() {
+      if (!addressRef.current || !stargate) return;
+      try {
+        const coin = await stargate.getBalance(addressRef.current, DENOM);
+        setAmount(coin.amount);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.warn('Error fetching Onomy balance', e);
+      }
+    }
+
+    updateBalance();
+    const interval = setInterval(updateBalance, POLLING_INTERVAL);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stargate]);
+
   const connectKeplr = useCallback(async () => {
     const chainId = 'ochain-testnet';
     try {
@@ -71,20 +98,8 @@ export function useKeplr() {
         if (!window.getOfflineSigner) throw new Error('No Offline Signer');
         const offlineSigner = window.getOfflineSigner(chainId);
         const accounts = await offlineSigner.getAccounts();
-        (async () => {
-          try {
-            const stargate = await StargateClient.connect(
-              `wss://${window.location.hostname}/tendermint`
-            );
-            const ca = await stargate.getBalance(accounts[0].address, `anom`);
-            // eslint-disable-next-line no-console
-            console.log('balance', ca);
-          } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error('Error fetching keplr balance', e);
-          }
-        })();
-        setState({ keplr: window.keplr, accounts });
+        console.log('kepler accounts', accounts);
+        setAddress(() => accounts[0].address);
       } else {
         // eslint-disable-next-line no-console
         console.error('Install keplr chrome extension');
@@ -93,12 +108,40 @@ export function useKeplr() {
       // eslint-disable-next-line no-console
       console.error('keplr error', e);
     }
-  }, []);
-
-  useEffect(() => {
-    connectKeplr();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return state;
+  useEffect(() => {
+    // Wait for kepler load
+    const interval = setInterval(() => {
+      if (window.keplr) {
+        connectKeplr();
+        clearInterval(interval);
+      }
+    }, 100);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return { address, amount, setAddress };
+}
+
+export type OnomyState = ReturnType<typeof useOnomyState>;
+
+const DEFAULT_STATE: OnomyState = {
+  address: '',
+  amount: '0',
+  setAddress: () => {},
+};
+
+const OnomyContext = createContext(DEFAULT_STATE);
+
+export function useOnomy() {
+  return useContext(OnomyContext);
+}
+
+export function OnomyProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
+  const state = useOnomyState();
+
+  return <OnomyContext.Provider value={state}>{children}</OnomyContext.Provider>;
 }

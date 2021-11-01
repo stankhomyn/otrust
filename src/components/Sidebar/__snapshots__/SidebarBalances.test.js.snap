@@ -431,7 +431,7 @@ exports[`Given the SidebarBalances component when the component is rendered shou
           <h5
             class="c5"
           >
-            wNOM Balance
+            NOM Balance
           </h5>
           <p
             class="c6"

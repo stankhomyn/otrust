@@ -6,6 +6,8 @@ import BridgeSwapMain from 'components/Modals/components/BridgeSwapMain';
 import { PrimaryButton } from 'components/Modals/styles';
 import { withTrimmedWrapper } from 'components/UI';
 import { responsive } from 'theme/constants';
+import { useOnomy } from 'context/chain/OnomyContext';
+import { NomBalanceDisplay } from 'components/Modals/components/NomBalanceDisplay';
 
 const Balances = styled.div`
   display: flex;
@@ -268,6 +270,8 @@ function Hint({ children }) {
 export default function SidebarBalances({ strong, weak, strongBalance, weakBalance, allowance }) {
   // const { handleModal } = useModal();
   const [showBridge, setShowBridge] = useState(false);
+  const { amount: nomBalance, address: nomAddress } = useOnomy();
+
   return (
     <>
       <Balances>
@@ -295,13 +299,30 @@ export default function SidebarBalances({ strong, weak, strongBalance, weakBalan
             </BalanceNumber>
           </BalancePrice>
           <Hint>
-            <TooltipCaption>wNOM Balance</TooltipCaption>
+            <TooltipCaption>NOM Balance</TooltipCaption>
             <TooltipDesc>
               This shows your total wNOM balance and the amount approved for selling. You must
               approve wNOM for selling before it can be sold.
             </TooltipDesc>
           </Hint>
         </Balance>
+
+        {nomAddress && (
+          <Balance>
+            <BalancePrice>
+              <strong>NOM Balance</strong>
+              <BalanceNumber strong>
+                <NomBalanceDisplay value={nomBalance} />
+                <small> = $16,208.04</small>
+              </BalanceNumber>
+            </BalancePrice>
+            <Hint>
+              <TooltipCaption>NOM Balance</TooltipCaption>
+              <TooltipDesc>This shows your total NOM balance on the Onomy chain</TooltipDesc>
+            </Hint>
+          </Balance>
+        )}
+
         <WithdrawBtnWrapper>
           <PrimaryButton style={{ width: '100%' }} onClick={() => setShowBridge(true)}>
             Withdraw wNOM

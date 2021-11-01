@@ -989,7 +989,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                 <h5
                   class="c12"
                 >
-                  wNOM Balance
+                  NOM Balance
                 </h5>
                 <p
                   class="c13"
@@ -2120,7 +2120,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                 <h5
                   class="c12"
                 >
-                  wNOM Balance
+                  NOM Balance
                 </h5>
                 <p
                   class="c13"

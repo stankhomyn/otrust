@@ -6,6 +6,7 @@ import { BigNumber } from 'bignumber.js';
 import { BondingCont, NOMCont } from 'context/chain/contracts';
 import { reducer } from 'context/chain/ChainReducer';
 import { BONDING_NOM_CONTRACT_ADDRESS } from 'constants/env';
+import { OnomyProvider } from './OnomyContext';
 
 export const ChainContext = createContext();
 export const useChain = () => useContext(ChainContext);
@@ -119,7 +120,9 @@ function ChainProvider({ theme, children }) {
   return (
     <ApolloProvider client={client}>
       <UpdateChainContext.Provider value={dispatch}>
-        <ChainContext.Provider value={contextValue}>{children}</ChainContext.Provider>
+        <ChainContext.Provider value={contextValue}>
+          <OnomyProvider>{children}</OnomyProvider>
+        </ChainContext.Provider>
       </UpdateChainContext.Provider>
     </ApolloProvider>
   );
