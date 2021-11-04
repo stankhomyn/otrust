@@ -5,7 +5,8 @@ export const {
   BONDING_NOM_CONTRACT_ADDRESS = '0x52A4A4FBB36A2f6A83dBf7De9425C1ec5FF528Da',
   WNOM_CONTRACT_ADDRESS = '0xe7c0fd1f0A3f600C1799CD8d335D31efBE90592C',
   GRAVITY_CONTRACT_ADDRESS = '0x0F23c3f0C77582a5dB7fB3D61097B619982fb32f',
-  KEPLR_RPC = 'http://64.227.98.168:26657',
-  KEPLR_REST = 'http://64.227.98.168:9091',
   COSMOS_REST = 'http://157.245.90.45:1317',
+  KEPLR_RPC = 'https://rpc-devnet.onomy.online',
+  KEPLR_REST = 'https://rest-devnet.onomy.online',
+  COSMOS_WS = 'wss://rpc-devnet.onomy.online',
 } = process.env;

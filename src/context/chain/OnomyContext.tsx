@@ -3,6 +3,7 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 
 import { useAsyncValue } from 'hooks/useAsyncValue';
 import { useStateRef } from 'hooks/useStateRef';
+import { COSMOS_WS, KEPLR_REST, KEPLR_RPC } from 'constants/env';
 
 // This is lame, but can't find a way to subscribe to cosmos events
 const POLLING_INTERVAL = 1000;
@@ -14,15 +15,7 @@ function useOnomyState() {
 
   const [stargate] = useAsyncValue(
     // useCallback(() => StargateClient.connect(`wss://${window.location.hostname}/tendermint`), []),
-    useCallback(
-      () =>
-        StargateClient.connect(
-          `ws${window.location.protocol === 'https:' ? 's' : ''}://${
-            window.location.hostname
-          }/tendermint`
-        ),
-      []
-    ),
+    useCallback(() => StargateClient.connect(COSMOS_WS), []),
     null
   );
 
@@ -56,9 +49,9 @@ function useOnomyState() {
           // The name of the chain to be displayed to the user.
           chainName: 'Onomy',
           // RPC endpoint of the chain.
-          rpc: `${window.location.origin}/keplr_rpc`,
+          rpc: KEPLR_RPC,
           // REST endpoint of the chain.
-          rest: `${window.location.origin}/keplr_rest`,
+          rest: KEPLR_REST,
           stakeCurrency: {
             // Coin denomination to be displayed to the user.
             coinDenom: 'NOM',
