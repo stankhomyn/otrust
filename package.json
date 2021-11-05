@@ -28,6 +28,7 @@
     "@apollo/client": "^3.4.11",
     "@cosmjs/launchpad": "^0.26.0",
     "@cosmjs/stargate": "^0.26.4",
+    "@cosmjs/tendermint-rpc": "^0.26.4",
     "@ethersproject/address": "^5.4.0",
     "@ethersproject/bignumber": "^5.4.1",
     "@ethersproject/contracts": "^5.4.1",

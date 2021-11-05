@@ -1,17 +1,71 @@
 import { StargateClient } from '@cosmjs/stargate';
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { BigNumber } from 'bignumber.js';
 
 import { useAsyncValue } from 'hooks/useAsyncValue';
 import { useStateRef } from 'hooks/useStateRef';
 import { COSMOS_WS, KEPLR_REST, KEPLR_RPC } from 'constants/env';
+// eslint-disable-next-line import/no-cycle
+import { ChainContext } from './ChainContext';
 
 // This is lame, but can't find a way to subscribe to cosmos events
 const POLLING_INTERVAL = 1000;
 const DENOM = 'anom';
+const BLOCKS_TO_WAIT_FOR_BRIDGE = new BigNumber(14);
+
+type BridgeTransactionInProgress = {
+  startBalance: BigNumber;
+  startEthBlock: BigNumber;
+  expectedIncrease: BigNumber;
+};
 
 function useOnomyState() {
+  const { blockNumber } = useContext<{ blockNumber: BigNumber }>(ChainContext);
+  const blockNumRef = useRef(blockNumber);
+  blockNumRef.current = blockNumber;
   const [address, setAddress, addressRef] = useStateRef('');
-  const [amount, setAmount] = useState('0');
+  const [amount, setAmount, amountRef] = useStateRef('0');
+  const [bridgeTransactions, setBridgeTransactions] = useState<BridgeTransactionInProgress[]>([]);
+
+  const addPendingBridgeTransaction = useCallback((expectedIncrease: BigNumber) => {
+    const transaction = {
+      startBalance: new BigNumber(amountRef.current),
+      startEthBlock: blockNumRef.current,
+      expectedIncrease,
+    };
+    setBridgeTransactions(t => [...t, transaction]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    // Clear any pending transactions that appear to have been processed
+    const curBalance = new BigNumber(amount);
+    const clearedTransactions = bridgeTransactions.filter(({ startBalance, expectedIncrease }) => {
+      const expectedBalance = startBalance.plus(expectedIncrease);
+      return curBalance.isGreaterThanOrEqualTo(expectedBalance);
+    });
+    setBridgeTransactions(pending => pending.filter(t => clearedTransactions.indexOf(t) === -1));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [amount]);
+
+  const bridgeProgress = useMemo(() => {
+    if (bridgeTransactions.length === 0) return null;
+    const [{ startEthBlock }] = bridgeTransactions;
+    const { startEthBlock: lastStartBlock } = bridgeTransactions.slice().pop()!;
+    const expectedEndBlock = lastStartBlock.plus(BLOCKS_TO_WAIT_FOR_BRIDGE);
+    const progressBlocks = blockNumber.minus(startEthBlock);
+    const totalBlocks = expectedEndBlock.minus(startEthBlock);
+    const progress = progressBlocks.dividedBy(totalBlocks).multipliedBy(100).toNumber();
+    return Math.min(progress, 100);
+  }, [blockNumber, bridgeTransactions]);
 
   const [stargate] = useAsyncValue(
     // useCallback(() => StargateClient.connect(`wss://${window.location.hostname}/tendermint`), []),
@@ -100,8 +154,26 @@ function useOnomyState() {
         if (!window.getOfflineSigner) throw new Error('No Offline Signer');
         const offlineSigner = window.getOfflineSigner(chainId);
         const accounts = await offlineSigner.getAccounts();
-        console.log('kepler accounts', accounts);
         setAddress(() => accounts[0].address);
+
+        /*
+        const tmclient = await Tendermint34Client.connect(COSMOS_WS);
+        const txQuery = buildQuery({
+          tags: [
+            {
+              key: 'action',
+              value: 'send_to_cosmos_claim',
+            },
+          ],
+        });
+        const stream = tmclient.subscribeTx(txQuery);
+        const stream = tmclient.subscribeNewBlock();
+        stream.addListener({
+          next: evt => console.log('tendermint-rpc', evt),
+          error: err => console.error('tendermint error', err),
+          complete: () => console.log('tendermint-rpc complete'),
+        });
+        */
       } else {
         // eslint-disable-next-line no-console
         console.error('Install keplr chrome extension');
@@ -125,7 +197,7 @@ function useOnomyState() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { address, amount, setAddress };
+  return { address, amount, bridgeProgress, setAddress, addPendingBridgeTransaction };
 }
 
 export type OnomyState = ReturnType<typeof useOnomyState>;
@@ -133,7 +205,9 @@ export type OnomyState = ReturnType<typeof useOnomyState>;
 const DEFAULT_STATE: OnomyState = {
   address: '',
   amount: '0',
+  bridgeProgress: null,
   setAddress: () => {},
+  addPendingBridgeTransaction: () => {},
 };
 
 const OnomyContext = createContext(DEFAULT_STATE);

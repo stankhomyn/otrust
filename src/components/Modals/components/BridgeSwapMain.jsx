@@ -33,7 +33,11 @@ export const initialGasOptions = [
 ];
 
 export default function BridgeSwapMain({ closeBridgeModal }) {
-  const { address: onomyWalletValue, setAddress: setOnomyWalletValue } = useOnomy();
+  const {
+    address: onomyWalletValue,
+    setAddress: setOnomyWalletValue,
+    addPendingBridgeTransaction,
+  } = useOnomy();
   const [amountValue, setAmountValue] = useState('');
   const [errors, setErrors] = useState(initialErrorsState);
   const [formattedWeakBalance, setFormattedWeakBalance] = useState(0);
@@ -161,6 +165,8 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
             }
           );
 
+          addPendingBridgeTransaction(new BigNumber(amountValue));
+
           tx.wait().then(() => {
             setIsDisabled(false);
             setShowBridgeExchangeModal(false);
@@ -191,7 +197,14 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
         setShowApproveModal(true);
       }
     },
-    [onomyWalletValue, amountValue, GravityContract, allowanceAmountGravity, gasPrice]
+    [
+      amountValue,
+      allowanceAmountGravity,
+      onomyWalletValue,
+      GravityContract,
+      gasPrice,
+      addPendingBridgeTransaction,
+    ]
   );
 
   const Props = {

@@ -7,7 +7,7 @@ import { PrimaryButton } from 'components/Modals/styles';
 import { withTrimmedWrapper } from 'components/UI';
 import { responsive } from 'theme/constants';
 import { useOnomy } from 'context/chain/OnomyContext';
-import { NomBalanceDisplay } from 'components/Modals/components/NomBalanceDisplay';
+import { NomBalanceDisplay } from 'components/NomBalanceDisplay';
 
 const Balances = styled.div`
   display: flex;
@@ -270,7 +270,7 @@ function Hint({ children }) {
 export default function SidebarBalances({ strong, weak, strongBalance, weakBalance, allowance }) {
   // const { handleModal } = useModal();
   const [showBridge, setShowBridge] = useState(false);
-  const { amount: nomBalance, address: nomAddress } = useOnomy();
+  const { amount: nomBalance, address: nomAddress, bridgeProgress } = useOnomy();
 
   return (
     <>
@@ -313,7 +313,11 @@ export default function SidebarBalances({ strong, weak, strongBalance, weakBalan
               <strong>NOM Balance</strong>
               <BalanceNumber strong>
                 <NomBalanceDisplay value={nomBalance} />
-                <small> = $16,208.04</small>
+                {bridgeProgress === null ? (
+                  <small> = $16,208.04</small>
+                ) : (
+                  <small>{bridgeProgress.toFixed(2)}%</small>
+                )}
               </BalanceNumber>
             </BalancePrice>
             <Hint>

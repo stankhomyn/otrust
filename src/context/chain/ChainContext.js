@@ -6,6 +6,7 @@ import { BigNumber } from 'bignumber.js';
 import { BondingCont, NOMCont } from 'context/chain/contracts';
 import { reducer } from 'context/chain/ChainReducer';
 import { BONDING_NOM_CONTRACT_ADDRESS } from 'constants/env';
+// eslint-disable-next-line import/no-cycle
 import { OnomyProvider } from './OnomyContext';
 
 export const ChainContext = createContext();
