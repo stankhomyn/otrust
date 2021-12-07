@@ -10,10 +10,10 @@ import { useChain } from 'context/chain/ChainContext';
 import { GravityCont, NOMCont } from 'context/chain/contracts';
 import BridgeSwapMobile from './BridgeSwapMobile';
 import BridgeSwapModal from './BridgeSwapModal';
-import { contAddrs } from '../../../context/chain/contracts';
 import { NOTIFICATION_MESSAGES } from '../../../constants/NotificationMessages';
 import { responsive } from 'theme/constants';
 import { useGasPriceSelection } from 'hooks/useGasPriceSelection';
+import { GRAVITY_CONTRACT_ADDRESS, WNOM_CONTRACT_ADDRESS } from 'constants/env';
 
 export const initialErrorsState = { amountError: '', onomyWalletError: '', transactionError: '' };
 
@@ -67,7 +67,7 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
   }, [weakBalance]);
 
   const updateAllowanceAmount = useCallback(async () => {
-    const allowanceGravity = await NOMContract.allowance(account, contAddrs.Gravity);
+    const allowanceGravity = await NOMContract.allowance(account, GRAVITY_CONTRACT_ADDRESS);
     setAllowanceAmountGravity(allowanceGravity);
     return allowanceGravity;
   }, [NOMContract, account]);
@@ -161,7 +161,7 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
           setShowLoader(true);
           setIsTransactionPending(true);
           tx = await GravityContract.sendToCosmos(
-            contAddrs.NOMERC20,
+            WNOM_CONTRACT_ADDRESS,
             cosmosAddressBytes32,
             string18FromAmount,
             {
