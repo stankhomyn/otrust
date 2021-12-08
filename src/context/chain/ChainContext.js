@@ -3,8 +3,9 @@ import { useWeb3React } from '@web3-react/core';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { BigNumber } from 'bignumber.js';
 
-import { BondingCont, NOMCont, contAddrs } from 'context/chain/contracts';
+import { BondingCont, NOMCont } from 'context/chain/contracts';
 import { reducer } from 'context/chain/ChainReducer';
+import { BONDING_NOM_CONTRACT_ADDRESS } from 'constants/env';
 
 export const ChainContext = createContext();
 export const useChain = () => useContext(ChainContext);
@@ -44,7 +45,7 @@ function ChainProvider({ theme, children }) {
             // Current ETH Price & Current NOM Price
             bondContract.buyQuoteETH((10 ** 18).toString()),
             // NOM Allowance
-            NOMContract.allowance(account, contAddrs.BondingNOM),
+            NOMContract.allowance(account, BONDING_NOM_CONTRACT_ADDRESS),
             // Strong Balance
             library.getBalance(account),
             // Supply NOM

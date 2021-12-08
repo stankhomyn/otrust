@@ -10,10 +10,10 @@ import { ethers } from 'ethers';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
 import { NOMCont } from 'context/chain/contracts';
 import * as Modal from '../styles';
-import { contAddrs } from '../../../context/chain/contracts';
 import { responsive } from 'theme/constants';
 import { MaxBtn } from 'components/Exchange/exchangeStyles';
 import { NOTIFICATION_MESSAGES } from '../../../constants/NotificationMessages';
+import { GRAVITY_CONTRACT_ADDRESS } from 'constants/env';
 
 const Message = styled.div`
   margin: 32px 0 0;
@@ -202,7 +202,7 @@ export default function ApproveTokensBridgeModal({
         setDelay(null);
         setShowLoader(true);
         tx = await NOMContract.increaseAllowance(
-          contAddrs.Gravity,
+          GRAVITY_CONTRACT_ADDRESS,
           BigNumber(approveAmountInputValue).shiftedBy(18).toString(10),
           {
             gasPrice: gasPrice.toFixed(0),
