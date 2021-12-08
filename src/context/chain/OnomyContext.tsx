@@ -12,7 +12,7 @@ import { BigNumber } from 'bignumber.js';
 
 import { useAsyncValue } from 'hooks/useAsyncValue';
 import { useStateRef } from 'hooks/useStateRef';
-import { COSMOS_WS, KEPLR_REST, KEPLR_RPC } from 'constants/env';
+import { ONOMY_REST_URL, ONOMY_RPC_URL, ONOMY_WS_URL } from 'constants/env';
 // eslint-disable-next-line import/no-cycle
 import { ChainContext } from './ChainContext';
 
@@ -69,7 +69,7 @@ function useOnomyState() {
 
   const [stargate] = useAsyncValue(
     // useCallback(() => StargateClient.connect(`wss://${window.location.hostname}/tendermint`), []),
-    useCallback(() => StargateClient.connect(COSMOS_WS), []),
+    useCallback(() => StargateClient.connect(ONOMY_WS_URL), []),
     null
   );
 
@@ -103,9 +103,9 @@ function useOnomyState() {
           // The name of the chain to be displayed to the user.
           chainName: 'Onomy',
           // RPC endpoint of the chain.
-          rpc: KEPLR_RPC,
+          rpc: ONOMY_RPC_URL,
           // REST endpoint of the chain.
-          rest: KEPLR_REST,
+          rest: ONOMY_REST_URL,
           stakeCurrency: {
             // Coin denomination to be displayed to the user.
             coinDenom: 'NOM',
