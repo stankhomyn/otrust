@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import * as t from 'io-ts';
 import { useCallback } from 'react';
 
-import { ETHERSCAN_API_KEY } from 'constants/env';
+import { REACT_APP_ETHERSCAN_API_KEY } from 'constants/env';
 import { decodeIoTs } from 'utils/decodeIoTs';
 import { useAsyncValue } from './useAsyncValue';
 
@@ -18,7 +18,7 @@ const GasOracleResponse = t.type({
 
 export function useGasPrices() {
   const query = useCallback(async () => {
-    const url = `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${ETHERSCAN_API_KEY}`;
+    const url = `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${REACT_APP_ETHERSCAN_API_KEY}`;
     const response = await fetch(url);
     const json = await response.json();
     const decoded = await decodeIoTs(GasOracleResponse, json);

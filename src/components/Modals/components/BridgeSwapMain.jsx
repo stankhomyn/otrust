@@ -12,7 +12,7 @@ import BridgeSwapModal from './BridgeSwapModal';
 import { NOTIFICATION_MESSAGES } from '../../../constants/NotificationMessages';
 import { responsive } from 'theme/constants';
 import { useGasPriceSelection } from 'hooks/useGasPriceSelection';
-import { GRAVITY_CONTRACT_ADDRESS, WNOM_CONTRACT_ADDRESS } from 'constants/env';
+import { REACT_APP_GRAVITY_CONTRACT_ADDRESS, REACT_APP_WNOM_CONTRACT_ADDRESS } from 'constants/env';
 import { useOnomy } from 'context/chain/OnomyContext';
 
 export const initialErrorsState = { amountError: '', onomyWalletError: '', transactionError: '' };
@@ -63,7 +63,10 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
   }, [weakBalance]);
 
   const updateAllowanceAmount = useCallback(async () => {
-    const allowanceGravity = await NOMContract.allowance(account, GRAVITY_CONTRACT_ADDRESS);
+    const allowanceGravity = await NOMContract.allowance(
+      account,
+      REACT_APP_GRAVITY_CONTRACT_ADDRESS
+    );
     setAllowanceAmountGravity(allowanceGravity);
     return allowanceGravity;
   }, [NOMContract, account]);
@@ -157,7 +160,7 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
           setShowLoader(true);
           setIsTransactionPending(true);
           tx = await GravityContract.sendToCosmos(
-            WNOM_CONTRACT_ADDRESS,
+            REACT_APP_WNOM_CONTRACT_ADDRESS,
             cosmosAddressBytes32,
             string18FromAmount,
             {

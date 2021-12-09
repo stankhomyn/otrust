@@ -5,7 +5,7 @@ import { BigNumber } from 'bignumber.js';
 
 import { BondingCont, NOMCont } from 'context/chain/contracts';
 import { reducer } from 'context/chain/ChainReducer';
-import { BONDING_NOM_CONTRACT_ADDRESS } from 'constants/env';
+import { REACT_APP_BONDING_NOM_CONTRACT_ADDRESS, REACT_APP_GRAPHQL_ENDPOINT } from 'constants/env';
 // eslint-disable-next-line import/no-cycle
 import { OnomyProvider } from './OnomyContext';
 
@@ -29,12 +29,8 @@ function ChainProvider({ theme, children }) {
     weakBalance: new BigNumber(0),
   });
 
-  if (!process.env.REACT_APP_GRAPHQL_ENDPOINT) {
-    throw new Error('REACT_APP_GRAPHQL_ENDPOINT environment variable not defined');
-  }
-
   const client = new ApolloClient({
-    uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
+    uri: REACT_APP_GRAPHQL_ENDPOINT,
     cache: new InMemoryCache(),
   });
 
@@ -47,7 +43,7 @@ function ChainProvider({ theme, children }) {
             // Current ETH Price & Current NOM Price
             bondContract.buyQuoteETH((10 ** 18).toString()),
             // NOM Allowance
-            NOMContract.allowance(account, BONDING_NOM_CONTRACT_ADDRESS),
+            NOMContract.allowance(account, REACT_APP_BONDING_NOM_CONTRACT_ADDRESS),
             // Strong Balance
             library.getBalance(account),
             // Supply NOM
