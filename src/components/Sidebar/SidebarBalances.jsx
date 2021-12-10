@@ -329,7 +329,7 @@ export default function SidebarBalances({ strong, weak, strongBalance, weakBalan
 
         <WithdrawBtnWrapper>
           <PrimaryButton style={{ width: '100%' }} onClick={() => setShowBridge(true)}>
-            Withdraw wNOM
+            Bridge wNOM to NOM
           </PrimaryButton>
         </WithdrawBtnWrapper>
       </Balances>

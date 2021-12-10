@@ -97,6 +97,13 @@ const ModalBtn = styled.button`
   cursor: pointer;
 `;
 
+const KeplrLink = styled.a`
+  margin: 5px auto 0;
+
+  font-size: 12px;
+  color: ${props => props.theme.colors.textThirdly};
+`;
+
 function BridgeSwapModalInfo({ closeModal }) {
   const collapsedInfoBreakpoint = useMediaQuery({ maxWidth: responsive.laptopSmall });
 
@@ -213,6 +220,7 @@ export default function BridgeSwapModal({ ...props }) {
                       />
                     </Modal.CosmosInputSection>
                   </Modal.ConnectionItem>
+                  <KeplrLink href="keplr">Get Keplr Cosmos Wallet</KeplrLink>
                 </Modal.BridgeContent>
                 <FormWrapper>
                   {flags.showLoader && (
@@ -222,7 +230,7 @@ export default function BridgeSwapModal({ ...props }) {
                   )}
                   <InputWrapper>
                     <BridgeSending error={values.errors.amountError}>
-                      <strong>Swap to NOM</strong>
+                      <strong>Bridge to NOM</strong>
                       <BridgeAmountInput
                         type="text"
                         value={values.amountValue}
@@ -261,7 +269,7 @@ export default function BridgeSwapModal({ ...props }) {
                     onClick={handlers.submitTransClickHandler}
                     disabled={flags.isDisabled || !active}
                   >
-                    Swap wNOM for NOM
+                    Bridge wNOM to NOM
                   </Modal.FullWidthButton>
                   {collapsedInfoBreakpoint && (
                     <Modal.SecondaryButton

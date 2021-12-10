@@ -182,14 +182,14 @@ export default function MainHeader() {
             <HeaderInfo>
               <ExchangeRate>
                 <HeaderInfoItem>
-                  <strong>NOM / USDT</strong>
+                  <strong>wNOM / USDT</strong>
                   <HeaderInfoItemValue>
                     <strong>$10.12</strong>
                     <Details type="increase">24.2%</Details>
                   </HeaderInfoItemValue>
                 </HeaderInfoItem>
                 <HeaderInfoItem>
-                  <strong>NOM / ETH</strong>
+                  <strong>wNOM / ETH</strong>
                   <HeaderInfoItemValue>
                     <strong>
                       <span>
@@ -205,7 +205,7 @@ export default function MainHeader() {
               </ExchangeRate>
               <Issued>
                 <HeaderInfoItem>
-                  <strong>NOM Issued</strong>
+                  <strong>wNOM Issued</strong>
                   <HeaderInfoItemValue>
                     <strong>
                       <span>
