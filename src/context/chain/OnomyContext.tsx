@@ -13,6 +13,8 @@ import { BigNumber } from 'bignumber.js';
 import { useAsyncValue } from 'hooks/useAsyncValue';
 import { useStateRef } from 'hooks/useStateRef';
 import {
+  REACT_APP_CHAIN_ID,
+  REACT_APP_CHAIN_NAME,
   REACT_APP_ONOMY_REST_URL,
   REACT_APP_ONOMY_RPC_URL,
   REACT_APP_ONOMY_WS_URL,
@@ -23,6 +25,7 @@ import { ChainContext } from './ChainContext';
 // This is lame, but can't find a way to subscribe to cosmos events
 const POLLING_INTERVAL = 1000;
 const DENOM = 'anom';
+const DENOM_DECIMALS = 18;
 const BLOCKS_TO_WAIT_FOR_BRIDGE = new BigNumber(14);
 
 type BridgeTransactionInProgress = {
@@ -98,14 +101,13 @@ function useOnomyState() {
   }, [stargate]);
 
   const connectKeplr = useCallback(async () => {
-    const chainId = 'ochain-testnet';
     try {
       if (window.keplr) {
         await window.keplr.experimentalSuggestChain({
           // Chain-id of the Cosmos SDK chain.
-          chainId: chainId,
+          chainId: REACT_APP_CHAIN_ID,
           // The name of the chain to be displayed to the user.
-          chainName: 'Onomy',
+          chainName: REACT_APP_CHAIN_NAME,
           // RPC endpoint of the chain.
           rpc: REACT_APP_ONOMY_RPC_URL,
           // REST endpoint of the chain.
@@ -114,9 +116,9 @@ function useOnomyState() {
             // Coin denomination to be displayed to the user.
             coinDenom: 'NOM',
             // Actual denom (i.e. uatom, uscrt) used by the blockchain.
-            coinMinimalDenom: 'unom',
+            coinMinimalDenom: DENOM,
             // # of decimal points to convert minimal denomination to user-facing denomination.
-            coinDecimals: 6,
+            coinDecimals: DENOM_DECIMALS,
             // (Optional) Keplr can show the fiat value of the coin if a coingecko id is provided.
             // You can get id from https://api.coingecko.com/api/v3/coins/list if it is listed.
             // coinGeckoId: ""
@@ -135,15 +137,15 @@ function useOnomyState() {
           currencies: [
             {
               coinDenom: 'NOM',
-              coinMinimalDenom: 'unom',
-              coinDecimals: 6,
+              coinMinimalDenom: DENOM,
+              coinDecimals: DENOM_DECIMALS,
             },
           ],
           feeCurrencies: [
             {
               coinDenom: 'NOM',
-              coinMinimalDenom: 'unom',
-              coinDecimals: 6,
+              coinMinimalDenom: DENOM,
+              coinDecimals: DENOM_DECIMALS,
             },
           ],
           coinType: 118,
@@ -154,9 +156,9 @@ function useOnomyState() {
           },
         });
         // Staking coin information
-        await window.keplr.enable(chainId);
+        await window.keplr.enable(REACT_APP_CHAIN_ID);
         if (!window.getOfflineSigner) throw new Error('No Offline Signer');
-        const offlineSigner = window.getOfflineSigner(chainId);
+        const offlineSigner = window.getOfflineSigner(REACT_APP_CHAIN_ID);
         const accounts = await offlineSigner.getAccounts();
         setAddress(() => accounts[0].address);
 
