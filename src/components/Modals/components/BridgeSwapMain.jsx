@@ -5,7 +5,6 @@ import cosmos from 'cosmos-lib';
 import { ethers } from 'ethers';
 import { useMediaQuery } from 'react-responsive';
 
-import { useKeplr } from 'hooks/useKeplr';
 import { useChain } from 'context/chain/ChainContext';
 import { GravityCont, NOMCont } from 'context/chain/contracts';
 import BridgeSwapMobile from './BridgeSwapMobile';
@@ -13,7 +12,8 @@ import BridgeSwapModal from './BridgeSwapModal';
 import { NOTIFICATION_MESSAGES } from '../../../constants/NotificationMessages';
 import { responsive } from 'theme/constants';
 import { useGasPriceSelection } from 'hooks/useGasPriceSelection';
-import { GRAVITY_CONTRACT_ADDRESS, WNOM_CONTRACT_ADDRESS } from 'constants/env';
+import { REACT_APP_GRAVITY_CONTRACT_ADDRESS, REACT_APP_WNOM_CONTRACT_ADDRESS } from 'constants/env';
+import { useOnomy } from 'context/chain/OnomyContext';
 
 export const initialErrorsState = { amountError: '', onomyWalletError: '', transactionError: '' };
 
@@ -33,8 +33,11 @@ export const initialGasOptions = [
 ];
 
 export default function BridgeSwapMain({ closeBridgeModal }) {
-  const keplrWallet = useKeplr();
-  const [onomyWalletValue, setOnomyWalletValue] = useState('');
+  const {
+    address: onomyWalletValue,
+    setAddress: setOnomyWalletValue,
+    addPendingBridgeTransaction,
+  } = useOnomy();
   const [amountValue, setAmountValue] = useState('');
   const [errors, setErrors] = useState(initialErrorsState);
   const [formattedWeakBalance, setFormattedWeakBalance] = useState(0);
@@ -56,18 +59,14 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
   const NOMContract = useMemo(() => NOMCont(library), [library]);
 
   useEffect(() => {
-    if (!keplrWallet) return;
-    console.log('keplrWallet', keplrWallet);
-    const [acct] = keplrWallet.accounts;
-    setOnomyWalletValue(acct.address);
-  }, [keplrWallet]);
-
-  useEffect(() => {
     setFormattedWeakBalance(weakBalance.shiftedBy(-18));
   }, [weakBalance]);
 
   const updateAllowanceAmount = useCallback(async () => {
-    const allowanceGravity = await NOMContract.allowance(account, GRAVITY_CONTRACT_ADDRESS);
+    const allowanceGravity = await NOMContract.allowance(
+      account,
+      REACT_APP_GRAVITY_CONTRACT_ADDRESS
+    );
     setAllowanceAmountGravity(allowanceGravity);
     return allowanceGravity;
   }, [NOMContract, account]);
@@ -161,13 +160,15 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
           setShowLoader(true);
           setIsTransactionPending(true);
           tx = await GravityContract.sendToCosmos(
-            WNOM_CONTRACT_ADDRESS,
+            REACT_APP_WNOM_CONTRACT_ADDRESS,
             cosmosAddressBytes32,
             string18FromAmount,
             {
               gasPrice: gasPrice.toFixed(0),
             }
           );
+
+          addPendingBridgeTransaction(new BigNumber(amountValue));
 
           tx.wait().then(() => {
             setIsDisabled(false);
@@ -199,7 +200,14 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
         setShowApproveModal(true);
       }
     },
-    [onomyWalletValue, amountValue, GravityContract, allowanceAmountGravity, gasPrice]
+    [
+      amountValue,
+      allowanceAmountGravity,
+      onomyWalletValue,
+      GravityContract,
+      gasPrice,
+      addPendingBridgeTransaction,
+    ]
   );
 
   const Props = {

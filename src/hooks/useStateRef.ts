@@ -4,9 +4,13 @@ export function useStateRef<T>(init: T) {
   const [state, setState] = useState<T>(init);
   const stateRef = useRef(init);
 
-  function setStateWrapper(fn: (v: T) => T) {
+  function setStateWrapper(fnOrValue: T | ((v: T) => T)) {
     function wrap(existing: T) {
-      stateRef.current = fn(existing);
+      if (fnOrValue instanceof Function) {
+        stateRef.current = fnOrValue(existing);
+      } else {
+        stateRef.current = fnOrValue;
+      }
       return stateRef.current;
     }
     setState(wrap);

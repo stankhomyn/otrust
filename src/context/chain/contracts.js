@@ -1,9 +1,9 @@
 import { Contract } from '@ethersproject/contracts';
 
 import {
-  BONDING_NOM_CONTRACT_ADDRESS,
-  GRAVITY_CONTRACT_ADDRESS,
-  WNOM_CONTRACT_ADDRESS,
+  REACT_APP_BONDING_NOM_CONTRACT_ADDRESS,
+  REACT_APP_GRAVITY_CONTRACT_ADDRESS,
+  REACT_APP_WNOM_CONTRACT_ADDRESS,
 } from 'constants/env';
 
 const NomContractJSON = require('./ERC20NOM.json');
@@ -17,7 +17,7 @@ const uniswapUsdcAddress = '0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc';
  */
 export function NOMCont(library) {
   const ABI = NomContractJSON.abi;
-  return new Contract(WNOM_CONTRACT_ADDRESS, ABI, library?.getSigner());
+  return new Contract(REACT_APP_WNOM_CONTRACT_ADDRESS, ABI, library?.getSigner());
 }
 
 /**
@@ -25,7 +25,7 @@ export function NOMCont(library) {
  */
 export function BondingCont(library) {
   const ABI = BondingContractJSON.abi;
-  return new Contract(BONDING_NOM_CONTRACT_ADDRESS, ABI, library?.getSigner());
+  return new Contract(REACT_APP_BONDING_NOM_CONTRACT_ADDRESS, ABI, library?.getSigner());
 }
 
 /**
@@ -38,5 +38,5 @@ export function UniSwapCont(library) {
 
 export function GravityCont(library) {
   const ABI = GravityContractJSON.abi;
-  return new Contract(GRAVITY_CONTRACT_ADDRESS, ABI, library.getSigner());
+  return new Contract(REACT_APP_GRAVITY_CONTRACT_ADDRESS, ABI, library.getSigner());
 }
