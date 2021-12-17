@@ -181,6 +181,7 @@ export default function MainHeader() {
           <div id="tour-prices">
             <HeaderInfo>
               <ExchangeRate>
+                {/*
                 <HeaderInfoItem>
                   <strong>wNOM / USDT</strong>
                   <HeaderInfoItemValue>
@@ -188,6 +189,7 @@ export default function MainHeader() {
                     <Details type="increase">24.2%</Details>
                   </HeaderInfoItemValue>
                 </HeaderInfoItem>
+                */}
                 <HeaderInfoItem>
                   <strong>wNOM / ETH</strong>
                   <HeaderInfoItemValue>

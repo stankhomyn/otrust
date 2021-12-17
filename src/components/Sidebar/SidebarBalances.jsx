@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 // import ModalComponent from 'components/Modals/components/ModalComponent';
 import BridgeSwapMain from 'components/Modals/components/BridgeSwapMain';
 import { PrimaryButton } from 'components/Modals/styles';
+import { EquivalentValue } from 'components/EquivalentValue';
 import {
   Balances,
   Balance,
@@ -29,7 +30,9 @@ export default function SidebarBalances({ strong, weak, strongBalance, weakBalan
             <strong>{strong} Balance</strong>
             <BalanceNumber>
               {strongBalance}
-              <small> = $16,208.04</small>
+              <small>
+                <EquivalentValue amount={strongBalance} asset="ETH" />
+              </small>
             </BalanceNumber>
           </BalancePrice>
           <Hint>
@@ -42,7 +45,9 @@ export default function SidebarBalances({ strong, weak, strongBalance, weakBalan
             <strong>{weak} Balance</strong>
             <BalanceNumber strong>
               {weakBalance}
-              <small> = $16,208.04</small>
+              <small>
+                <EquivalentValue amount={weak} asset="NOM" />
+              </small>
               <TrimmedApproved value={allowance} />
               {/* <CloseIcon onClick={() => {}} /> */}
             </BalanceNumber>

@@ -807,9 +807,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                 class="c7"
               >
                 Loading
-                <small>
-                   = $16,208.04
-                </small>
+                <small />
               </div>
             </div>
             <div
@@ -849,9 +847,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                 class="c13"
               >
                 Loading
-                <small>
-                   = $16,208.04
-                </small>
+                <small />
                 <div
                   class="c14"
                 >
@@ -1873,9 +1869,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                 class="c7"
               >
                 0.000000
-                <small>
-                   = $16,208.04
-                </small>
+                <small />
               </div>
             </div>
             <div
@@ -1915,9 +1909,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                 class="c13"
               >
                 0.000000
-                <small>
-                   = $16,208.04
-                </small>
+                <small />
                 <div
                   class="c14"
                 >
