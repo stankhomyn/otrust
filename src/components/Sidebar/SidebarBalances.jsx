@@ -15,6 +15,7 @@ import {
   WithdrawBtnWrapper,
 } from './SidebarStyles';
 import { SidebarBridgedBalance } from './SidebarBridgedBalance';
+import { REACT_APP_SHOW_BRIDGED_NOM } from 'constants/env';
 
 export default function SidebarBalances({ strong, weak, strongBalance, weakBalance, allowance }) {
   // const { handleModal } = useModal();
@@ -55,7 +56,7 @@ export default function SidebarBalances({ strong, weak, strongBalance, weakBalan
           </Hint>
         </Balance>
 
-        <SidebarBridgedBalance />
+        {REACT_APP_SHOW_BRIDGED_NOM && <SidebarBridgedBalance />}
 
         <WithdrawBtnWrapper>
           <PrimaryButton style={{ width: '100%' }} onClick={() => setShowBridge(true)}>
