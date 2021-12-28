@@ -23,6 +23,7 @@ import oneWayBridgeImg from '../assets/one-way-bridge.svg';
 import whyBridgeImg from '../assets/why-bridge.svg';
 import bridgeCurveImg from '../assets/icon-bridge-curve.svg';
 import walletImg from '../assets/icon-onomy-wallet.svg';
+import BrdigeLineChart from './BrdigeLineChart';
 
 const InputWrapper = styled.div`
   margin: 0 0 12px;
@@ -115,14 +116,15 @@ function BridgeSwapModalInfo({ closeModal }) {
             <FontAwesomeIcon icon={faChevronLeft} />
           </ModalBtn>
         )}
-        <h2>What is Onomy Bridge?</h2>
       </ModalHeader>
 
-      <Modal.Desc>
-        The Onomy Bonding Curve platform is a gateway into the Onomy Network. This is achieved by
-        participants purchasing wrapped-NOM, an ERC-20 token on the Ethereum Network, and swapping
-        for NOM on the Onomy Network.
-      </Modal.Desc>
+      <BrdigeLineChart
+        peakHeight={100}
+        peakPosition={150000000}
+        standardDeviation={50000000}
+        totalCoins={300000000}
+        coinsInCirculation={120960000}
+      />
 
       <Modal.InfoRow>
         <div>

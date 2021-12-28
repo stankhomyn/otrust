@@ -255,7 +255,7 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
   font-weight: 300;
 }
 
-.c31 {
+.c32 {
   display: grid;
   grid-template-columns: 1fr 180px;
   gap: 30px;
@@ -282,13 +282,13 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
   background-color: #1a1823;
 }
 
-.c34 {
+.c36 {
   padding: 40px 50px;
   border-radius: 8px;
   background-color: #201d2a;
 }
 
-.c32 {
+.c33 {
   margin: 0 0 12px;
   font-size: 16px;
   font-weight: 500;
@@ -432,27 +432,27 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
   opacity: 1;
 }
 
-.c30 {
+.c34 {
   max-width: 600px;
   margin-bottom: 40px;
   color: #9895a6;
 }
 
-.c30 strong {
+.c34 strong {
   font-weight: 500;
   color: #e1dfeb;
 }
 
-.c33 {
+.c35 {
   padding-left: 1em;
   color: #9895a6;
 }
 
-.c33 li::marker {
+.c35 li::marker {
   color: #e1dfeb;
 }
 
-.c33 li + li {
+.c35 li + li {
   margin-top: 12px;
 }
 
@@ -564,6 +564,32 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
 .c20 {
   width: 100%;
   padding: 0 10px;
+}
+
+.c31 {
+  width: 100%;
+  height: 200px;
+  margin: 20px 0 50px;
+  padding: 0 40px;
+  background-color: transparent;
+  overflow: visible;
+  color: #656273;
+}
+
+.c31 .tooltip {
+  width: 100px;
+  height: 100px;
+  fill: #fff;
+}
+
+.c30 {
+  margin: 0 0 2em;
+  font-size: 16px;
+  text-align: center;
+}
+
+.c30 strong {
+  color: #88d1ff;
 }
 
 .c17 {
@@ -722,13 +748,13 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
 }
 
 @media screen and (max-width:1440px) {
-  .c31 {
+  .c32 {
     grid-template-columns: 1fr 150px;
   }
 }
 
 @media screen and (max-width:700px) {
-  .c31 {
+  .c32 {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -742,7 +768,7 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
     align-items: center;
   }
 
-  .c31 > img {
+  .c32 > img {
     width: 230px;
     margin: 32px auto;
   }
@@ -761,13 +787,13 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
 }
 
 @media screen and (max-width:1440px) {
-  .c34 {
+  .c36 {
     padding: 40px;
   }
 }
 
 @media screen and (max-width:1440px) {
-  .c32 {
+  .c33 {
     font-size: 14px;
   }
 }
@@ -1066,27 +1092,319 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
       >
         <header
           class="c29"
-        >
-          <h2>
-            What is Onomy Bridge?
-          </h2>
-        </header>
-        <p
-          class="c30"
-        >
-          The Onomy Bonding Curve platform is a gateway into the Onomy Network. This is achieved by participants purchasing wrapped-NOM, an ERC-20 token on the Ethereum Network, and swapping for NOM on the Onomy Network.
-        </p>
+        />
+        <div>
+          <h3
+            class="c30"
+          >
+            Bridge to earn 
+            <strong>
+              84%
+            </strong>
+             APY with Staking Rewards!
+          </h3>
+          <svg
+            class="c31"
+          >
+            <defs>
+              <lineargradient
+                gradientUnits="userSpaceOnUse"
+                id="lineColor"
+                x1="0%"
+                x2="100%"
+                y1="0%"
+                y2="0%"
+              >
+                <stop />
+                <stop />
+                <stop />
+              </lineargradient>
+            </defs>
+            <g
+              class="y-axis"
+              fill="none"
+              font-family="sans-serif"
+              font-size="10"
+              text-anchor="end"
+            >
+              <text
+                fill="#656273"
+                style="transform: rotate(-90deg) translate(-10%, -50px); font-size: 12px; font-weight: 500;"
+              >
+                Block reward
+              </text>
+              <g
+                class="tick"
+                opacity="1"
+                transform="translate(0,200.5)"
+              >
+                <line
+                  stroke="#302e3d"
+                  x2="100%"
+                />
+                <text
+                  dy="0.32em"
+                  fill="currentColor"
+                  style="font-size: 12px; font-weight: 500;"
+                  x="-9"
+                >
+                  0%
+                </text>
+              </g>
+              <g
+                class="tick"
+                opacity="1"
+                transform="translate(0,160.5)"
+              >
+                <line
+                  stroke="#302e3d"
+                  x2="100%"
+                />
+                <text
+                  dy="0.32em"
+                  fill="currentColor"
+                  style="font-size: 12px; font-weight: 500;"
+                  x="-9"
+                >
+                  20%
+                </text>
+              </g>
+              <g
+                class="tick"
+                opacity="1"
+                transform="translate(0,120.5)"
+              >
+                <line
+                  stroke="#302e3d"
+                  x2="100%"
+                />
+                <text
+                  dy="0.32em"
+                  fill="currentColor"
+                  style="font-size: 12px; font-weight: 500;"
+                  x="-9"
+                >
+                  40%
+                </text>
+              </g>
+              <g
+                class="tick"
+                opacity="1"
+                transform="translate(0,80.5)"
+              >
+                <line
+                  stroke="#302e3d"
+                  x2="100%"
+                />
+                <text
+                  dy="0.32em"
+                  fill="currentColor"
+                  style="font-size: 12px; font-weight: 500;"
+                  x="-9"
+                >
+                  60%
+                </text>
+              </g>
+              <g
+                class="tick"
+                opacity="1"
+                transform="translate(0,40.49999999999999)"
+              >
+                <line
+                  stroke="#302e3d"
+                  x2="100%"
+                />
+                <text
+                  dy="0.32em"
+                  fill="currentColor"
+                  style="font-size: 12px; font-weight: 500;"
+                  x="-9"
+                >
+                  80%
+                </text>
+              </g>
+              <g
+                class="tick"
+                opacity="1"
+                transform="translate(0,0.5)"
+              >
+                <line
+                  stroke="#302e3d"
+                  x2="100%"
+                />
+                <text
+                  dy="0.32em"
+                  fill="currentColor"
+                  style="font-size: 12px; font-weight: 500;"
+                  x="-9"
+                >
+                  100%
+                </text>
+              </g>
+            </g>
+            <g
+              class="x-axis"
+              fill="none"
+              font-family="sans-serif"
+              font-size="10"
+              style="transform: translateY(200px);"
+              text-anchor="middle"
+            >
+              <text
+                fill="#656273"
+                style="transform: translate(50%, 40px); font-size: 12px; font-weight: 500;"
+              >
+                Coins in circulation
+              </text>
+              <g
+                class="tick"
+                opacity="1"
+                transform="translate(0.5,0)"
+              >
+                <text
+                  dy="0.71em"
+                  fill="currentColor"
+                  style="font-size: 12px; font-weight: 500;"
+                  y="9"
+                >
+                  0m
+                </text>
+              </g>
+              <g
+                class="tick"
+                opacity="1"
+                transform="translate(-12.833333333333332,0)"
+              >
+                <text
+                  dy="0.71em"
+                  fill="currentColor"
+                  style="font-size: 12px; font-weight: 500;"
+                  y="9"
+                >
+                  50m
+                </text>
+              </g>
+              <g
+                class="tick"
+                opacity="1"
+                transform="translate(-26.166666666666664,0)"
+              >
+                <text
+                  dy="0.71em"
+                  fill="currentColor"
+                  style="font-size: 12px; font-weight: 500;"
+                  y="9"
+                >
+                  100m
+                </text>
+              </g>
+              <g
+                class="tick"
+                opacity="1"
+                transform="translate(-39.5,0)"
+              >
+                <text
+                  dy="0.71em"
+                  fill="currentColor"
+                  style="font-size: 12px; font-weight: 500;"
+                  y="9"
+                >
+                  150m
+                </text>
+              </g>
+              <g
+                class="tick"
+                opacity="1"
+                transform="translate(-52.83333333333333,0)"
+              >
+                <text
+                  dy="0.71em"
+                  fill="currentColor"
+                  style="font-size: 12px; font-weight: 500;"
+                  y="9"
+                >
+                  200m
+                </text>
+              </g>
+              <g
+                class="tick"
+                opacity="1"
+                transform="translate(-66.16666666666667,0)"
+              >
+                <text
+                  dy="0.71em"
+                  fill="currentColor"
+                  style="font-size: 12px; font-weight: 500;"
+                  y="9"
+                >
+                  250m
+                </text>
+              </g>
+              <g
+                class="tick"
+                opacity="1"
+                transform="translate(-79.5,0)"
+              >
+                <text
+                  dy="0.71em"
+                  fill="currentColor"
+                  style="font-size: 12px; font-weight: 500;"
+                  y="9"
+                >
+                  300m
+                </text>
+              </g>
+            </g>
+            <path
+              class="line"
+              d="M0,197.77820069235156C0,197.77820069235156,-1.7777777777777777,196.79639632433788,-2.6666666666666665,196.03178105112596C-3.5555555555555554,195.26716577791404,-4.444444444444444,194.40029798940557,-5.333333333333333,193.19050905308012C-6.222222222222222,191.98072011675467,-7.111111111111111,190.60218619066615,-8,188.77304743317325C-8.88888888888889,186.94390867568035,-9.777777777777777,184.85569385487202,-10.666666666666666,182.21567650812273C-11.555555555555555,179.57565916137344,-12.444444444444443,176.56551274015175,-13.333333333333332,172.93294335267746C-14.222222222222221,169.30037396520316,-15.11111111111111,165.17699409049644,-16,160.42026018327707C-16.88888888888889,155.6635262760577,-17.77777777777778,150.30628656828733,-18.666666666666668,144.39253990936118C-19.555555555555557,138.47879325043502,-20.444444444444443,131.89494541327934,-21.333333333333332,124.93778022972009C-22.22222222222222,117.98061504616084,-23.11111111111111,110.35686750338012,-24,102.64954880800565C-24.88888888888889,94.94223011263118,-25.777777777777775,86.67376076126395,-26.666666666666664,78.69386805747331C-27.555555555555554,70.71397535368267,-28.444444444444443,62.39484430854976,-29.333333333333332,54.77019258526181C-30.22222222222222,47.14554086197386,-31.11111111111111,39.51153469484378,-32,32.94595771774562C-32.88888888888889,26.38038074064746,-33.777777777777786,20.207679452522296,-34.66666666666667,15.37673072267285C-35.55555555555556,10.545781992823404,-36.44444444444445,6.523053792427758,-37.333333333333336,3.9602653386489495C-38.22222222222222,1.3974768848701413,-39.111111111111114,0,-40,0C-40.888888888888886,0,-41.77777777777778,1.3974768848701413,-42.666666666666664,3.9602653386489495C-43.55555555555555,6.523053792427758,-44.44444444444444,10.545781992823404,-45.33333333333333,15.37673072267285C-46.222222222222214,20.207679452522296,-47.111111111111114,26.38038074064746,-48,32.94595771774562C-48.888888888888886,39.51153469484378,-49.77777777777778,47.14554086197386,-50.666666666666664,54.77019258526181C-51.55555555555555,62.39484430854976,-52.44444444444444,70.71397535368267,-53.33333333333333,78.69386805747331C-54.222222222222214,86.67376076126395,-55.111111111111114,94.94223011263118,-56,102.64954880800565C-56.888888888888886,110.35686750338012,-57.77777777777777,117.98061504616084,-58.666666666666664,124.93778022972009C-59.55555555555556,131.89494541327934,-60.44444444444444,138.47879325043502,-61.333333333333336,144.39253990936118C-62.22222222222223,150.30628656828733,-63.111111111111114,155.6635262760577,-64,160.42026018327707C-64.88888888888889,165.17699409049644,-65.77777777777779,169.30037396520316,-66.66666666666667,172.93294335267746C-67.55555555555556,176.56551274015175,-68.44444444444446,179.57565916137344,-69.33333333333334,182.21567650812273C-70.22222222222223,184.85569385487202,-71.11111111111111,186.94390867568035,-72,188.77304743317325C-72.88888888888889,190.60218619066615,-73.77777777777779,191.98072011675467,-74.66666666666667,193.19050905308012C-75.55555555555556,194.40029798940557,-76.44444444444444,195.26716577791404,-77.33333333333333,196.03178105112596C-78.22222222222221,196.79639632433788,-80,197.77820069235156,-80,197.77820069235156"
+              fill="none"
+              stroke="url(#lineColor)"
+              stroke-width="3"
+            />
+            <g
+              class="activePoint"
+              style="opacity: 0; transform: translate(-32px, 82.94595771774561px);"
+            >
+              <circle
+                cx="0"
+                cy="0"
+                fill="#1a1723"
+                r="7"
+                stroke="#87d1ff"
+                stroke-width="3"
+              />
+              <rect
+                fill="#87d1ff"
+                height="25"
+                id="valueTooltip"
+                rx="4"
+                width="50"
+                x="-25"
+                y="-40"
+              />
+              <text
+                fill="#1a1723"
+                font-size="12"
+                font-weight="500"
+                text-anchor="middle"
+                x="0"
+                y="-23"
+              />
+            </g>
+          </svg>
+        </div>
         <section
-          class="c31"
+          class="c32"
         >
           <div>
             <h3
-              class="c32"
+              class="c33"
             >
               One Way Bridge
             </h3>
             <p
-              class="c30"
+              class="c34"
             >
               Choose to bridge when you are ready to do so to finalize your purchase of NOM! 
               <strong>
@@ -1101,16 +1419,16 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
           />
         </section>
         <section
-          class="c31"
+          class="c32"
         >
           <div>
             <h3
-              class="c32"
+              class="c33"
             >
               Why Bridge?
             </h3>
             <ol
-              class="c33"
+              class="c35"
             >
               <li>
                 You must hold NOM to participate in the Onomy Network. 
@@ -1130,7 +1448,7 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
             </ol>
           </div>
           <div
-            class="c34"
+            class="c36"
           >
             <img
               alt=""
