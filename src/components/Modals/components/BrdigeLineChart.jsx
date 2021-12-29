@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { select, line, curveCardinal, axisLeft, axisBottom, scaleLinear } from 'd3';
