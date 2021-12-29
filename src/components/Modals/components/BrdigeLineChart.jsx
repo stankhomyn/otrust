@@ -52,6 +52,7 @@ export default function BrdigeLineChart({
   // constants
   const WRAPPER_SIDE_PADDING = 40;
   const CHART_HEIGHT = 200;
+  const CHART_DATA_STEP = 10000000;
 
   // utils
   const applyFormula = useCallback(
@@ -89,7 +90,7 @@ export default function BrdigeLineChart({
   useEffect(() => {
     const generatedData = [];
 
-    for (let i = 0; i <= totalCoins; i += 10000000) {
+    for (let i = 0; i <= totalCoins; i += CHART_DATA_STEP) {
       generatedData.push(i);
     }
 
@@ -199,7 +200,7 @@ export default function BrdigeLineChart({
   return (
     <div ref={wrapperRef}>
       <ChartCaption>
-        Bridge to earn <strong>{activePoint}%</strong> APY with Staking Rewards!
+        Bridge to earn up to <strong>{activePoint}%</strong> APY with Staking Rewards!
       </ChartCaption>
       <StyledSVG ref={svgRef} chartHeight={CHART_HEIGHT} sidePadding={WRAPPER_SIDE_PADDING}>
         <defs>
