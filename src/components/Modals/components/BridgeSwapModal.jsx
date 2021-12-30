@@ -24,6 +24,7 @@ import whyBridgeImg from '../assets/why-bridge.svg';
 import bridgeCurveImg from '../assets/icon-bridge-curve.svg';
 import walletImg from '../assets/icon-onomy-wallet.svg';
 import BrdigeLineChart from './BrdigeLineChart';
+import { useOnomy } from 'context/chain/OnomyContext';
 
 const InputWrapper = styled.div`
   margin: 0 0 12px;
@@ -167,6 +168,7 @@ function BridgeSwapModalInfo({ closeModal }) {
 export default function BridgeSwapModal({ ...props }) {
   const { active, account } = useWeb3React();
   const { values, flags, handlers } = { ...props };
+  const { hasKeplr } = useOnomy();
   const [showInfoModal, setShowInfoModal] = useState(false);
 
   const collapsedInfoBreakpoint = useMediaQuery({
@@ -222,7 +224,11 @@ export default function BridgeSwapModal({ ...props }) {
                       />
                     </Modal.CosmosInputSection>
                   </Modal.ConnectionItem>
-                  <KeplrLink href="keplr">Get Keplr Cosmos Wallet</KeplrLink>
+                  {!hasKeplr && (
+                    <KeplrLink href="https://www.keplr.app/" target="_new">
+                      Get Keplr Cosmos Wallet
+                    </KeplrLink>
+                  )}
                 </Modal.BridgeContent>
                 <FormWrapper>
                   {flags.showLoader && (

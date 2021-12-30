@@ -1023,7 +1023,8 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
           </div>
           <a
             class="c15"
-            href="keplr"
+            href="https://www.keplr.app/"
+            target="_new"
           >
             Get Keplr Cosmos Wallet
           </a>
