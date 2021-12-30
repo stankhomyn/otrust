@@ -37,6 +37,9 @@ type BridgeTransactionInProgress = {
 function useOnomyState() {
   const { blockNumber } = useContext<{ blockNumber: BigNumber }>(ChainContext);
   const blockNumRef = useRef(blockNumber);
+  const keplrConnected = useRef(false);
+
+  const hasKeplr = !!window.keplr;
   blockNumRef.current = blockNumber;
   const [address, setAddress, addressRef] = useStateRef('');
   const [amount, setAmount, amountRef] = useStateRef('0');
@@ -101,6 +104,8 @@ function useOnomyState() {
   }, [stargate]);
 
   const connectKeplr = useCallback(async () => {
+    if (keplrConnected.current) return;
+    keplrConnected.current = true;
     try {
       if (window.keplr) {
         await window.keplr.experimentalSuggestChain({
@@ -191,6 +196,7 @@ function useOnomyState() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /*
   useEffect(() => {
     // Wait for kepler load
     const interval = setInterval(() => {
@@ -202,8 +208,17 @@ function useOnomyState() {
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  */
 
-  return { address, amount, bridgeProgress, setAddress, addPendingBridgeTransaction };
+  return {
+    address,
+    amount,
+    bridgeProgress,
+    hasKeplr,
+    setAddress,
+    addPendingBridgeTransaction,
+    connectKeplr,
+  };
 }
 
 export type OnomyState = ReturnType<typeof useOnomyState>;
@@ -212,6 +227,8 @@ const DEFAULT_STATE: OnomyState = {
   address: '',
   amount: '0',
   bridgeProgress: null,
+  hasKeplr: false,
+  connectKeplr: () => Promise.resolve(),
   setAddress: () => {},
   addPendingBridgeTransaction: () => {},
 };
@@ -219,7 +236,9 @@ const DEFAULT_STATE: OnomyState = {
 const OnomyContext = createContext(DEFAULT_STATE);
 
 export function useOnomy() {
-  return useContext(OnomyContext);
+  const context = useContext(OnomyContext);
+  context.connectKeplr();
+  return context;
 }
 
 export function OnomyProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
