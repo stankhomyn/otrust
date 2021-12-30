@@ -10,6 +10,7 @@ import {
   TooltipCaption,
   TooltipDesc,
 } from './SidebarStyles';
+import { EquivalentValue } from 'components/EquivalentValue';
 
 export function SidebarBridgedBalance() {
   const { amount: nomBalance, address: nomAddress, bridgeProgress } = useOnomy();
@@ -23,7 +24,9 @@ export function SidebarBridgedBalance() {
             <BalanceNumber strong>
               <NomBalanceDisplay value={nomBalance} />
               {bridgeProgress === null ? (
-                <small> = $16,208.04</small>
+                <small>
+                  <EquivalentValue amount={nomBalance} asset="NOM" />
+                </small>
               ) : (
                 <small>{bridgeProgress.toFixed(2)}%</small>
               )}
