@@ -365,7 +365,9 @@ exports[`Given the SidebarBalances component when the component is rendered shou
           class="c2"
         >
           100
-          <small />
+          <small>
+             = $375,000
+          </small>
         </div>
       </div>
       <div
@@ -405,7 +407,9 @@ exports[`Given the SidebarBalances component when the component is rendered shou
           class="c8"
         >
           50
-          <small />
+          <small>
+             = $∞
+          </small>
           <div
             class="c9"
           >

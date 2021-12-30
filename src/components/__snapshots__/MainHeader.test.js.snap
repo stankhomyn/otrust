@@ -266,6 +266,20 @@ exports[`Given the MainHeader component and supplyNOM, currentETHPrice are not o
                 class="c7 c8"
               >
                 <strong>
+                  wNOM / USDT
+                </strong>
+                <div
+                  class="c9"
+                >
+                  <strong>
+                    $∞
+                  </strong>
+                </div>
+              </div>
+              <div
+                class="c7 c8"
+              >
+                <strong>
                   wNOM / ETH
                 </strong>
                 <div
@@ -574,6 +588,20 @@ exports[`Given the MainHeader component and supplyNOM, currentETHPrice are of Bi
             <div
               class="c6"
             >
+              <div
+                class="c7 c8"
+              >
+                <strong>
+                  wNOM / USDT
+                </strong>
+                <div
+                  class="c9"
+                >
+                  <strong>
+                    $375,000,000,000,000,000,000
+                  </strong>
+                </div>
+              </div>
               <div
                 class="c7 c8"
               >

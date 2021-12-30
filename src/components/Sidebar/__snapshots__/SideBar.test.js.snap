@@ -1869,7 +1869,9 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                 class="c7"
               >
                 0.000000
-                <small />
+                <small>
+                   = $0
+                </small>
               </div>
             </div>
             <div

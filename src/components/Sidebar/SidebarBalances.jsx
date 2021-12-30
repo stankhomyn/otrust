@@ -46,7 +46,7 @@ export default function SidebarBalances({ strong, weak, strongBalance, weakBalan
             <BalanceNumber strong>
               {weakBalance}
               <small>
-                <EquivalentValue amount={weak} asset="NOM" />
+                <EquivalentValue amount={weakBalance} asset="NOM" />
               </small>
               <TrimmedApproved value={allowance} />
               {/* <CloseIcon onClick={() => {}} /> */}
