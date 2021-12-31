@@ -32,7 +32,7 @@ const ChartCaption = styled.h3`
   }
 `;
 
-export default function BrdigeLineChart({
+export default function BridgeLineChart({
   peakHeight,
   peakPosition,
   standardDeviation,
