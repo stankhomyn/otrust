@@ -1100,7 +1100,7 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
           >
             Bridge to earn up to 
             <strong>
-              84%
+              0%
             </strong>
              APY with Staking Rewards!
           </h3>
@@ -1365,7 +1365,7 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
             />
             <g
               class="activePoint"
-              style="opacity: 0; transform: translate(-32px, 82.94595771774561px);"
+              style="opacity: 0; transform: translate(0px, 247.77820069235156px);"
             >
               <circle
                 cx="0"

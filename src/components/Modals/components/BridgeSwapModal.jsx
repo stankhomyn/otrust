@@ -23,7 +23,7 @@ import oneWayBridgeImg from '../assets/one-way-bridge.svg';
 import whyBridgeImg from '../assets/why-bridge.svg';
 import bridgeCurveImg from '../assets/icon-bridge-curve.svg';
 import walletImg from '../assets/icon-onomy-wallet.svg';
-import BrdigeLineChart from './BrdigeLineChart';
+import BridgeLineChart from './BridgeLineChart';
 import { useOnomy } from 'context/chain/OnomyContext';
 
 const InputWrapper = styled.div`
@@ -108,7 +108,7 @@ const KeplrLink = styled.a`
 
 function BridgeSwapModalInfo({ closeModal }) {
   const collapsedInfoBreakpoint = useMediaQuery({ maxWidth: responsive.laptopSmall });
-
+  const { bridgedSupply } = useOnomy();
   return (
     <Modal.Info>
       <ModalHeader collapsedInfoBreakpoint={collapsedInfoBreakpoint}>
@@ -119,12 +119,12 @@ function BridgeSwapModalInfo({ closeModal }) {
         )}
       </ModalHeader>
 
-      <BrdigeLineChart
+      <BridgeLineChart
         peakHeight={100}
         peakPosition={150000000}
         standardDeviation={50000000}
         totalCoins={300000000}
-        coinsInCirculation={120960000}
+        coinsInCirculation={bridgedSupply}
       />
 
       <Modal.InfoRow>
