@@ -72,7 +72,7 @@ export default function TransactionCompletedModal({ isApproving, tx }) {
         <Modal.ModalIconWrapper>
           <Success />
         </Modal.ModalIconWrapper>
-        <Modal.Caption>Transaction Pending</Modal.Caption>
+        <Modal.Caption>Transaction Confirmed</Modal.Caption>
 
         <ExplorerButton onClick={() => onExplore()}>View in Etherscan</ExplorerButton>
 

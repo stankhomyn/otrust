@@ -82,6 +82,10 @@ exports[`Given the TransactionCompletedModal component when the component is ren
   background-color: #9895a6;
 }
 
+.c4:disabled {
+  cursor: not-allowed;
+}
+
 .c5 {
   background-color: #302E3D;
   color: #e1dfeb;
@@ -376,7 +380,7 @@ exports[`Given the TransactionCompletedModal component when the component is ren
       <h3
         class="c3"
       >
-        Transaction Pending
+        Transaction Confirmed
       </h3>
       <button
         class="c4 c5 c6"
@@ -525,6 +529,10 @@ exports[`Given the TransactionCompletedModal component when the component is ren
   background-color: #9895a6;
 }
 
+.c4:disabled {
+  cursor: not-allowed;
+}
+
 .c5 {
   background-color: #302E3D;
   color: #e1dfeb;
@@ -819,7 +827,7 @@ exports[`Given the TransactionCompletedModal component when the component is ren
       <h3
         class="c3"
       >
-        Transaction Pending
+        Transaction Confirmed
       </h3>
       <button
         class="c4 c5 c6"

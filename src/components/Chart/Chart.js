@@ -5,10 +5,6 @@ import { useMediaQuery } from 'react-responsive';
 import { responsive } from 'theme/constants';
 import BondLineChart from 'components/Chart/BondLineChart';
 import Dropdown from 'components/Dropdown/Dropdown';
-import LineChart from 'components/Chart/HistoricalLineChart';
-import CandleChart from 'components/Chart/CandleChart';
-import { candleHeaderDefault, tempCandlestickData } from 'components/Chart/defaultChartData';
-import { HISTORICAL_CHART_TYPE } from '../../constants/ChartSelections';
 import { TVChartContainer } from './TradingViewChart';
 
 const ChartWrapper = styled.div`
@@ -83,32 +79,13 @@ const ChartSelectorWrapper = styled.div`
   left: 15px;
 `;
 
-const LineChartSelectorWrapper = styled.div`
-  position: absolute;
-  right: 15px;
-`;
-
-const periods = [
-  { key: HISTORICAL_CHART_TYPE.DAY, value: 'Day' },
-  { key: HISTORICAL_CHART_TYPE.WEEK, value: 'Week' },
-  { key: HISTORICAL_CHART_TYPE.MONTH, value: 'Month' },
-  { key: HISTORICAL_CHART_TYPE.QUARTAL, value: 'Quartal' },
-  { key: HISTORICAL_CHART_TYPE.YEAR, value: 'Year' },
-  { key: HISTORICAL_CHART_TYPE.ALL_TIME, value: 'All Time' },
-];
-
 const chartTypes = [
-  { key: 'lineChart', value: 'Historical Chart' },
   { key: 'bondingCurve', value: 'Bonding Curve Chart' },
-  { key: 'candleView', value: 'Candles View' },
-  { key: 'tradingView', value: 'Trayding View' },
+  { key: 'tradingView', value: 'Trading View' },
 ];
 
 export default function Chart() {
   const [chartType, setChartType] = useState('bondingCurve');
-  const [historicalChartType, setHistoricalChartType] = useState(HISTORICAL_CHART_TYPE.DAY);
-  const [candleHeaderId] = useState('1');
-  const [candleHeader] = useState(candleHeaderDefault);
 
   const isBigScreen = useMediaQuery({ minWidth: responsive.smartphoneLarge });
 
@@ -120,28 +97,14 @@ export default function Chart() {
     }
   }, [isBigScreen]);
 
-  const selectPeriodHandler = selectKeyValue => {
-    setHistoricalChartType(selectKeyValue);
-  };
-
   const selectChartTypeHandler = selectKeyValue => {
     setChartType(selectKeyValue);
   };
 
   const renderChart = type => {
     switch (type) {
-      case 'lineChart':
-        return <LineChart historicalChartType={historicalChartType} />;
       case 'tradingView':
         return <TVChartContainer />;
-      case 'candleView':
-        return (
-          <CandleChart
-            candleHeader={candleHeader}
-            candleHeaderId={candleHeaderId}
-            data={tempCandlestickData}
-          />
-        );
       case 'bondingCurve':
       default:
         return <BondLineChart />;
@@ -160,18 +123,6 @@ export default function Chart() {
               Bonding Curve Chart
             </ChartTypeBtn>
             <ChartTypeBtn
-              onClick={() => setChartType('lineChart')}
-              active={chartType === 'lineChart'}
-            >
-              Historical Chart
-            </ChartTypeBtn>
-            <ChartTypeBtn
-              onClick={() => setChartType('candleView')}
-              active={chartType === 'candleView'}
-            >
-              Candles View
-            </ChartTypeBtn>
-            <ChartTypeBtn
               onClick={() => setChartType('tradingView')}
               active={chartType === 'tradingView'}
             >
@@ -182,11 +133,6 @@ export default function Chart() {
           <ChartSelectorWrapper>
             <Dropdown selectItems={chartTypes} selectHandler={selectChartTypeHandler} />
           </ChartSelectorWrapper>
-        )}
-        {chartType === 'lineChart' && (
-          <LineChartSelectorWrapper>
-            <Dropdown selectItems={periods} selectHandler={selectPeriodHandler} />
-          </LineChartSelectorWrapper>
         )}
       </ChartHeader>
 

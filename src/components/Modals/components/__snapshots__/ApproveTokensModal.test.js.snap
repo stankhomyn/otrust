@@ -82,6 +82,10 @@ exports[`Given the ApproveTokensModal component when the component is rendered s
   background-color: #9895a6;
 }
 
+.c8:disabled {
+  cursor: not-allowed;
+}
+
 .c9 {
   background-color: #302E3D;
   color: #e1dfeb;

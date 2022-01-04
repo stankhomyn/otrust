@@ -82,6 +82,10 @@ exports[`Given the ConfirmTransactionModal component and bidDenom is weak should
   background-color: #9895a6;
 }
 
+.c15:disabled {
+  cursor: not-allowed;
+}
+
 .c16 {
   background-color: #302E3D;
   color: #e1dfeb;
@@ -690,6 +694,10 @@ exports[`Given the ConfirmTransactionModal component when the component is rende
 
 .c15:active {
   background-color: #9895a6;
+}
+
+.c15:disabled {
+  cursor: not-allowed;
 }
 
 .c16 {

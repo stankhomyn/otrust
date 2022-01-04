@@ -5,6 +5,7 @@ import { BigNumber } from 'bignumber.js';
 import logo from 'assets/logo.svg';
 import { Container } from './UI';
 import { responsive } from 'theme/constants';
+import { EquivalentValue } from './EquivalentValue';
 import { format18 } from 'utils/math';
 import { useChain } from 'context/chain/ChainContext';
 
@@ -182,14 +183,16 @@ export default function MainHeader() {
             <HeaderInfo>
               <ExchangeRate>
                 <HeaderInfoItem>
-                  <strong>NOM / USDT</strong>
+                  <strong>wNOM / USDT</strong>
                   <HeaderInfoItemValue>
-                    <strong>$10.12</strong>
-                    <Details type="increase">24.2%</Details>
+                    <strong>
+                      <EquivalentValue amount={1} asset="NOM" prefix="$" />
+                    </strong>
+                    {/*<Details type="increase">24.2%</Details>*/}
                   </HeaderInfoItemValue>
                 </HeaderInfoItem>
                 <HeaderInfoItem>
-                  <strong>NOM / ETH</strong>
+                  <strong>wNOM / ETH</strong>
                   <HeaderInfoItemValue>
                     <strong>
                       <span>
@@ -205,7 +208,7 @@ export default function MainHeader() {
               </ExchangeRate>
               <Issued>
                 <HeaderInfoItem>
-                  <strong>NOM Issued</strong>
+                  <strong>wNOM Issued</strong>
                   <HeaderInfoItemValue>
                     <strong>
                       <span>
