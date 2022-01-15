@@ -9,6 +9,6 @@ export const NOTIFICATION_MESSAGES = {
     lowBid: `Your purchase amount must be more than the cumulative transaction and gas fee.  Please increase your purchase amount to successfully submit your transaction.`,
   },
   success: {
-    approvedBridgeTokens: amount => `Transaction Completed! ${amount} wNOM approved to swap.`,
+    approvedBridgeTokens: amount => `Transaction Completed! ${amount} wNOM approved to bridge.`,
   },
 };
