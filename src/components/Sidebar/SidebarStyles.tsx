@@ -264,7 +264,7 @@ export const TooltipDesc = styled.p`
 
 export const TrimmedApproved = withTrimmedWrapper(({ value }: { value: string | number }) => (
   <Approved>
-    <span>{value} approved</span>
+    <span>{value} approved for sale</span>
   </Approved>
 ));
 
