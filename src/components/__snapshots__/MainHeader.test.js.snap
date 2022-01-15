@@ -613,7 +613,7 @@ exports[`Given the MainHeader component and supplyNOM, currentETHPrice are of Bi
                 >
                   <strong>
                     <span>
-                      0
+                      100000000000000000.00000000
                     </span>
                   </strong>
                 </div>

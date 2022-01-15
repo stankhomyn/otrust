@@ -173,11 +173,21 @@ export default function ConfirmTransactionModal({ isApproving, submitTrans }) {
           <strong>
             {bidDenom && (
               <>
+                {/*
                 1 {bidDenom === 'strong' ? strong : weak} ={' '}
                 {BigNumber.isBigNumber(bidAmount) ? askAmount.div(bidAmount).toFixed(6) : 'Loading'}
+                */}
+                1 wNOM ={' '}
+                {BigNumber.isBigNumber(bidAmount)
+                  ? (bidDenom === 'strong'
+                      ? bidAmount.div(askAmount)
+                      : askAmount.div(bidAmount)
+                    ).toFixed(6)
+                  : 'Loading'}
               </>
             )}{' '}
-            {bidDenom === 'strong' ? weak : strong}
+            ETH
+            {/*bidDenom === 'strong' ? weak : strong */}
           </strong>
         </TransactionDetailsRow>
         <TransactionDetailsRow>
