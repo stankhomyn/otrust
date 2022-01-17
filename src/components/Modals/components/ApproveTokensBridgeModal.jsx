@@ -129,7 +129,6 @@ export default function ApproveTokensBridgeModal({
   const [count, setCount] = useState(60);
   const [delay, setDelay] = useState(1000);
   const [isBtnDisabled, setIsBtnDisabled] = useState(false);
-  const [calculatedApproveValue, setCalculatedApproveValue] = useState('');
   const [approveAmountInputValue, setApproveAmountInputValue] = useState('');
   const [showLoader, setShowLoader] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -146,10 +145,7 @@ export default function ApproveTokensBridgeModal({
         .sub(allowanceAmountGravity)
         .toString();
       const formattedApproveAmount = BigNumber(approveAmount).shiftedBy(-18).toString(10);
-      setCalculatedApproveValue(formattedApproveAmount);
       setApproveAmountInputValue(formattedApproveAmount);
-    } else {
-      setCalculatedApproveValue(0);
     }
   }, [amountValue, allowanceAmountGravity]);
 
@@ -231,7 +227,6 @@ export default function ApproveTokensBridgeModal({
   );
 
   const amountDisplay = parseFloat(amountValue || 0).toFixed(6);
-  const calculatedDisplay = parseFloat(calculatedApproveValue || 0).toFixed(6);
 
   return (
     <Modal.BridgeSectionWrapper>
@@ -243,16 +238,15 @@ export default function ApproveTokensBridgeModal({
         >
           <FontAwesomeIcon icon={faChevronLeft} />
         </ModalBtn>
-        <Caption>Approve Tokens</Caption>
+        <Caption>Approve Bridge Transaction</Caption>
       </header>
 
       <main>
         <Message>
-          You want to sell <strong>{amountDisplay} wNOM</strong>, but you approved for sale only{' '}
-          {allowanceAmountGravity &&
-            BigNumber(allowanceAmountGravity.toString()).shiftedBy(-18).toFixed(6)}{' '}
-          wNOM. To sell this amount, please approve <strong>{calculatedDisplay} wNOM</strong> or
-          more.
+          Please approve <strong>{amountDisplay} wNOM</strong> for bridging to the Onomy Network.
+          Your wNOM will be burned and you will receive an equivalent number of NOM tokens in your
+          Cosmos-based wallet. After approval, you may bridge up to the approved amount in an
+          additional transaction.
         </Message>
         <ApproveTokensWrapper>
           <div>
@@ -313,7 +307,7 @@ export default function ApproveTokensBridgeModal({
         )}
         {isTransactionCompleted && (
           <Modal.PrimaryButton onClick={onCancelHandler} style={{ margin: 'auto' }}>
-            Done
+            Return to Bridge Screen
           </Modal.PrimaryButton>
         )}
       </footer>

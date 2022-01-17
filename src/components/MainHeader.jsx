@@ -197,9 +197,7 @@ export default function MainHeader() {
                     <strong>
                       <span>
                         {BigNumber.isBigNumber(currentETHPrice)
-                          ? `${Math.round(format18(currentETHPrice).toNumber()).toLocaleString(
-                              'en-US'
-                            )}`
+                          ? `${(1.0 / format18(currentETHPrice).toNumber()).toFixed(8)}`
                           : 'Loading'}
                       </span>
                     </strong>

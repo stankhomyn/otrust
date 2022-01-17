@@ -860,7 +860,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                     class="c17"
                   >
                     <span>
-                      Loading approved
+                      Loading approved for sale
                     </span>
                   </div>
                 </div>
@@ -1924,7 +1924,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                     class="c17"
                   >
                     <span>
-                      Loading approved
+                      Loading approved for sale
                     </span>
                   </div>
                 </div>
