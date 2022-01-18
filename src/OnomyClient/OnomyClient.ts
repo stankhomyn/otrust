@@ -26,7 +26,6 @@ export class OnomyClient {
   }
 
   async getValidators() {
-    // TODO: decode json for validators
     const res = await fetch(`${this.REST_URL}/staking/validators?status=BOND_STATUS_BONDED`);
     const json = await res.json();
     console.log('json', json);
