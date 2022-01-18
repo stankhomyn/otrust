@@ -29,14 +29,16 @@ export class OnomyClient {
     // TODO: decode json for validators
     const res = await fetch(`${this.REST_URL}/staking/validators?status=BOND_STATUS_BONDED`);
     const json = await res.json();
-    console.log('validators json', json);
+    console.log('json', json);
+    const { result } = decodeIoTs(ApiResponseCodec.ValidatorsResponse, json);
+    console.log('validators', result);
   }
 
   async getAddressBalance(address: string, denom: string) {
     // TODO: decode json for balance
     const stargate = await this.stargate;
     const coin = await stargate.getBalance(address, denom);
-    return coin.amount;
+    return coin.amount; // TODO: BigNumber rather than string return?
   }
 
   private connectStargate() {

@@ -43,11 +43,11 @@ function useOnomyState() {
   const [address, setAddress, addressRef] = useStateRef('');
   const [amount, setAmount, amountRef] = useStateRef('0');
   const [bridgeTransactions, setBridgeTransactions] = useState<BridgeTransactionInProgress[]>([]);
-  const [bridgedSupply, setBridgedSupply] = useState(BigInt(0));
+  const [bridgedSupply, setBridgedSupply] = useState(new BigNumber(0));
 
   const bridgedSupplyFormatted = useMemo(() => {
     if (!bridgedSupply) return 0;
-    const formated = format18(new BigNumber(bridgedSupply.toString()));
+    const formated = format18(bridgedSupply);
     return formated.toNumber();
   }, [bridgedSupply]);
 
