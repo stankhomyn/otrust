@@ -43,13 +43,13 @@ function useOnomyState() {
   const [address, setAddress, addressRef] = useStateRef('');
   const [amount, setAmount, amountRef] = useStateRef('0');
   const [bridgeTransactions, setBridgeTransactions] = useState<BridgeTransactionInProgress[]>([]);
-  const [bridgedSupplyStr, setBridgedSupplyStr] = useState('');
+  const [bridgedSupply, setBridgedSupply] = useState(BigInt(0));
 
-  const bridgedSupply = useMemo(() => {
-    if (!bridgedSupplyStr) return 0;
-    const formated = format18(new BigNumber(bridgedSupplyStr));
+  const bridgedSupplyFormatted = useMemo(() => {
+    if (!bridgedSupply) return 0;
+    const formated = format18(new BigNumber(bridgedSupply.toString()));
     return formated.toNumber();
-  }, [bridgedSupplyStr]);
+  }, [bridgedSupply]);
 
   const { address: keplrAddress, hasKeplr, connect: connectKeplr } = useKeplr(KEPLR_CONFIG);
   useEffect(() => {
@@ -106,7 +106,7 @@ function useOnomyState() {
   }, []);
 
   const updateBridgedSupply = useCallback(
-    async () => setBridgedSupplyStr(await onomyClient.getSupply()),
+    async () => setBridgedSupply(await onomyClient.getSupply()),
     [onomyClient]
   );
 
@@ -120,7 +120,7 @@ function useOnomyState() {
   return {
     address,
     amount,
-    bridgedSupply,
+    bridgedSupplyFormatted,
     bridgeProgress,
     hasKeplr,
     setAddress,
@@ -134,7 +134,7 @@ export type OnomyState = ReturnType<typeof useOnomyState>;
 const DEFAULT_STATE: OnomyState = {
   address: '',
   amount: '0',
-  bridgedSupply: 0,
+  bridgedSupplyFormatted: 0,
   bridgeProgress: null,
   hasKeplr: false,
   connectKeplr: () => Promise.resolve(),

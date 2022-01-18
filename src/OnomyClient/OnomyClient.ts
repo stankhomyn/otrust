@@ -1,5 +1,8 @@
 import { StargateClient } from '@cosmjs/stargate';
 
+import { decodeIoTs } from 'utils/decodeIoTs';
+import { ApiResponseCodec } from './ApiResponse';
+
 export class OnomyClient {
   private REST_URL: string;
 
@@ -14,11 +17,12 @@ export class OnomyClient {
   }
 
   async getSupply() {
-    // TODO: decode json for supply
     const res = await fetch(`${this.REST_URL}/cosmos/bank/v1beta1/supply/anom`);
     const json = await res.json();
-    const val = json.amount.amount || '';
-    return val;
+    const {
+      amount: { amount },
+    } = decodeIoTs(ApiResponseCodec.SingleSupplyResponse, json);
+    return amount;
   }
 
   async getValidators() {

@@ -108,7 +108,7 @@ const KeplrLink = styled.a`
 
 function BridgeSwapModalInfo({ closeModal }) {
   const collapsedInfoBreakpoint = useMediaQuery({ maxWidth: responsive.laptopSmall });
-  const { bridgedSupply } = useOnomy();
+  const { bridgedSupplyFormatted: bridgedSupply } = useOnomy();
   return (
     <Modal.Info>
       <ModalHeader collapsedInfoBreakpoint={collapsedInfoBreakpoint}>
