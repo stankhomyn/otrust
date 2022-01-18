@@ -16,7 +16,7 @@ export class OnomyClient {
     this.connectStargate();
   }
 
-  async getSupply() {
+  async getAnomSupply() {
     const res = await fetch(`${this.REST_URL}/cosmos/bank/v1beta1/supply/anom`);
     const json = await res.json();
     const {

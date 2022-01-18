@@ -106,7 +106,7 @@ function useOnomyState() {
   }, []);
 
   const updateBridgedSupply = useCallback(
-    async () => setBridgedSupply(await onomyClient.getSupply()),
+    async () => setBridgedSupply(await onomyClient.getAnomSupply()),
     [onomyClient]
   );
 
