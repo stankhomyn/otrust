@@ -127,6 +127,7 @@ const Unbonding = t.type({
   entries: t.array(UnbondingEntry),
 });
 
+// /cosmos/staking/v1beta1/delegators/${delegatorAddress}/unbonding_delegations
 const UnbondingsResponse = t.type({
   unbonding_responses: t.array(Unbonding),
   pagination: PaginationMeta,
