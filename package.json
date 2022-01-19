@@ -47,6 +47,7 @@
     "@web3-react/walletconnect-connector": "^6.2.4",
     "@web3-react/walletlink-connector": "^6.2.5",
     "apollo-boost": "^0.4.9",
+    "bech32": "^2.0.0",
     "bignumber.js": "^9.0.1",
     "cosmos-lib": "^1.1.0",
     "d3": "^6.5.0",
