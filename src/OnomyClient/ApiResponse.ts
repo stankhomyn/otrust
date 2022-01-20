@@ -110,7 +110,7 @@ const DelegationResponse = t.type({
 
 // /cosmos/staking/v1beta1/delegations/${delegatorAddress}
 const DelegationsResponse = t.type({
-  delegation_responses: Delegation,
+  delegation_responses: t.array(Delegation),
   pagination: PaginationMeta,
 });
 

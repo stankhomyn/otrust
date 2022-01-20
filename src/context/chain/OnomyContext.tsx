@@ -119,6 +119,7 @@ function useOnomyState() {
 
   return {
     address,
+    onomyClient,
     amount,
     bridgedSupplyFormatted,
     bridgeProgress,
@@ -132,6 +133,7 @@ function useOnomyState() {
 export type OnomyState = ReturnType<typeof useOnomyState>;
 
 const DEFAULT_STATE: OnomyState = {
+  onomyClient: null as unknown as OnomyClient,
   address: '',
   amount: '0',
   bridgedSupplyFormatted: 0,
