@@ -200,11 +200,9 @@ export const ExchangeResult = styled.div`
   }
 
   sup {
-    font-size: 14px;
-
-    @media screen and (max-width: ${responsive.laptop}) {
-      font-size: 12px;
-    }
+    margin-left: 8px;
+    
+    font-size: 12px;
   }
 `;
 
@@ -349,6 +347,7 @@ export const DetailsSeparator = styled.span`
   margin: 0 20px;
 
   color: ${props => props.theme.colors.iconsNormal};
+  font-weight: 600;
 `;
 
 export const FooterDetails = styled.div`
