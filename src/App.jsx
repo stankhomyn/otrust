@@ -10,6 +10,7 @@ import { AutoLogin } from 'context/AutoLogin';
 import ChainProvider from 'context/chain/ChainContext';
 import ExchangeProvider from 'context/exchange/ExchangeContext';
 import ModalProvider from 'context/modal/ModalContext';
+import SelectValidator from 'components/Modals/BridgeStaking/SelectValidator';
 import './assets/font-faces.css';
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
       <ThemeProvider theme={darkNew}>
         <AutoLogin>
           <ChainProvider theme={darkNew}>
+            <SelectValidator />
+
             <ExchangeProvider>
               <ModalProvider>
                 <GlobalStyle />
