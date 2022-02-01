@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-const Caption = styled.h3`
+export const Caption = styled.h3`
   margin-bottom: 20px;
 
   font-family: Barlow Condensed, sans-serif;
@@ -10,7 +10,7 @@ const Caption = styled.h3`
   color: ${props => props.theme.colors.txtPrimary};
 `;
 
-const Desc = styled.p`
+export const Desc = styled.p`
   margin-bottom: 24px;
 
   font-size: 14px;

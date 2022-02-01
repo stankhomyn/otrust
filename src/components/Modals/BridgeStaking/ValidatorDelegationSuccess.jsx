@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components/macro';
 
 import { Dimmer } from 'components/UI';
-import ValidatorHeader from './ValidatorHeader';
 import ValidatorFooter from './ValidatorFooter';
 import { Hint, TooltipCaption, TooltipDesc } from '../../Sidebar/SidebarStyles';
-import { ExternalLink } from '../Icons';
+import { ExternalLink, Success } from '../Icons';
+import { Caption, Desc } from './ValidatorHeader';
+import * as Modal from '../styles';
 
 const ModalBody = styled.div`
   width: 770px;
@@ -96,87 +97,47 @@ const Icon = styled.div`
   margin-left: 150px;
 `;
 
-const DelegateWrapper = styled.div`
+const ValidatedWrapper = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-`;
 
-const DelegateItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  padding: 32px 40px;
 
-  width: 50%;
+  position: relative;
 
-  & + & {
-    padding-left: 55px;
+  background-color: ${props => props.theme.colors.bgNormal};
 
-    border-left: 1px solid ${props => props.theme.colors.bgHighlightBorder};
+  > strong {
+    position: absolute;
+    left: 40px;
+
+    color: ${props => props.theme.colors.highlightBlue};
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 500;
   }
 
   > span {
-    font-size: 14px;
+    font-size: 24px;
     font-weight: 500;
-    color: #9595a6;
-  }
 
-  > strong {
-    margin-top: 16px;
+    color: ${props => props.theme.colors.textPrimary};
 
-    font-family: Bebas Neue, sans-serif;
-    font-size: 40px;
-    font-weight: 600;
-    color: ${props =>
-      props.reward ? props.theme.colors.highlightBlue : props.theme.colors.textPrimary};
-
-    > sup {
-      margin-left: 12px;
-      font-size: 18px;
+    sup {
+      margin-left: 8px;
+      font-size: 12px;
     }
   }
 `;
 
-const Footer = styled.footer`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px 100px;
-
-  padding: 32px 0;
-  margin-top: 40px;
-
-  border-top: 1px solid ${props => props.theme.colors.bgHighlightBorder};
-`;
-
-const FooterInfo = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  width: calc(50% - 50px);
-
-  > span {
-    font-size: 14px;
-    font-weight: 400;
-    color: ${props => props.theme.colors.textThirdly};
-  }
-
-  > strong {
-    font-size: 14px;
-    font-weight: 600;
-    color: ${props => props.theme.colors.textPrimary};
-  }
-`;
-
-export default function ValidatorNode() {
+export default function ValidatorDelegationSuccess() {
   return (
     <>
       <Dimmer />
 
       <ModalBody>
         <Wrapper>
-          <ValidatorHeader />
-
           <Header>
             <Validator>
               <img src="https://picsum.photos/80/80" alt="" />
@@ -199,41 +160,23 @@ export default function ValidatorNode() {
             </Icon>
           </Header>
 
-          <DelegateWrapper>
-            <DelegateItem>
-              <span>Delegated</span>
-              <strong>
-                22,094.23 <sup>NOM</sup>
-              </strong>
-              <span>$3,998.32</span>
-            </DelegateItem>
-            <DelegateItem reward>
-              <span>Reward</span>
-              <strong>
-                4,552.98 <sup>XRP</sup>
-              </strong>
-              <span>$3,998.32</span>
-            </DelegateItem>
-          </DelegateWrapper>
+          <div>
+            <Modal.ModalIconWrapper>
+              <Success />
+            </Modal.ModalIconWrapper>
 
-          <Footer>
-            <FooterInfo>
-              <span>Total Banded</span>
-              <strong>10,682,107 XRP</strong>
-            </FooterInfo>
-            <FooterInfo>
-              <span>Self Bonded Rate</span>
-              <strong>0.92%</strong>
-            </FooterInfo>
-            <FooterInfo>
-              <span>Commission</span>
-              <strong>8.90%</strong>
-            </FooterInfo>
-            <FooterInfo>
-              <span>Voting Power</span>
-              <strong>13.9M</strong>
-            </FooterInfo>
-          </Footer>
+            <Caption style={{ textAlign: 'center' }}>Delegated successfully!</Caption>
+            <Desc>
+              Now you can delegate part of your NOMs to the desired validator. After that this part
+              will be locked inside validator node, and you will start to receive yield
+            </Desc>
+            <ValidatedWrapper>
+              <strong>Delegated</strong>
+              <span>
+                2544.24<sup>NOM</sup>
+              </span>
+            </ValidatedWrapper>
+          </div>
         </Wrapper>
         <ValidatorFooter />
       </ModalBody>
