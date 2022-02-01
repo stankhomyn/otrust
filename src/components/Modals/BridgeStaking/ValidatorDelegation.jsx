@@ -6,6 +6,7 @@ import ValidatorFooter from './ValidatorFooter';
 import { Caption, Desc } from './ValidatorHeader';
 import { Sending, ExchangeInput, MaxBtn, SendingBox } from '../../Exchange/exchangeStyles';
 import ValidatorNodeHeader from './ValidatorNodeHeader';
+import * as Modal from '../styles';
 
 const ModalBody = styled.div`
   width: 770px;
@@ -61,7 +62,10 @@ export default function ValidatorDelegation() {
             </Sending>
           </div>
         </Wrapper>
-        <ValidatorFooter />
+        <ValidatorFooter>
+          <Modal.SecondaryButton type="button">Back</Modal.SecondaryButton>
+          <Modal.PrimaryButton type="button">Confirm</Modal.PrimaryButton>
+        </ValidatorFooter>
       </ModalBody>
     </>
   );

@@ -91,7 +91,10 @@ export default function ValidatorDelegationSuccess() {
             </ValidatedWrapper>
           </div>
         </Wrapper>
-        <ValidatorFooter />
+        <ValidatorFooter>
+          <Modal.SecondaryButton type="button">Back to validator</Modal.SecondaryButton>
+          <Modal.PrimaryButton type="button">Done</Modal.PrimaryButton>
+        </ValidatorFooter>
       </ModalBody>
     </>
   );
