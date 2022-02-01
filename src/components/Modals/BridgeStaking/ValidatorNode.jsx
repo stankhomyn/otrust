@@ -5,6 +5,7 @@ import { Dimmer } from 'components/UI';
 import ValidatorHeader from './ValidatorHeader';
 import ValidatorFooter from './ValidatorFooter';
 import ValidatorNodeHeader from './ValidatorNodeHeader';
+import * as Modal from '../styles';
 
 const ModalBody = styled.div`
   width: 770px;
@@ -147,7 +148,10 @@ export default function ValidatorNode() {
             </FooterInfo>
           </Footer>
         </Wrapper>
-        <ValidatorFooter />
+        <ValidatorFooter>
+          <Modal.SecondaryButton type="button">Undelegate</Modal.SecondaryButton>
+          <Modal.PrimaryButton type="button">Delegate</Modal.PrimaryButton>
+        </ValidatorFooter>
       </ModalBody>
     </>
   );

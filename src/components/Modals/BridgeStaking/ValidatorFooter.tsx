@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-import * as Modal from '../styles';
-
 const Footer = styled.footer`
   display: flex;
   align-items: center;
@@ -33,9 +31,13 @@ const FooterBalanceValue = styled.div`
   }
 `;
 
-const Controls = styled.div``;
+const Controls = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+`;
 
-export default function ValidatorFooter() {
+export default function ValidatorFooter({ children }: { children: React.ReactNode }) {
   return (
     <Footer>
       <FooterBalance>
@@ -45,9 +47,7 @@ export default function ValidatorFooter() {
           <span> = $16,208.04</span>
         </FooterBalanceValue>
       </FooterBalance>
-      <Controls>
-        <Modal.PrimaryButton type="button">Select validator</Modal.PrimaryButton>
-      </Controls>
+      <Controls>{children}</Controls>
     </Footer>
   );
 }

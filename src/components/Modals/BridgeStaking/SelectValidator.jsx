@@ -5,6 +5,7 @@ import { Dimmer } from 'components/UI';
 import ValidatorHeader from './ValidatorHeader';
 import ValidatorFooter from './ValidatorFooter';
 import ValidatorTable from './ValidatorTable';
+import * as Modal from '../styles';
 
 const ModalBody = styled.div`
   width: 770px;
@@ -38,7 +39,9 @@ export default function SelectValidator() {
           <ValidatorHeader />
           <ValidatorTable />
         </Wrapper>
-        <ValidatorFooter />
+        <ValidatorFooter>
+          <Modal.PrimaryButton type="button">Select validator</Modal.PrimaryButton>
+        </ValidatorFooter>
       </ModalBody>
     </>
   );
