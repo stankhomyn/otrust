@@ -144,12 +144,13 @@
   "resolutions": {
     "**/ganache-core/lodash": "^4.17.21",
     "**/underscore": "^1.13.1",
-    "**/node-fetch": "^2.6.1",
+    "**/node-fetch": "^2.6.7",
     "**/ansi-regex": "^5.0.1",
     "**/set-value": "^4.0.1",
     "react-scripts/react-dev-utils/browserslist": "^4.16.5",
     "react-scripts/**/glob-parent": "^5.1.2",
     "@web3-react/**/json-schema": "^0.4.0",
-    "**/follow-redirects": "^1.14.7"
+    "**/follow-redirects": "^1.14.7",
+    "**/simple-get": "^4.0.1"
   }
 }
