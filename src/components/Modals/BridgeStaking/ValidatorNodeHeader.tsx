@@ -8,7 +8,7 @@ const Header = styled.header`
   display: flex;
   align-items: center;
 
-  padding: 32px 0;
+  padding: 0 0 32px;
   margin-bottom: 40px;
 
   border-bottom: 1px solid ${props => props.theme.colors.bgHighlightBorder};
@@ -18,6 +18,10 @@ const Validator = styled.div`
   display: flex;
   align-items: center;
   gap: 24px;
+
+  img {
+    border-radius: 4px;
+  }
 `;
 
 const ValidatorDesc = styled.div`

@@ -30,7 +30,7 @@ const Wrapper = styled.div`
   border-radius: 8px;
 `;
 
-const ValidatedWrapper = styled.div`
+const DeligatedWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,6 +40,7 @@ const ValidatedWrapper = styled.div`
   position: relative;
 
   background-color: ${props => props.theme.colors.bgNormal};
+  border-radius: 8px;
 
   > strong {
     position: absolute;
@@ -83,12 +84,12 @@ export default function ValidatorDelegationSuccess() {
               Now you can delegate part of your NOMs to the desired validator. After that this part
               will be locked inside validator node, and you will start to receive yield
             </Desc>
-            <ValidatedWrapper>
+            <DeligatedWrapper>
               <strong>Delegated</strong>
               <span>
                 2544.24<sup>NOM</sup>
               </span>
-            </ValidatedWrapper>
+            </DeligatedWrapper>
           </div>
         </Wrapper>
         <ValidatorFooter>
