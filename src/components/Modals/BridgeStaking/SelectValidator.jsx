@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import ValidatorHeader from './ValidatorHeader';
 import ValidatorFooter from './ValidatorFooter';
@@ -14,7 +15,9 @@ export default function SelectValidator() {
         <ValidatorTable />
       </Modal.StakingWrapper>
       <ValidatorFooter>
-        <Modal.PrimaryButton type="button">Select validator</Modal.PrimaryButton>
+        <Link to="/validator-node">
+          <Modal.PrimaryButton type="button">Select validator</Modal.PrimaryButton>
+        </Link>
       </ValidatorFooter>
     </StakingModal>
   );

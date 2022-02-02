@@ -5,7 +5,6 @@ import Exchange from 'components/Exchange/Exchange';
 import { responsive } from 'theme/constants';
 import { Panel } from 'components/UI';
 import Chart from 'components/Chart/Chart';
-import StakingModal from './Modals/components/StakingModal';
 
 const ContentLayout = styled.div`
   display: grid;
@@ -25,7 +24,6 @@ export default function Bonding() {
         {/* </div> */}
         <Exchange />
       </ContentLayout>
-      <StakingModal />
     </Panel>
   );
 }

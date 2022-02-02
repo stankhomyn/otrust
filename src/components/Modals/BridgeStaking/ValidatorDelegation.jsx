@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
+import { Link } from 'react-router-dom';
 
 import ValidatorFooter from './ValidatorFooter';
 import { Caption, Desc } from './ValidatorHeader';
@@ -92,8 +93,12 @@ export default function ValidatorDelegation({ direction = 'DELEGATE' }) {
         </div>
       </Modal.StakingWrapper>
       <ValidatorFooter>
-        <Modal.SecondaryButton type="button">Back</Modal.SecondaryButton>
-        <Modal.PrimaryButton type="button">Confirm</Modal.PrimaryButton>
+        <Link to="/validator-node">
+          <Modal.SecondaryButton type="button">Back</Modal.SecondaryButton>
+        </Link>
+        <Link to="/validator-delegation/success">
+          <Modal.PrimaryButton type="button">Confirm</Modal.PrimaryButton>
+        </Link>
       </ValidatorFooter>
     </StakingModal>
   );
