@@ -6,6 +6,12 @@ import { Scrollbars } from 'react-custom-scrollbars';
 
 import { SortBy, ValueChangeArrow } from '../Icons';
 
+/*
+import { useOnomy } from 'context/chain/OnomyContext';
+import { useAsyncValue } from 'hooks/useAsyncValue';
+import { format18 } from 'utils/math';
+*/
+
 const StyledTable = styled.table`
   width: 100%;
 
@@ -165,6 +171,32 @@ const DelegatedChange = styled.span`
 
 export default function ValidatorTable() {
   const [activeValidatorId, setActiveValidatorId] = useState(null);
+  /*
+  const { onomyClient } = useOnomy();
+
+  const [realData, { error }] = useAsyncValue(
+    useCallback(async () => {
+      const results = await onomyClient.getValidators();
+      console.log('results', results);
+      return results.map(res => ({
+        id: res.operator_address,
+        validator: {
+          name: res.description.moniker || res.operator_address,
+          votingPower: format18(res.tokens).toString(),
+        },
+        APR: res.commission.commission_rates.rate.toNumber(),
+        delegated: {
+          value: 23095.22,
+          change: 4552.98,
+          changeType: 'UP',
+        },
+      }));
+    }, [onomyClient]),
+    []
+  );
+
+  console.log('realData', realData, error);
+  */
 
   const data = useMemo(
     () => [

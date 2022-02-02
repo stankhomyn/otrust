@@ -15,6 +15,7 @@ import {
   REACT_APP_ONOMY_REST_URL,
   REACT_APP_ONOMY_WS_URL,
   DENOM,
+  BLOCKS_TO_WAIT_FOR_BRIDGE,
 } from 'constants/env';
 // eslint-disable-next-line import/no-cycle
 import { ChainContext } from './ChainContext';
@@ -24,7 +25,6 @@ import { useKeplr } from 'hooks/useKeplr';
 
 // This is lame, but can't find a way to subscribe to cosmos events
 const POLLING_INTERVAL = 1000;
-const BLOCKS_TO_WAIT_FOR_BRIDGE = new BigNumber(14);
 
 type BridgeTransactionInProgress = {
   startBalance: BigNumber;
