@@ -68,6 +68,11 @@ const APR = styled.div`
     font-size: 24px;
     font-weight: 600;
     color: ${props => props.theme.colors.highlightBlue};
+
+    > sup {
+      margin-left: 4px;
+      font-size: 12px;
+    }
   }
 `;
 
@@ -89,7 +94,9 @@ export default function ValidatorNodeHeader() {
       </Validator>
       <APR>
         <span>Estimated APR</span>
-        <strong>8.93%</strong>
+        <strong>
+          8.93<sup>%</sup>
+        </strong>
       </APR>
       <Icon>
         <Hint>
