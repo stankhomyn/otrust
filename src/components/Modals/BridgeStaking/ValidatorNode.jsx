@@ -6,6 +6,7 @@ import ValidatorHeader from './ValidatorHeader';
 import ValidatorFooter from './ValidatorFooter';
 import ValidatorNodeHeader from './ValidatorNodeHeader';
 import * as Modal from '../styles';
+import BackButton from './BackButton';
 
 const ModalBody = styled.div`
   width: 770px;
@@ -24,6 +25,8 @@ const ModalBody = styled.div`
 
 const Wrapper = styled.div`
   padding: 32px 40px;
+
+  position: relative;
 
   background-color: ${props => props.theme.colors.bgDarken};
   border-radius: 8px;
@@ -64,7 +67,7 @@ const DelegateItem = styled.div`
       props.reward ? props.theme.colors.highlightBlue : props.theme.colors.textPrimary};
 
     > sup {
-      margin-left: 12px;
+      margin-left: 6px;
       font-size: 18px;
     }
   }
@@ -108,6 +111,11 @@ export default function ValidatorNode() {
 
       <ModalBody>
         <Wrapper>
+          <BackButton
+            clickHandler={() => {
+              alert('going back');
+            }}
+          />
           <ValidatorHeader />
 
           <ValidatorNodeHeader />
