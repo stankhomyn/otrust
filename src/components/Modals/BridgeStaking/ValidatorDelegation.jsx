@@ -7,6 +7,7 @@ import { Caption, Desc } from './ValidatorHeader';
 import { Sending, ExchangeInput, MaxBtn, SendingBox } from '../../Exchange/exchangeStyles';
 import ValidatorNodeHeader from './ValidatorNodeHeader';
 import * as Modal from '../styles';
+import BackButton from './BackButton';
 
 const ModalBody = styled.div`
   width: 770px;
@@ -37,6 +38,12 @@ export default function ValidatorDelegation() {
 
       <ModalBody>
         <Wrapper>
+          <BackButton
+            clickHandler={() => {
+              alert('going back');
+            }}
+          />
+
           <ValidatorNodeHeader />
 
           <div>

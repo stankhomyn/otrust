@@ -12,8 +12,8 @@ import ExchangeProvider from 'context/exchange/ExchangeContext';
 import ModalProvider from 'context/modal/ModalContext';
 // import BridgeSuccess from 'components/Modals/BridgeStaking/BridgeSuccess';
 // import SelectValidator from 'components/Modals/BridgeStaking/SelectValidator';
-import ValidatorNode from 'components/Modals/BridgeStaking/ValidatorNode';
-// import ValidatorDelegation from 'components/Modals/BridgeStaking/ValidatorDelegation';
+// import ValidatorNode from 'components/Modals/BridgeStaking/ValidatorNode';
+import ValidatorDelegation from 'components/Modals/BridgeStaking/ValidatorDelegation';
 // import ValidatorDelegationSuccess from 'components/Modals/BridgeStaking/ValidatorDelegationSuccess';
 import './assets/font-faces.css';
 
@@ -25,8 +25,8 @@ function App() {
           <ChainProvider theme={darkNew}>
             {/* <BridgeSuccess /> */}
             {/* <SelectValidator /> */}
-            <ValidatorNode />
-            {/* <ValidatorDelegation /> */}
+            {/* <ValidatorNode /> */}
+            <ValidatorDelegation />
             {/* <ValidatorDelegationSuccess /> */}
 
             <ExchangeProvider>
