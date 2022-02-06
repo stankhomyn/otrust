@@ -4,7 +4,6 @@ import styled from 'styled-components/macro';
 import { Dimmer } from 'components/UI';
 import ValidatorFooter from './ValidatorFooter';
 import { Caption, Desc } from './ValidatorHeader';
-import { Sending, ExchangeInput, MaxBtn, SendingBox } from '../../Exchange/exchangeStyles';
 import ValidatorNodeHeader from './ValidatorNodeHeader';
 import * as Modal from '../styles';
 import BackButton from './BackButton';
@@ -31,6 +30,59 @@ const Wrapper = styled.div`
   border-radius: 8px;
 `;
 
+const FieldWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 76px;
+  padding: 12px;
+
+  background-color: ${props => props.theme.colors.bgHighlightBorder};
+  border-radius: 8px;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  padding: 4px 12px;
+
+  span {
+    font-size: 12px;
+    font-weight: 500;
+    color: ${props => props.theme.colors.textThirdly};
+  }
+
+  input {
+    background: transparent;
+    border: none;
+
+    font-size: 18px;
+    font-weight: 500;
+    color: ${props => props.theme.colors.textPrimary};
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+`;
+
+const MaxButton = styled.button`
+  width: 70px;
+  height: 100%;
+
+  border: none;
+  border-radius: 7px;
+  background-color: ${props => props.theme.colors.bgNormal};
+
+  font-size: 14px;
+  font-weight: 500;
+  color: ${props => props.theme.colors.highlightYellow};
+`;
+
 export default function ValidatorDelegation() {
   return (
     <>
@@ -52,21 +104,14 @@ export default function ValidatorDelegation() {
               Now you can delegate part of your NOMs to the desired validator. After that this part
               will be locked inside validator node, and you will start to receive yield
             </Desc>
-            <Sending>
-              <strong>Delegate NOMs</strong>
-              <ExchangeInput
-                type="text"
-                name="WNOMValue"
-                onChange={() => {}}
-                value={123}
-                placeholder="0.00"
-                autoComplete="off"
-              />
-              <SendingBox>
-                <strong style={{ marginLeft: '16px' }}>NOM</strong>
-                <MaxBtn name="ETHValue">Max</MaxBtn>
-              </SendingBox>
-            </Sending>
+
+            <FieldWrapper>
+              <InputWrapper>
+                <span>Delegate NOMs</span>
+                <input type="text" placeholder="0.0" />
+              </InputWrapper>
+              <MaxButton>MAX</MaxButton>
+            </FieldWrapper>
           </div>
         </Wrapper>
         <ValidatorFooter>
