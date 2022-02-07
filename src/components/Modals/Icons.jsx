@@ -164,3 +164,12 @@ export function BackArrow() {
     </svg>
   );
 }
+
+export function SortBy() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+      <path className="arrow-up" d="M5.293 5.91L8 3l2.707 2.91z" />
+      <path className="arrow-down" d="M5.293 10.079L8 13l2.707-2.921z" />
+    </svg>
+  );
+}

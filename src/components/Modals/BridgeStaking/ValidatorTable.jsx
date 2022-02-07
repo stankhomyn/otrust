@@ -1,7 +1,9 @@
 /* eslint-disable react/jsx-key */
 import React, { useMemo, useState } from 'react';
-import styled from 'styled-components/macro';
-import { useTable } from 'react-table';
+import styled, { css } from 'styled-components/macro';
+import { useTable, useSortBy } from 'react-table';
+
+import { SortBy } from '../Icons';
 
 const StyledTable = styled.table`
   width: 100%;
@@ -23,9 +25,15 @@ const StyledTable = styled.table`
       width: 100%;
 
       th {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
         font-size: 12px;
         font-weight: 400;
         color: ${props => props.theme.colors.textSecondary};
+
+        user-select: none;
       }
     }
   }
@@ -45,6 +53,28 @@ const StyledTable = styled.table`
       margin: -10px -32px;
     }
   }
+`;
+
+const sortedMixin = css`
+  .arrow-up {
+    fill: ${props =>
+      props.sortedDesc ? props.theme.colors.textSecondary : props.theme.colors.textPrimary};
+  }
+
+  .arrow-down {
+    fill: ${props =>
+      props.sortedDesc ? props.theme.colors.textPrimary : props.theme.colors.textSecondary};
+  }
+`;
+
+const SortIconWrapper = styled.span`
+  height: 16px;
+
+  svg path {
+    fill: ${props => props.theme.colors.textSecondary};
+  }
+
+  ${props => (props.sorted ? sortedMixin : '')};
 `;
 
 const Validator = styled.div`
@@ -118,12 +148,12 @@ export default function ValidatorTable() {
       {
         id: '1',
         validator: {
-          name: 'CoinBase Custody',
+          name: 'ACoinBase Custody',
           votingPower: '13,9M',
         },
-        APR: 3.54,
+        APR: 13.54,
         delegated: {
-          value: 23095.22,
+          value: 1.22,
           change: 4552.98,
           changeType: 'UP',
         },
@@ -136,7 +166,7 @@ export default function ValidatorTable() {
         },
         APR: 9.54,
         delegated: {
-          value: 1231.22,
+          value: 2.22,
           change: 22.98,
           changeType: 'DOWN',
         },
@@ -149,7 +179,7 @@ export default function ValidatorTable() {
         },
         APR: 3.54,
         delegated: {
-          value: 11111.22,
+          value: 3.22,
           change: 0,
         },
       },
@@ -194,10 +224,13 @@ export default function ValidatorTable() {
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
-    columns,
-    data,
-  });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
+    {
+      columns,
+      data,
+    },
+    useSortBy
+  );
 
   return (
     <StyledTable {...getTableProps()}>
@@ -205,7 +238,12 @@ export default function ValidatorTable() {
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                {column.render('Header')}
+                <SortIconWrapper sorted={column.isSorted} sortedDesc={column.isSortedDesc}>
+                  <SortBy />
+                </SortIconWrapper>
+              </th>
             ))}
           </tr>
         ))}
