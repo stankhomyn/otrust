@@ -43,6 +43,9 @@ const StyledTable = styled.table`
     flex-direction: column;
     gap: 40px;
 
+    max-height: 440px;
+    overflow-y: scroll;
+
     tr {
       display: grid;
       grid-template-columns: 6fr 4fr 2fr;
@@ -180,6 +183,42 @@ export default function ValidatorTable() {
         APR: 3.54,
         delegated: {
           value: 3.22,
+          change: 0,
+        },
+      },
+      {
+        id: '4',
+        validator: {
+          name: 'FCoinBase Custody',
+          votingPower: '3,9M',
+        },
+        APR: 113.54,
+        delegated: {
+          value: 873.22,
+          change: 0,
+        },
+      },
+      {
+        id: '5',
+        validator: {
+          name: 'DCoinBase Custody',
+          votingPower: '1,9M',
+        },
+        APR: 31.54,
+        delegated: {
+          value: 443.22,
+          change: 0,
+        },
+      },
+      {
+        id: '6',
+        validator: {
+          name: 'XCoinBase Custody',
+          votingPower: '7,9M',
+        },
+        APR: 1.54,
+        delegated: {
+          value: 312.22,
           change: 0,
         },
       },
