@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import styled, { css } from 'styled-components/macro';
 import { useTable, useSortBy } from 'react-table';
 
-import { SortBy } from '../Icons';
+import { SortBy, ValueChangeArrow } from '../Icons';
 
 const StyledTable = styled.table`
   width: 100%;
@@ -139,7 +139,31 @@ const Delegated = styled.div`
   span {
     font-size: 12px;
     font-weight: 500;
-    color: ${props => props.theme.colors.highlightGreen};
+  }
+`;
+
+const changeTypeMixin = css`
+  ${props =>
+    props.changeType === 'DOWN'
+      ? props.theme.colors.highlightRed
+      : props.theme.colors.highlightGreen};
+`;
+
+const DelegatedChange = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  color: ${props => (props.changeType ? changeTypeMixin : props.theme.colors.textSecondary)};
+
+  svg {
+    display: ${props => (props.changeType ? 'block' : 'none')};
+
+    transform: ${props => (props.changeType === 'DOWN' ? 'rotate(180deg)' : 'rotate(0deg)')};
+
+    path {
+      fill: currentColor;
+    }
   }
 `;
 
@@ -195,7 +219,8 @@ export default function ValidatorTable() {
         APR: 113.54,
         delegated: {
           value: 873.22,
-          change: 0,
+          change: 11.11,
+          changeType: 'DOWN',
         },
       },
       {
@@ -207,7 +232,8 @@ export default function ValidatorTable() {
         APR: 31.54,
         delegated: {
           value: 443.22,
-          change: 0,
+          change: 12.3,
+          changeType: 'UP',
         },
       },
       {
@@ -218,8 +244,9 @@ export default function ValidatorTable() {
         },
         APR: 1.54,
         delegated: {
-          value: 312.22,
-          change: 0,
+          value: 9312.22,
+          change: 4412.3,
+          changeType: 'UP',
         },
       },
     ],
@@ -253,9 +280,10 @@ export default function ValidatorTable() {
         Cell: ({ value }) => (
           <Delegated>
             <strong>{value.value}</strong>
-            <span>
-              ${value.change} {value.changeType}
-            </span>
+            <DelegatedChange changeType={value.changeType}>
+              ${value.change}
+              <ValueChangeArrow />
+            </DelegatedChange>
           </Delegated>
         ),
       },

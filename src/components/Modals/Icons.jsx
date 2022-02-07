@@ -173,3 +173,11 @@ export function SortBy() {
     </svg>
   );
 }
+
+export function ValueChangeArrow() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+      <path fill="#7cf9ba" d="M7.999 5l4 5h-8z" />
+    </svg>
+  );
+}
