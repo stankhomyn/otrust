@@ -2,6 +2,7 @@
 import React, { useMemo, useState } from 'react';
 import styled, { css } from 'styled-components/macro';
 import { useTable, useSortBy } from 'react-table';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import { SortBy, ValueChangeArrow } from '../Icons';
 
@@ -44,7 +45,6 @@ const StyledTable = styled.table`
     gap: 40px;
 
     max-height: 440px;
-    overflow-y: scroll;
 
     tr {
       display: grid;
@@ -315,23 +315,26 @@ export default function ValidatorTable() {
           </tr>
         ))}
       </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map(row => {
-          prepareRow(row);
 
-          return (
-            <ValidatorRow
-              {...row.getRowProps()}
-              active={row.original.id === activeValidatorId}
-              onClick={() => setActiveValidatorId(row.original.id)}
-            >
-              {row.cells.map(cell => (
-                <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-              ))}
-            </ValidatorRow>
-          );
-        })}
-      </tbody>
+      <Scrollbars style={{ height: 440 }}>
+        <tbody {...getTableBodyProps()}>
+          {rows.map(row => {
+            prepareRow(row);
+
+            return (
+              <ValidatorRow
+                {...row.getRowProps()}
+                active={row.original.id === activeValidatorId}
+                onClick={() => setActiveValidatorId(row.original.id)}
+              >
+                {row.cells.map(cell => (
+                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                ))}
+              </ValidatorRow>
+            );
+          })}
+        </tbody>
+      </Scrollbars>
     </StyledTable>
   );
 }
