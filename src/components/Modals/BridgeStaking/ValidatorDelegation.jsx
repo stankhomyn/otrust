@@ -83,7 +83,9 @@ const MaxButton = styled.button`
   color: ${props => props.theme.colors.highlightYellow};
 `;
 
-export default function ValidatorDelegation() {
+export default function ValidatorDelegation({ direction = 'delegate' }) {
+  const verb = direction === 'delegate' ? 'delegate' : 'undelegate';
+
   return (
     <>
       <Dimmer />
@@ -99,15 +101,15 @@ export default function ValidatorDelegation() {
           <ValidatorNodeHeader />
 
           <div>
-            <Caption>Delegate NOMs</Caption>
+            <Caption style={{ textTransform: 'capitalize' }}>{verb} NOMs</Caption>
             <Desc>
-              Now you can delegate part of your NOMs to the desired validator. After that this part
+              Now you can {verb} part of your NOMs to the desired validator. After that this part
               will be locked inside validator node, and you will start to receive yield
             </Desc>
 
             <FieldWrapper>
               <InputWrapper>
-                <span>Delegate NOMs</span>
+                <span style={{ textTransform: 'capitalize' }}>{verb} NOMs</span>
                 <input type="text" placeholder="0.0" />
               </InputWrapper>
               <MaxButton>MAX</MaxButton>
