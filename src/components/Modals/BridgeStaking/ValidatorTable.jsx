@@ -45,16 +45,6 @@ const StyledTable = styled.table`
     gap: 40px;
 
     max-height: 440px;
-
-    tr {
-      display: grid;
-      grid-template-columns: 6fr 4fr 2fr;
-      align-items: center;
-
-      width: calc(100% + 64px);
-      padding: 10px 32px;
-      margin: -10px -32px;
-    }
   }
 `;
 
@@ -109,6 +99,12 @@ const ValidatorContent = styled.div`
 `;
 
 const ValidatorRow = styled.tr`
+  display: grid;
+  grid-template-columns: 6fr 4fr 2fr;
+  align-items: center;
+
+  width: 100%;
+
   background-color: ${props =>
     props.active ? props.theme.colors.bgHighlightBorder : 'transparent'};
 
@@ -316,7 +312,7 @@ export default function ValidatorTable() {
         ))}
       </thead>
 
-      <Scrollbars style={{ height: 440 }}>
+      <Scrollbars style={{ height: 440, width: 'auto' }}>
         <tbody {...getTableBodyProps()}>
           {rows.map(row => {
             prepareRow(row);
