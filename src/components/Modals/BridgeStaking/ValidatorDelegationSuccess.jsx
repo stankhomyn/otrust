@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
 
 import { Dimmer } from 'components/UI';
@@ -65,8 +65,8 @@ const DeligatedWrapper = styled.div`
   }
 `;
 
-export default function ValidatorDelegationSuccess({ direction = 'delegate' }) {
-  const verb = direction === 'delegate' ? 'delegated' : 'undelegated';
+export default function ValidatorDelegationSuccess({ direction = 'DELEGATE' }) {
+  const verb = useMemo(() => (direction === 'DELEGATE' ? 'delegated' : 'undelegated'), [direction]);
 
   return (
     <>

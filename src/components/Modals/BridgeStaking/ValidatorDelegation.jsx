@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
 
 import { Dimmer } from 'components/UI';
@@ -83,8 +83,8 @@ const MaxButton = styled.button`
   color: ${props => props.theme.colors.highlightYellow};
 `;
 
-export default function ValidatorDelegation({ direction = 'delegate' }) {
-  const verb = direction === 'delegate' ? 'delegate' : 'undelegate';
+export default function ValidatorDelegation({ direction = 'DELEGATE' }) {
+  const verb = useMemo(() => (direction === 'DELEGATE' ? 'delegate' : 'undelegate'), [direction]);
 
   return (
     <>
