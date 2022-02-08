@@ -26,8 +26,8 @@ function App() {
             {/* <BridgeSuccess /> */}
             {/* <SelectValidator /> */}
             {/* <ValidatorNode /> */}
-            {/* <ValidatorDelegation direction="undelegate" /> */}
-            <ValidatorDelegationSuccess direction="undelegate" />
+            {/* <ValidatorDelegation direction="UNDELEGATE" /> */}
+            <ValidatorDelegationSuccess direction="UNDELEGATE" />
 
             <ExchangeProvider>
               <ModalProvider>
