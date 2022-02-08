@@ -65,7 +65,9 @@ const DeligatedWrapper = styled.div`
   }
 `;
 
-export default function ValidatorDelegationSuccess() {
+export default function ValidatorDelegationSuccess({ direction = 'delegate' }) {
+  const verb = direction === 'delegate' ? 'delegated' : 'undelegated';
+
   return (
     <>
       <Dimmer />
@@ -79,13 +81,15 @@ export default function ValidatorDelegationSuccess() {
               <Success />
             </Modal.ModalIconWrapper>
 
-            <Caption style={{ textAlign: 'center' }}>Delegated successfully!</Caption>
+            <Caption style={{ textAlign: 'center', textTransform: 'capitalize' }}>
+              {verb} successfully!
+            </Caption>
             <Desc>
               Now you can delegate part of your NOMs to the desired validator. After that this part
               will be locked inside validator node, and you will start to receive yield
             </Desc>
             <DeligatedWrapper>
-              <strong>Delegated</strong>
+              <strong style={{ textTransform: 'capitalize' }}>{verb}</strong>
               <span>
                 2544.24<sup>NOM</sup>
               </span>
