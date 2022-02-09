@@ -11,7 +11,8 @@ import { format18 } from 'utils/math';
 import SidebarHeader from './SidebarHeader';
 import SidebarBalances from './SidebarBalances';
 import SidebarFooter from './SidebarFooter';
-import SidebarConnection from './SidebarConnection';
+// import SidebarConnection from './SidebarConnection';
+import NOMBalances from './NOMBalances';
 
 const PanelLayout = styled(Panel)`
   height: 100%;
@@ -40,9 +41,18 @@ const SidebarLayout = styled.div`
   }
 `;
 
+const DarkWrapper = styled.div`
+  margin-top: auto;
+
+  background-color: ${props => props.theme.colors.bgDarken};
+  border-radius: 4px;
+`;
+
 export default function Sidebar() {
-  const { active, error, chainId, account, deactivate } = useWeb3React();
-  const { blockNumber, strongBalance, weakBalance, NOMallowance } = useChain();
+  // const { active, error, chainId, account, deactivate } = useWeb3React();
+  // const { blockNumber, strongBalance, weakBalance, NOMallowance } = useChain();
+  const { account, deactivate } = useWeb3React();
+  const { strongBalance, weakBalance, NOMallowance } = useChain();
   const { strong, weak } = useExchange();
 
   const handleLogout = () => {
@@ -54,7 +64,7 @@ export default function Sidebar() {
     <div id="tour-sidebar">
       <PanelLayout>
         <SidebarLayout>
-          <SidebarHeader account={account} />
+          <SidebarHeader account={account} onLogout={handleLogout} />
           <SidebarBalances
             strong={strong}
             weak={weak}
@@ -70,13 +80,16 @@ export default function Sidebar() {
               BigNumber.isBigNumber(weakBalance) ? `${format18(weakBalance).toFixed(6)}` : 'Loading'
             }
           />
-          <SidebarConnection
+          {/* <SidebarConnection
             active={active}
             error={error}
             chainId={chainId}
             blockNumber={blockNumber}
-          />
-          <SidebarFooter onLogout={handleLogout} />
+          /> */}
+          <DarkWrapper>
+            <NOMBalances />
+            <SidebarFooter />
+          </DarkWrapper>
         </SidebarLayout>
       </PanelLayout>
     </div>

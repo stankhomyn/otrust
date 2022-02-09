@@ -11,9 +11,9 @@ export const Balances = styled.div`
 
   padding: 24px 40px;
 
-  border-bottom: 1px solid
+  /* border-bottom: 1px solid
     ${(props: { theme: { colors: { bgHighlightBorder: any } } }) =>
-      props.theme.colors.bgHighlightBorder};
+    props.theme.colors.bgHighlightBorder}; */
 
   @media screen and (max-width: ${responsive.laptop}) {
     padding: 24px;
@@ -51,10 +51,10 @@ export const Balances = styled.div`
   }
 `;
 
-export const BalanceNumber = styled.div`
+export const BalanceNumber = styled.div<{ strong?: any }>`
   font-family: 'Bebas Neue', sans-serif;
   font-size: 28px;
-  font-weight: ${(props: { strong: any }) => (props.strong ? 700 : 400)};
+  font-weight: ${props => (props.strong ? 700 : 400)};
 
   > small {
     margin-left: 5px;

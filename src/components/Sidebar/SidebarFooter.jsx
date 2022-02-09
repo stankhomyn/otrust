@@ -40,28 +40,28 @@ const SidebarFooterWrapper = styled.footer`
   }
 `;
 
-const Logout = styled.button`
-  display: block;
-  margin-top: 10px;
+// const Logout = styled.button`
+//   display: block;
+//   margin-top: 10px;
 
-  background: transparent;
-  border: none;
+//   background: transparent;
+//   border: none;
 
-  color: ${props => props.theme.colors.textSecondary};
-  text-decoration: none;
+//   color: ${props => props.theme.colors.textSecondary};
+//   text-decoration: none;
 
-  &:hover {
-    color: ${props => props.theme.colors.textPrimary};
-  }
+//   &:hover {
+//     color: ${props => props.theme.colors.textPrimary};
+//   }
 
-  &:active {
-    color: ${props => props.theme.colors.textThirdly};
-  }
+//   &:active {
+//     color: ${props => props.theme.colors.textThirdly};
+//   }
 
-  @media screen and (max-width: ${responsive.tablet}) {
-    margin: 0;
-  }
-`;
+//   @media screen and (max-width: ${responsive.tablet}) {
+//     margin: 0;
+//   }
+// `;
 
 const SecondaryIcon = styled.a`
   display: flex;
@@ -112,15 +112,18 @@ const SecondaryIcon = styled.a`
 const IconsWrapper = styled.div`
   display: flex;
   align-items: center;
-
+  justify-content: space-between;
   gap: 16px;
 
+  width: 100%;
+
   @media screen and (max-width: ${responsive.tablet}) {
+    justify-content: flex-end;
     gap: 12px;
   }
 `;
 
-export default function SidebarFooter({ onLogout }) {
+export default function SidebarFooter() {
   return (
     <SidebarFooterWrapper>
       <IconsWrapper>
@@ -142,8 +145,6 @@ export default function SidebarFooter({ onLogout }) {
           <TwitterIcon />
         </SecondaryIcon>
       </IconsWrapper>
-
-      <Logout onClick={onLogout}>Logout</Logout>
     </SidebarFooterWrapper>
   );
 }

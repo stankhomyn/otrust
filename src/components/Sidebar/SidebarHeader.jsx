@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { responsive } from 'theme/constants';
+import { LogoutIcon } from './SidebarIcons';
 
 const Header = styled.header`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 32px;
 
   height: 100px;
@@ -63,7 +64,7 @@ const Header = styled.header`
 const AccountNumber = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
 
   grid-column: 1/4;
@@ -93,7 +94,54 @@ const AccountNumber = styled.div`
   }
 `;
 
-export default function SidebarHeader({ account }) {
+const PrimaryIcon = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  width: 44px;
+  background-color: ${props => props.theme.colors.bgDarken};
+  border: 1px solid ${props => props.theme.colors.bgHighlightBorder};
+  border-radius: 8px;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+  color: ${props => props.theme.colors.iconsNormal};
+  cursor: pointer;
+  @media screen and (max-width: ${responsive.laptop}) {
+    width: 32px;
+    height: 32px;
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  @media screen and (max-width: ${responsive.tablet}) {
+    &:first-child {
+      grid-column: 3/4;
+    }
+    &:nth-child(3) {
+      grid-column: 4/5;
+    }
+  }
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    width: 44px;
+    height: 44px;
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  &:hover {
+    background-color: ${props => props.theme.colors.bgNormal_lighten};
+  }
+  &:active {
+    background-color: ${props => props.theme.colors.bgNormal_darken};
+  }
+`;
+
+export default function SidebarHeader({ account, onLogout }) {
   return (
     <Header>
       <AccountNumber>
@@ -107,6 +155,10 @@ export default function SidebarHeader({ account }) {
             : ''}
         </span>
       </AccountNumber>
+
+      <PrimaryIcon onClick={onLogout}>
+        <LogoutIcon />
+      </PrimaryIcon>
     </Header>
   );
 }
