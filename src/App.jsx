@@ -10,7 +10,7 @@ import { AutoLogin } from 'context/AutoLogin';
 import ChainProvider from 'context/chain/ChainContext';
 import ExchangeProvider from 'context/exchange/ExchangeContext';
 import ModalProvider from 'context/modal/ModalContext';
-import BridgeSuccess from 'components/Modals/BridgeStaking/BridgeSuccess';
+// import BridgeSuccess from 'components/Modals/BridgeStaking/BridgeSuccess';
 // import SelectValidator from 'components/Modals/BridgeStaking/SelectValidator';
 // import ValidatorNode from 'components/Modals/BridgeStaking/ValidatorNode';
 // import ValidatorDelegation from 'components/Modals/BridgeStaking/ValidatorDelegation';
@@ -23,7 +23,7 @@ function App() {
       <ThemeProvider theme={darkNew}>
         <AutoLogin>
           <ChainProvider theme={darkNew}>
-            <BridgeSuccess />
+            {/* <BridgeSuccess /> */}
             {/* <SelectValidator /> */}
             {/* <ValidatorNode /> */}
             {/* <ValidatorDelegation direction="UNDELEGATE" /> */}
