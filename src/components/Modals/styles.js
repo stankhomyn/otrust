@@ -740,3 +740,10 @@ export const BridgeContent = styled.div`
     gap: 24px;
   }
 `;
+
+export const StakingWrapper = styled.div`
+  padding: 32px 40px;
+
+  background-color: ${props => props.theme.colors.bgDarken};
+  border-radius: 8px;
+`;

@@ -10,11 +10,11 @@ import { AutoLogin } from 'context/AutoLogin';
 import ChainProvider from 'context/chain/ChainContext';
 import ExchangeProvider from 'context/exchange/ExchangeContext';
 import ModalProvider from 'context/modal/ModalContext';
-// import BridgeSuccess from 'components/Modals/BridgeStaking/BridgeSuccess';
+import BridgeSuccess from 'components/Modals/BridgeStaking/BridgeSuccess';
 // import SelectValidator from 'components/Modals/BridgeStaking/SelectValidator';
 // import ValidatorNode from 'components/Modals/BridgeStaking/ValidatorNode';
 // import ValidatorDelegation from 'components/Modals/BridgeStaking/ValidatorDelegation';
-import ValidatorDelegationSuccess from 'components/Modals/BridgeStaking/ValidatorDelegationSuccess';
+// import ValidatorDelegationSuccess from 'components/Modals/BridgeStaking/ValidatorDelegationSuccess';
 import './assets/font-faces.css';
 
 function App() {
@@ -23,11 +23,11 @@ function App() {
       <ThemeProvider theme={darkNew}>
         <AutoLogin>
           <ChainProvider theme={darkNew}>
-            {/* <BridgeSuccess /> */}
+            <BridgeSuccess />
             {/* <SelectValidator /> */}
             {/* <ValidatorNode /> */}
             {/* <ValidatorDelegation direction="UNDELEGATE" /> */}
-            <ValidatorDelegationSuccess direction="UNDELEGATE" />
+            {/* <ValidatorDelegationSuccess direction="UNDELEGATE" /> */}
 
             <ExchangeProvider>
               <ModalProvider>

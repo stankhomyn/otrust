@@ -1,34 +1,12 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
 
-import { Dimmer } from 'components/UI';
 import ValidatorFooter from './ValidatorFooter';
 import { Success } from '../Icons';
 import { Caption, Desc } from './ValidatorHeader';
 import * as Modal from '../styles';
 import ValidatorNodeHeader from './ValidatorNodeHeader';
-
-const ModalBody = styled.div`
-  width: 770px;
-  padding: 4px;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  background-color: ${props => props.theme.colors.bgNormal};
-  border-radius: 8px;
-
-  transform: translate(-50%, -50%);
-  z-index: 11;
-`;
-
-const Wrapper = styled.div`
-  padding: 32px 40px;
-
-  background-color: ${props => props.theme.colors.bgDarken};
-  border-radius: 8px;
-`;
+import StakingModal from './StakingModal';
 
 const DeligatedWrapper = styled.div`
   display: flex;
@@ -69,38 +47,34 @@ export default function ValidatorDelegationSuccess({ direction = 'DELEGATE' }) {
   const verb = useMemo(() => (direction === 'DELEGATE' ? 'delegated' : 'undelegated'), [direction]);
 
   return (
-    <>
-      <Dimmer />
+    <StakingModal>
+      <Modal.StakingWrapper>
+        <ValidatorNodeHeader />
 
-      <ModalBody>
-        <Wrapper>
-          <ValidatorNodeHeader />
+        <div>
+          <Modal.ModalIconWrapper>
+            <Success />
+          </Modal.ModalIconWrapper>
 
-          <div>
-            <Modal.ModalIconWrapper>
-              <Success />
-            </Modal.ModalIconWrapper>
-
-            <Caption style={{ textAlign: 'center', textTransform: 'capitalize' }}>
-              {verb} successfully!
-            </Caption>
-            <Desc>
-              Now you can delegate part of your NOMs to the desired validator. After that this part
-              will be locked inside validator node, and you will start to receive yield
-            </Desc>
-            <DeligatedWrapper>
-              <strong style={{ textTransform: 'capitalize' }}>{verb}</strong>
-              <span>
-                2544.24<sup>NOM</sup>
-              </span>
-            </DeligatedWrapper>
-          </div>
-        </Wrapper>
-        <ValidatorFooter>
-          <Modal.SecondaryButton type="button">Back to validator</Modal.SecondaryButton>
-          <Modal.PrimaryButton type="button">Done</Modal.PrimaryButton>
-        </ValidatorFooter>
-      </ModalBody>
-    </>
+          <Caption style={{ textAlign: 'center', textTransform: 'capitalize' }}>
+            {verb} successfully!
+          </Caption>
+          <Desc>
+            Now you can delegate part of your NOMs to the desired validator. After that this part
+            will be locked inside validator node, and you will start to receive yield
+          </Desc>
+          <DeligatedWrapper>
+            <strong style={{ textTransform: 'capitalize' }}>{verb}</strong>
+            <span>
+              2544.24<sup>NOM</sup>
+            </span>
+          </DeligatedWrapper>
+        </div>
+      </Modal.StakingWrapper>
+      <ValidatorFooter>
+        <Modal.SecondaryButton type="button">Back to validator</Modal.SecondaryButton>
+        <Modal.PrimaryButton type="button">Done</Modal.PrimaryButton>
+      </ValidatorFooter>
+    </StakingModal>
   );
 }
