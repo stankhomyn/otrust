@@ -57,7 +57,6 @@ exports[`Given the SidebarBalances component when the component is rendered shou
   flex-direction: column;
   gap: 14px;
   padding: 24px 40px;
-  border-bottom: 1px solid #302E3D;
 }
 
 .c0 strong {

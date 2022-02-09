@@ -116,7 +116,8 @@ exports[`Given the ConfirmTransactionModal component and bidDenom is weak should
 }
 
 .c3 sup {
-  font-size: 14px;
+  margin-left: 8px;
+  font-size: 12px;
 }
 
 .c2 {
@@ -334,12 +335,6 @@ exports[`Given the ConfirmTransactionModal component and bidDenom is weak should
     padding: 24px;
     margin: 24px 0 20px;
     font-size: 24px;
-  }
-}
-
-@media screen and (max-width:1440px) {
-  .c3 sup {
-    font-size: 12px;
   }
 }
 
@@ -730,7 +725,8 @@ exports[`Given the ConfirmTransactionModal component when the component is rende
 }
 
 .c3 sup {
-  font-size: 14px;
+  margin-left: 8px;
+  font-size: 12px;
 }
 
 .c2 {
@@ -948,12 +944,6 @@ exports[`Given the ConfirmTransactionModal component when the component is rende
     padding: 24px;
     margin: 24px 0 20px;
     font-size: 24px;
-  }
-}
-
-@media screen and (max-width:1440px) {
-  .c3 sup {
-    font-size: 12px;
   }
 }
 

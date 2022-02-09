@@ -11,10 +11,10 @@ exports[`Given the SidebarHeader component when the component is rendered and ac
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   gap: 32px;
   height: 100px;
   padding: 24px 48px;
@@ -30,10 +30,10 @@ exports[`Given the SidebarHeader component when the component is rendered and ac
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
   gap: 8px;
   grid-column: 1/4;
 }
@@ -42,6 +42,41 @@ exports[`Given the SidebarHeader component when the component is rendered and ac
   font-size: 16px;
   font-weight: 500;
   color: #9895a6;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 44px;
+  width: 44px;
+  background-color: #1a1823;
+  border: 1px solid #302E3D;
+  border-radius: 8px;
+  color: #8d89a3;
+  cursor: pointer;
+}
+
+.c2 svg {
+  width: 20px;
+  height: 20px;
+}
+
+.c2:hover {
+  background-color: #252130;
+}
+
+.c2:active {
+  background-color: #1b1924;
 }
 
 @media screen and (max-width:1440px) {
@@ -119,6 +154,40 @@ exports[`Given the SidebarHeader component when the component is rendered and ac
 @media screen and (max-width:1440px) {
   .c1 span {
     font-size: 14px;
+  }
+}
+
+@media screen and (max-width:1440px) {
+  .c2 {
+    width: 32px;
+    height: 32px;
+  }
+
+  .c2 svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media screen and (max-width:1024px) {
+  .c2:first-child {
+    grid-column: 3/4;
+  }
+
+  .c2:nth-child(3) {
+    grid-column: 4/5;
+  }
+}
+
+@media screen and (max-width:700px) {
+  .c2 {
+    width: 44px;
+    height: 44px;
+  }
+
+  .c2 svg {
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -135,6 +204,20 @@ exports[`Given the SidebarHeader component when the component is rendered and ac
         123456...9012
       </span>
     </div>
+    <a
+      class="c2"
+    >
+      <svg
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M18.643 10.674l-3.367 3.3a.987.987 0 01-1.4-1.392l1.137-1.129c.259-.257.173-.465-.192-.465H10.3a.984.984 0 110-1.968h4.525c.363 0 .451-.208.192-.466L13.88 7.425a.987.987 0 011.4-1.392l3.359 3.262a.957.957 0 01.004 1.379zM5.365 14.936h1.977a.987.987 0 110 1.974H4.379a1.317 1.317 0 01-1.314-1.316V4.41a1.317 1.317 0 011.314-1.316h2.963a.987.987 0 110 1.974H5.365a.327.327 0 00-.33.328v9.214a.329.329 0 00.33.326z"
+          fill="#8d89a3"
+          fill-rule="evenodd"
+        />
+      </svg>
+    </a>
   </header>
 </DocumentFragment>
 `;
@@ -150,10 +233,10 @@ exports[`Given the SidebarHeader component when the component is rendered and ac
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   gap: 32px;
   height: 100px;
   padding: 24px 48px;
@@ -169,10 +252,10 @@ exports[`Given the SidebarHeader component when the component is rendered and ac
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
   gap: 8px;
   grid-column: 1/4;
 }
@@ -181,6 +264,41 @@ exports[`Given the SidebarHeader component when the component is rendered and ac
   font-size: 16px;
   font-weight: 500;
   color: #9895a6;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 44px;
+  width: 44px;
+  background-color: #1a1823;
+  border: 1px solid #302E3D;
+  border-radius: 8px;
+  color: #8d89a3;
+  cursor: pointer;
+}
+
+.c2 svg {
+  width: 20px;
+  height: 20px;
+}
+
+.c2:hover {
+  background-color: #252130;
+}
+
+.c2:active {
+  background-color: #1b1924;
 }
 
 @media screen and (max-width:1440px) {
@@ -261,6 +379,40 @@ exports[`Given the SidebarHeader component when the component is rendered and ac
   }
 }
 
+@media screen and (max-width:1440px) {
+  .c2 {
+    width: 32px;
+    height: 32px;
+  }
+
+  .c2 svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media screen and (max-width:1024px) {
+  .c2:first-child {
+    grid-column: 3/4;
+  }
+
+  .c2:nth-child(3) {
+    grid-column: 4/5;
+  }
+}
+
+@media screen and (max-width:700px) {
+  .c2 {
+    width: 44px;
+    height: 44px;
+  }
+
+  .c2 svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
 <header
     class="c0"
   >
@@ -274,6 +426,20 @@ exports[`Given the SidebarHeader component when the component is rendered and ac
         -
       </span>
     </div>
+    <a
+      class="c2"
+    >
+      <svg
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M18.643 10.674l-3.367 3.3a.987.987 0 01-1.4-1.392l1.137-1.129c.259-.257.173-.465-.192-.465H10.3a.984.984 0 110-1.968h4.525c.363 0 .451-.208.192-.466L13.88 7.425a.987.987 0 011.4-1.392l3.359 3.262a.957.957 0 01.004 1.379zM5.365 14.936h1.977a.987.987 0 110 1.974H4.379a1.317 1.317 0 01-1.314-1.316V4.41a1.317 1.317 0 011.314-1.316h2.963a.987.987 0 110 1.974H5.365a.327.327 0 00-.33.328v9.214a.329.329 0 00.33.326z"
+          fill="#8d89a3"
+          fill-rule="evenodd"
+        />
+      </svg>
+    </a>
   </header>
 </DocumentFragment>
 `;

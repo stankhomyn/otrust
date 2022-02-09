@@ -42,7 +42,8 @@ exports[`Given the PendingModal component when the component is rendered should 
 }
 
 .c2 sup {
-  font-size: 14px;
+  margin-left: 8px;
+  font-size: 12px;
 }
 
 .c1 {
@@ -151,12 +152,6 @@ exports[`Given the PendingModal component when the component is rendered should 
     padding: 24px;
     margin: 24px 0 20px;
     font-size: 24px;
-  }
-}
-
-@media screen and (max-width:1440px) {
-  .c2 sup {
-    font-size: 12px;
   }
 }
 

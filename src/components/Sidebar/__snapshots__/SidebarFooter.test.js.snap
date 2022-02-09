@@ -19,24 +19,6 @@ exports[`Given the SidebarFooter component when the component is rendered should
   margin-top: auto;
 }
 
-.c3 {
-  display: block;
-  margin-top: 10px;
-  background: transparent;
-  border: none;
-  color: #9895a6;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c3:hover {
-  color: #e1dfeb;
-}
-
-.c3:active {
-  color: #656273;
-}
-
 .c2 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -85,7 +67,12 @@ exports[`Given the SidebarFooter component when the component is rendered should
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   gap: 16px;
+  width: 100%;
 }
 
 @media screen and (max-width:1440px) {
@@ -124,12 +111,6 @@ exports[`Given the SidebarFooter component when the component is rendered should
   }
 }
 
-@media screen and (max-width:1024px) {
-  .c3 {
-    margin: 0;
-  }
-}
-
 @media screen and (max-width:1440px) {
   .c2 {
     width: 32px;
@@ -145,6 +126,10 @@ exports[`Given the SidebarFooter component when the component is rendered should
 
 @media screen and (max-width:1024px) {
   .c1 {
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
     gap: 12px;
   }
 }
@@ -248,11 +233,6 @@ exports[`Given the SidebarFooter component when the component is rendered should
         </svg>
       </a>
     </div>
-    <button
-      class="c3"
-    >
-      Logout
-    </button>
   </footer>
 </DocumentFragment>
 `;
