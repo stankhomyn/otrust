@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import * as Modal from '../styles';
 import { Dimmer } from 'components';
-import { Success } from '../Icons';
+import { Close, Success } from '../Icons';
 
 const Wrapper = styled.div`
   display: flex;
@@ -41,6 +41,10 @@ export default function BridgeSuccess() {
     <>
       <Dimmer />
       <Modal.BridgeModalWrapper>
+        <Modal.CloseIcon onClick={() => null}>
+          <Close />
+        </Modal.CloseIcon>
+
         <Modal.BridgeLayout>
           <Wrapper>
             <Modal.ModalIconWrapper>

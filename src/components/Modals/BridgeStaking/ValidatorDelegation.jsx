@@ -1,34 +1,12 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
 
-import { Dimmer } from 'components/UI';
 import ValidatorFooter from './ValidatorFooter';
 import { Caption, Desc } from './ValidatorHeader';
 import ValidatorNodeHeader from './ValidatorNodeHeader';
 import * as Modal from '../styles';
 import BackButton from './BackButton';
-
-const ModalBody = styled.div`
-  width: 770px;
-  padding: 4px;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  background-color: ${props => props.theme.colors.bgNormal};
-  border-radius: 8px;
-
-  transform: translate(-50%, -50%);
-  z-index: 11;
-`;
-
-const Wrapper = styled.div`
-  padding: 32px 40px;
-
-  background-color: ${props => props.theme.colors.bgDarken};
-  border-radius: 8px;
-`;
+import StakingModal from './StakingModal';
 
 const FieldWrapper = styled.div`
   display: flex;
@@ -76,7 +54,7 @@ const MaxButton = styled.button`
 
   border: none;
   border-radius: 7px;
-  background-color: ${props => props.theme.colors.bgNormal};
+  background-color: #2a2837;
 
   font-size: 14px;
   font-weight: 500;
@@ -87,40 +65,36 @@ export default function ValidatorDelegation({ direction = 'DELEGATE' }) {
   const verb = useMemo(() => (direction === 'DELEGATE' ? 'delegate' : 'undelegate'), [direction]);
 
   return (
-    <>
-      <Dimmer />
+    <StakingModal>
+      <Modal.StakingWrapper>
+        <BackButton
+          clickHandler={() => {
+            alert('going back');
+          }}
+        />
 
-      <ModalBody>
-        <Wrapper>
-          <BackButton
-            clickHandler={() => {
-              alert('going back');
-            }}
-          />
+        <ValidatorNodeHeader />
 
-          <ValidatorNodeHeader />
+        <div>
+          <Caption style={{ textTransform: 'capitalize' }}>{verb} NOMs</Caption>
+          <Desc>
+            Now you can {verb} part of your NOMs to the desired validator. After that this part will
+            be locked inside validator node, and you will start to receive yield
+          </Desc>
 
-          <div>
-            <Caption style={{ textTransform: 'capitalize' }}>{verb} NOMs</Caption>
-            <Desc>
-              Now you can {verb} part of your NOMs to the desired validator. After that this part
-              will be locked inside validator node, and you will start to receive yield
-            </Desc>
-
-            <FieldWrapper>
-              <InputWrapper>
-                <span style={{ textTransform: 'capitalize' }}>{verb} NOMs</span>
-                <input type="text" placeholder="0.0" />
-              </InputWrapper>
-              <MaxButton>MAX</MaxButton>
-            </FieldWrapper>
-          </div>
-        </Wrapper>
-        <ValidatorFooter>
-          <Modal.SecondaryButton type="button">Back</Modal.SecondaryButton>
-          <Modal.PrimaryButton type="button">Confirm</Modal.PrimaryButton>
-        </ValidatorFooter>
-      </ModalBody>
-    </>
+          <FieldWrapper>
+            <InputWrapper>
+              <span style={{ textTransform: 'capitalize' }}>{verb} NOMs</span>
+              <input type="text" placeholder="0.0" />
+            </InputWrapper>
+            <MaxButton>MAX</MaxButton>
+          </FieldWrapper>
+        </div>
+      </Modal.StakingWrapper>
+      <ValidatorFooter>
+        <Modal.SecondaryButton type="button">Back</Modal.SecondaryButton>
+        <Modal.PrimaryButton type="button">Confirm</Modal.PrimaryButton>
+      </ValidatorFooter>
+    </StakingModal>
   );
 }
