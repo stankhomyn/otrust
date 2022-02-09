@@ -1,4 +1,3 @@
-import { StargateClient } from '@cosmjs/stargate';
 import React, {
   createContext,
   useCallback,
@@ -10,24 +9,22 @@ import React, {
 } from 'react';
 import { BigNumber } from 'bignumber.js';
 
-import { useAsyncValue } from 'hooks/useAsyncValue';
 import { useStateRef } from 'hooks/useStateRef';
 import {
-  REACT_APP_CHAIN_ID,
-  REACT_APP_CHAIN_NAME,
+  KEPLR_CONFIG,
   REACT_APP_ONOMY_REST_URL,
-  REACT_APP_ONOMY_RPC_URL,
   REACT_APP_ONOMY_WS_URL,
+  DENOM,
+  BLOCKS_TO_WAIT_FOR_BRIDGE,
 } from 'constants/env';
 // eslint-disable-next-line import/no-cycle
 import { ChainContext } from './ChainContext';
 import { format18 } from 'utils/math';
+import { OnomyClient } from 'OnomyClient';
+import { useKeplr } from 'hooks/useKeplr';
 
 // This is lame, but can't find a way to subscribe to cosmos events
 const POLLING_INTERVAL = 1000;
-const DENOM = 'anom';
-const DENOM_DECIMALS = 18;
-const BLOCKS_TO_WAIT_FOR_BRIDGE = new BigNumber(14);
 
 type BridgeTransactionInProgress = {
   startBalance: BigNumber;
@@ -37,21 +34,27 @@ type BridgeTransactionInProgress = {
 
 function useOnomyState() {
   const { blockNumber } = useContext<{ blockNumber: BigNumber }>(ChainContext);
-  const [bridgedSupplyStr, setBridgedSupplyStr] = useState('');
   const blockNumRef = useRef(blockNumber);
-  const keplrConnected = useRef(false);
+  const onomyClient = useMemo(() => {
+    return new OnomyClient(REACT_APP_ONOMY_REST_URL, REACT_APP_ONOMY_WS_URL);
+  }, []);
 
-  const hasKeplr = !!window.keplr;
   blockNumRef.current = blockNumber;
   const [address, setAddress, addressRef] = useStateRef('');
   const [amount, setAmount, amountRef] = useStateRef('0');
   const [bridgeTransactions, setBridgeTransactions] = useState<BridgeTransactionInProgress[]>([]);
+  const [bridgedSupply, setBridgedSupply] = useState(new BigNumber(0));
 
-  const bridgedSupply = useMemo(() => {
-    if (!bridgedSupplyStr) return 0;
-    const formated = format18(new BigNumber(bridgedSupplyStr));
+  const bridgedSupplyFormatted = useMemo(() => {
+    if (!bridgedSupply) return 0;
+    const formated = format18(bridgedSupply);
     return formated.toNumber();
-  }, [bridgedSupplyStr]);
+  }, [bridgedSupply]);
+
+  const { address: keplrAddress, hasKeplr, connect: connectKeplr } = useKeplr(KEPLR_CONFIG);
+  useEffect(() => {
+    if (keplrAddress) setAddress(keplrAddress);
+  }, [keplrAddress, setAddress]);
 
   const addPendingBridgeTransaction = useCallback((expectedIncrease: BigNumber) => {
     const transaction = {
@@ -85,20 +88,11 @@ function useOnomyState() {
     return Math.min(progress, 100);
   }, [blockNumber, bridgeTransactions]);
 
-  const [stargate] = useAsyncValue(
-    // useCallback(() => StargateClient.connect(`wss://${window.location.hostname}/tendermint`), []),
-    useCallback(() => StargateClient.connect(REACT_APP_ONOMY_WS_URL), []),
-    null
-  );
-
   useEffect(() => {
-    if (!stargate) return;
-
     async function updateBalance() {
-      if (!addressRef.current || !stargate) return;
+      if (!addressRef.current) return;
       try {
-        const coin = await stargate.getBalance(addressRef.current, DENOM);
-        setAmount(coin.amount);
+        setAmount(await onomyClient.getAddressBalance(addressRef.current, DENOM));
       } catch (e) {
         // eslint-disable-next-line no-console
         console.warn('Error fetching Onomy balance', e);
@@ -109,121 +103,12 @@ function useOnomyState() {
     const interval = setInterval(updateBalance, POLLING_INTERVAL);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stargate]);
-
-  const connectKeplr = useCallback(async () => {
-    if (keplrConnected.current) return;
-    keplrConnected.current = true;
-    try {
-      if (window.keplr) {
-        await window.keplr.experimentalSuggestChain({
-          // Chain-id of the Cosmos SDK chain.
-          chainId: REACT_APP_CHAIN_ID,
-          // The name of the chain to be displayed to the user.
-          chainName: REACT_APP_CHAIN_NAME,
-          // RPC endpoint of the chain.
-          rpc: REACT_APP_ONOMY_RPC_URL,
-          // REST endpoint of the chain.
-          rest: REACT_APP_ONOMY_REST_URL,
-          stakeCurrency: {
-            // Coin denomination to be displayed to the user.
-            coinDenom: 'NOM',
-            // Actual denom (i.e. uatom, uscrt) used by the blockchain.
-            coinMinimalDenom: DENOM,
-            // # of decimal points to convert minimal denomination to user-facing denomination.
-            coinDecimals: DENOM_DECIMALS,
-            // (Optional) Keplr can show the fiat value of the coin if a coingecko id is provided.
-            // You can get id from https://api.coingecko.com/api/v3/coins/list if it is listed.
-            // coinGeckoId: ""
-          },
-          bip44: {
-            coinType: 118,
-          },
-          bech32Config: {
-            bech32PrefixAccAddr: 'onomy',
-            bech32PrefixAccPub: 'onomypub',
-            bech32PrefixValAddr: 'onomyvaloper',
-            bech32PrefixValPub: 'onomyvaloperpub',
-            bech32PrefixConsAddr: 'onomyvalcons',
-            bech32PrefixConsPub: 'onomyvalconspub',
-          },
-          currencies: [
-            {
-              coinDenom: 'NOM',
-              coinMinimalDenom: DENOM,
-              coinDecimals: DENOM_DECIMALS,
-            },
-          ],
-          feeCurrencies: [
-            {
-              coinDenom: 'NOM',
-              coinMinimalDenom: DENOM,
-              coinDecimals: DENOM_DECIMALS,
-            },
-          ],
-          coinType: 118,
-          gasPriceStep: {
-            low: 0.01,
-            average: 0.025,
-            high: 0.04,
-          },
-        });
-        // Staking coin information
-        await window.keplr.enable(REACT_APP_CHAIN_ID);
-        if (!window.getOfflineSigner) throw new Error('No Offline Signer');
-        const offlineSigner = window.getOfflineSigner(REACT_APP_CHAIN_ID);
-        const accounts = await offlineSigner.getAccounts();
-        setAddress(() => accounts[0].address);
-
-        /*
-        const tmclient = await Tendermint34Client.connect(COSMOS_WS);
-        const txQuery = buildQuery({
-          tags: [
-            {
-              key: 'action',
-              value: 'send_to_cosmos_claim',
-            },
-          ],
-        });
-        const stream = tmclient.subscribeTx(txQuery);
-        const stream = tmclient.subscribeNewBlock();
-        stream.addListener({
-          next: evt => console.log('tendermint-rpc', evt),
-          error: err => console.error('tendermint error', err),
-          complete: () => console.log('tendermint-rpc complete'),
-        });
-        */
-      } else {
-        // eslint-disable-next-line no-console
-        console.error('Install keplr chrome extension');
-      }
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error('keplr error', e);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /*
-  useEffect(() => {
-    // Wait for kepler load
-    const interval = setInterval(() => {
-      if (window.keplr) {
-        connectKeplr();
-        clearInterval(interval);
-      }
-    }, 100);
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  */
-
-  const updateBridgedSupply = useCallback(async function () {
-    const res = await fetch(`${REACT_APP_ONOMY_REST_URL}/cosmos/bank/v1beta1/supply/anom`);
-    const json = await res.json();
-    const val = json.amount.amount || '';
-    setBridgedSupplyStr(val);
-  }, []);
+  const updateBridgedSupply = useCallback(
+    async () => setBridgedSupply(await onomyClient.getAnomSupply()),
+    [onomyClient]
+  );
 
   useEffect(() => {
     updateBridgedSupply();
@@ -234,8 +119,9 @@ function useOnomyState() {
 
   return {
     address,
+    onomyClient,
     amount,
-    bridgedSupply,
+    bridgedSupplyFormatted,
     bridgeProgress,
     hasKeplr,
     setAddress,
@@ -247,9 +133,10 @@ function useOnomyState() {
 export type OnomyState = ReturnType<typeof useOnomyState>;
 
 const DEFAULT_STATE: OnomyState = {
+  onomyClient: null as unknown as OnomyClient,
   address: '',
   amount: '0',
-  bridgedSupply: 0,
+  bridgedSupplyFormatted: 0,
   bridgeProgress: null,
   hasKeplr: false,
   connectKeplr: () => Promise.resolve(),

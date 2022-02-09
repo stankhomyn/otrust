@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { BridgeProgress } from 'components/BridgeProgress';
 import { Success } from '../Icons';
 import * as Modal from '../styles';
 
@@ -27,6 +28,7 @@ export default function BridgeTransactionComplete({ closeModalHandler, amountVal
 
           <strong>1 NOM = 1 wNOM</strong>
         </Modal.ExchangeRateWrapper>
+        <BridgeProgress />
       </main>
       <footer>
         <Modal.BridgeFooterControl>

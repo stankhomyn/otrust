@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import { Link } from 'react-router-dom';
 
 import ValidatorHeader from './ValidatorHeader';
 import ValidatorFooter from './ValidatorFooter';
@@ -131,7 +132,9 @@ export default function ValidatorNode() {
       </Modal.StakingWrapper>
       <ValidatorFooter>
         <Modal.SecondaryButton type="button">Undelegate</Modal.SecondaryButton>
-        <Modal.PrimaryButton type="button">Delegate</Modal.PrimaryButton>
+        <Link to="/validator-delegation">
+          <Modal.PrimaryButton type="button">Delegate</Modal.PrimaryButton>
+        </Link>{' '}
       </ValidatorFooter>
     </StakingModal>
   );

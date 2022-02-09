@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import * as Modal from '../styles';
 import { Dimmer } from 'components';
@@ -106,7 +107,9 @@ export default function BridgeSuccess() {
             </Section>
 
             <Section>
-              <Modal.FullWidthButton>Start Staking</Modal.FullWidthButton>
+              <Link to="/select-validator">
+                <Modal.FullWidthButton>Start Staking</Modal.FullWidthButton>
+              </Link>
             </Section>
 
             <Section>

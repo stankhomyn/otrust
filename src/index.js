@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 import Modal from 'react-modal';
+import { BrowserRouter } from 'react-router-dom';
 
 import reportWebVitals from './reportWebVitals';
 import App from './App';
@@ -23,7 +24,9 @@ Modal.setAppElement('#root');
 ReactDOM.render(
   <React.StrictMode>
     <Web3ReactProvider getLibrary={getLibrary}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Web3ReactProvider>
   </React.StrictMode>,
   document.getElementById('root')
