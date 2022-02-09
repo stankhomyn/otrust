@@ -59,7 +59,7 @@ export default function ValidatorDelegationSuccess({ direction = 'DELEGATE' }) {
           <Caption style={{ textAlign: 'center', textTransform: 'capitalize' }}>
             {verb} successfully!
           </Caption>
-          <Desc>
+          <Desc style={{ textAlign: 'center' }}>
             Now you can delegate part of your NOMs to the desired validator. After that this part
             will be locked inside validator node, and you will start to receive yield
           </Desc>
