@@ -100,8 +100,8 @@ export default function ValidatorNodeHeader() {
       </APR>
       <Icon>
         <Hint>
-          <TooltipCaption>APR caption</TooltipCaption>
-          <TooltipDesc>APR Description</TooltipDesc>
+          <TooltipCaption>APR</TooltipCaption>
+          <TooltipDesc>The estimated reward rate you will earn on delegated NOM</TooltipDesc>
         </Hint>
       </Icon>
     </Header>

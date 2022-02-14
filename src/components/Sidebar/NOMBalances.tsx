@@ -26,11 +26,8 @@ export default function NOMBalances() {
           </BalanceNumber>
         </BalancePrice>
         <Hint>
-          <TooltipCaption>NOM Balance</TooltipCaption>
-          <TooltipDesc>
-            This shows your total wNOM balance and the amount approved for selling. You must approve
-            wNOM for selling before it can be sold.
-          </TooltipDesc>
+          <TooltipCaption>NOM Balance (Bridged)</TooltipCaption>
+          <TooltipDesc>Your NOM balance on the Onomy Network</TooltipDesc>
         </Hint>
       </Balance>
 
@@ -45,11 +42,8 @@ export default function NOMBalances() {
           </BalanceNumber>
         </BalancePrice>
         <Hint>
-          <TooltipCaption>NOM Balance</TooltipCaption>
-          <TooltipDesc>
-            This shows your total wNOM balance and the amount approved for selling. You must approve
-            wNOM for selling before it can be sold.
-          </TooltipDesc>
+          <TooltipCaption>NOM Delegated</TooltipCaption>
+          <TooltipDesc>NOM delegated to earn staking rewards</TooltipDesc>
         </Hint>
       </Balance>
     </Balances>

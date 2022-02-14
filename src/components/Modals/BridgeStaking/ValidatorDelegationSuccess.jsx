@@ -44,7 +44,10 @@ const DeligatedWrapper = styled.div`
   }
 `;
 
-export default function ValidatorDelegationSuccess({ direction = 'DELEGATE' }) {
+export default function ValidatorDelegationSuccess({
+  direction = 'DELEGATE',
+  validator_name = 'Test Validator',
+}) {
   const verb = useMemo(() => (direction === 'DELEGATE' ? 'delegated' : 'undelegated'), [direction]);
 
   return (
@@ -61,8 +64,10 @@ export default function ValidatorDelegationSuccess({ direction = 'DELEGATE' }) {
             {verb} successfully!
           </Caption>
           <Desc style={{ textAlign: 'center' }}>
-            Now you can delegate part of your NOMs to the desired validator. After that this part
-            will be locked inside validator node, and you will start to receive yield
+            {direction === 'DELEGATE'
+              ? `Your NOM has been successfully delegated to ${validator_name} and is now earning staking
+            rewards!`
+              : `Your NOM has been successfully undelegated from ${validator_name} and is now available for other uses.`}
           </Desc>
           <DeligatedWrapper>
             <strong style={{ textTransform: 'capitalize' }}>{verb}</strong>
