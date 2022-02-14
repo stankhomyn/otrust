@@ -1,5 +1,5 @@
 import React from 'react';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
 import { EquivalentValue } from 'components/EquivalentValue';
 import {
@@ -11,6 +11,11 @@ import {
   TooltipCaption,
   TooltipDesc,
 } from './SidebarStyles';
+import { PrimaryButton } from 'components/Modals/styles';
+
+const ButtonWrapper = styled.div`
+  margin-top: 20px;
+`;
 
 export default function NOMBalances() {
   return (
@@ -46,6 +51,12 @@ export default function NOMBalances() {
           <TooltipDesc>NOM delegated to earn staking rewards</TooltipDesc>
         </Hint>
       </Balance>
+
+      <ButtonWrapper>
+        <PrimaryButton style={{ width: '100%' }} onClick={() => {}}>
+          Manage Staking
+        </PrimaryButton>
+      </ButtonWrapper>
     </Balances>
   );
 }
