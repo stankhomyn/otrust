@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
 import { Link, useParams } from 'react-router-dom';
+import BigNumber from 'bignumber.js';
 
 import ValidatorFooter from './ValidatorFooter';
 import { Caption, Desc } from './ValidatorHeader';
@@ -9,6 +10,7 @@ import * as Modal from '../styles';
 import BackButton from './BackButton';
 import StakingModal from './StakingModal';
 import { ValidatorData } from './hooks';
+import { useOnomy } from 'context/chain/OnomyContext';
 
 const FieldWrapper = styled.div`
   display: flex;
@@ -71,6 +73,7 @@ export default function ValidatorDelegation({
   direction: string;
 }) {
   const { id } = useParams();
+  const { onomyClient } = useOnomy();
   const verb = useMemo(() => (direction === 'DELEGATE' ? 'delegate' : 'undelegate'), [direction]);
   const { validator } = data;
 
@@ -95,6 +98,12 @@ export default function ValidatorDelegation({
             Now you can {verb} part of your NOMs to the desired validator. After that this part will
             be locked inside validator node, and you will start to receive yield
           </Desc>
+          <button
+            type="button"
+            onClick={() => onomyClient.delegate(id!, new BigNumber('10000000000000000000'))}
+          >
+            Delegate
+          </button>
 
           <FieldWrapper>
             <InputWrapper>

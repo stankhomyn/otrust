@@ -145,7 +145,7 @@ export default function ValidatorDetail({ data }: { data: ValidatorData }) {
           <FooterInfo>
             <span>Self Bonded Rate</span>
             <strong>
-              {100 * selfStake}
+              {(100 * selfStake).toFixed(2)}
               <sup>%</sup>
             </strong>
           </FooterInfo>
