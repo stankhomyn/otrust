@@ -33,7 +33,7 @@ function App() {
                   <Route path="/" element={<></>} />
                   <Route path="/bridge-success" element={<BridgeSuccess />} />
                   <Route path="/select-validator" element={<SelectValidator />} />
-                  <Route path="/validator-node" element={<ValidatorNode />} />
+                  <Route path="/validator-node/:id" element={<ValidatorNode />} />
                   <Route
                     path="/validator-delegation"
                     element={<ValidatorDelegation direction="DELEGATE" />}

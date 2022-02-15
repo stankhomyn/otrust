@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import styled from 'styled-components/macro';
 
@@ -80,22 +81,35 @@ const Icon = styled.div`
   margin-left: 150px;
 `;
 
-export default function ValidatorNodeHeader() {
+export default function ValidatorNodeHeader({
+  imgSrc = 'https://picsum.photos/80/80',
+  name,
+  url,
+  estimatedAPR,
+}: {
+  imgSrc?: string;
+  name: string;
+  url?: string;
+  estimatedAPR: number;
+}) {
   return (
     <Header>
       <Validator>
-        <img src="https://picsum.photos/80/80" alt="" />
+        <img src={imgSrc} alt="" />
         <ValidatorDesc>
-          <ValidatorName>Coinbase Custody</ValidatorName>
-          <a href="/">
-            custody.coinbase.com <ExternalLink />
-          </a>
+          <ValidatorName>{name}</ValidatorName>
+          {url && (
+            <a href={url}>
+              {url} <ExternalLink /> {/* TODO: pull out domain for display */}
+            </a>
+          )}
         </ValidatorDesc>
       </Validator>
       <APR>
         <span>Estimated APR</span>
         <strong>
-          8.93<sup>%</sup>
+          {estimatedAPR}
+          <sup>%</sup>
         </strong>
       </APR>
       <Icon>

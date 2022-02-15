@@ -67,6 +67,7 @@ export class OnomyClient {
     const json = await this.getJson(
       `/cosmos/staking/v1beta1/validators/${validatorAddress}/delegations/${delegatorAddress}`
     );
+    if (!(json as any)?.delegation_response) return null;
     const { delegation_response } = decodeIoTs(ApiResponseCodec.DelegationResponse, json);
     return delegation_response;
   }
@@ -95,6 +96,7 @@ export class OnomyClient {
     const json = await this.getJson(
       `/cosmos/distribution/v1beta1/delegators/${delegatorAddress}/rewards`
     );
+    if (!(json as any).rewards) return null;
     const response = decodeIoTs(ApiResponseCodec.DelegatorRewardsResponse, json);
     return response;
   }
