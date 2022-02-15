@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import { Link } from 'react-router-dom';
 
 import { Dimmer } from 'components';
 import { Close } from '../Icons';
@@ -26,10 +27,11 @@ export default function StakingModal({ children }: { children: React.ReactNode }
       <Dimmer />
 
       <ModalBody>
-        <Modal.CloseIcon onClick={() => null}>
-          <Close />
-        </Modal.CloseIcon>
-
+        <Link to="/">
+          <Modal.CloseIcon>
+            <Close />
+          </Modal.CloseIcon>
+        </Link>
         {children}
       </ModalBody>
     </>

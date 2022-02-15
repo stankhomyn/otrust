@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { EquivalentValue } from 'components/EquivalentValue';
 import {
@@ -53,9 +54,9 @@ export default function NOMBalances() {
       </Balance>
 
       <ButtonWrapper>
-        <PrimaryButton style={{ width: '100%' }} onClick={() => {}}>
-          Manage Staking
-        </PrimaryButton>
+        <Link to="/validators">
+          <PrimaryButton style={{ width: '100%' }}>Manage Staking</PrimaryButton>
+        </Link>
       </ButtonWrapper>
     </Balances>
   );

@@ -42,6 +42,24 @@ export class OnomyClient {
     ]);
   }
 
+  async undelegate(validatorAddress: string, amount: BigNumber, denom = DENOM) {
+    const signer = this.getSigner();
+    const [account] = await signer.getAccounts();
+    await this.sendTx([
+      {
+        type: `cosmos-sdk/MsgUndelegate`,
+        value: {
+          delegator_address: account.address,
+          validator_address: validatorAddress,
+          amount: {
+            amount,
+            denom,
+          },
+        },
+      },
+    ]);
+  }
+
   async getAnomSupply() {
     const json = await this.getJson('/cosmos/bank/v1beta1/supply/anom');
     const {
