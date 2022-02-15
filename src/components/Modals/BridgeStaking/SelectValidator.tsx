@@ -18,7 +18,7 @@ export default function SelectValidator() {
       </Modal.StakingWrapper>
       <ValidatorFooter>
         {selected ? (
-          <Link to={`/validator-node/${selected}`}>
+          <Link to={`/validators/${selected}`}>
             <Modal.PrimaryButton type="button">Select validator</Modal.PrimaryButton>
           </Link>
         ) : (

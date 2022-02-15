@@ -1,19 +1,14 @@
-import React, { useCallback } from 'react';
-import { Route, Routes, useParams } from 'react-router-dom';
+import { useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 
-import StakingModal from './StakingModal';
 import { useOnomy } from 'context/chain/OnomyContext';
 import { useAsyncValue } from 'hooks/useAsyncValue';
-import LoadingSpinner from 'components/UI/LoadingSpinner';
-import ValidatorDetail from './ValidatorDetail';
-import ValidatorDelegation from './ValidatorDelegation';
-import ValidatorDelegationSuccess from './ValidatorDelegationSuccess';
 
-export default function ValidatorNode() {
+export function useValidator() {
   const { onomyClient, address } = useOnomy();
   const { id } = useParams();
 
-  const [data, { error, pending }] = useAsyncValue(
+  return useAsyncValue(
     useCallback(async () => {
       if (!id) return { validator: null, delegation: null };
       const [validators, selfDelegation, delegationData, rewardsData] = await Promise.all([
@@ -38,36 +33,6 @@ export default function ValidatorNode() {
     }, [onomyClient, id, address]),
     { validator: null, delegation: null, rewards: null, selfStake: 0 }
   );
-
-  if (pending) {
-    return (
-      <StakingModal>
-        <LoadingSpinner />
-      </StakingModal>
-    );
-  }
-
-  if (error) {
-    return (
-      <StakingModal>
-        <pre>{`${error}`}</pre>
-      </StakingModal>
-    );
-  }
-
-  if (!data.validator) {
-    return <StakingModal>No Matching Validator</StakingModal>;
-  }
-
-  return (
-    <Routes>
-      <Route path="/" element={<ValidatorDetail data={data} />} />
-      <Route path="/delegate" element={<ValidatorDelegation data={data} direction="DELEGATE" />} />
-      <Route
-        path="/undelegate"
-        element={<ValidatorDelegation data={data} direction="UNDELEGATE" />}
-      />
-      <Route path="/validator-delegation/success" element={<ValidatorDelegationSuccess />} />
-    </Routes>
-  );
 }
+
+export type ValidatorData = ReturnType<typeof useValidator>[0];

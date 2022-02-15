@@ -8,6 +8,7 @@ import { SortBy, ValueChangeArrow } from '../Icons';
 import { useOnomy } from 'context/chain/OnomyContext';
 import { useAsyncValue } from 'hooks/useAsyncValue';
 import { format18 } from 'utils/math';
+import { FormattedNumber } from 'components/FormattedNumber';
 
 const StyledTable = styled.table`
   width: 100%;
@@ -286,7 +287,9 @@ export default function ValidatorTable({ selected, setSelected }) {
             {/* {value.img} */}
             <ValidatorContent>
               <strong>{value.name}</strong>
-              <span>{value.votingPower} Voting Power</span>
+              <span>
+                <FormattedNumber value={value.votingPower} /> Voting Power
+              </span>
             </ValidatorContent>
           </Validator>
         ),
@@ -301,7 +304,9 @@ export default function ValidatorTable({ selected, setSelected }) {
         accessor: 'delegated',
         Cell: ({ value }) => (
           <Delegated>
-            <strong>{value.value}</strong>
+            <strong>
+              <FormattedNumber value={value.value} />
+            </strong>
             <DelegatedChange changeType={value.changeType}>
               ${value.change}
               <ValueChangeArrow />

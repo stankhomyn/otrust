@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import ValidatorFooter from './ValidatorFooter';
 import { Caption, Desc } from './ValidatorHeader';
@@ -8,6 +8,7 @@ import ValidatorNodeHeader from './ValidatorNodeHeader';
 import * as Modal from '../styles';
 import BackButton from './BackButton';
 import StakingModal from './StakingModal';
+import { ValidatorData } from './hooks';
 
 const FieldWrapper = styled.div`
   display: flex;
@@ -62,19 +63,31 @@ const MaxButton = styled.button`
   color: ${props => props.theme.colors.highlightYellow};
 `;
 
-export default function ValidatorDelegation({ direction = 'DELEGATE' }) {
+export default function ValidatorDelegation({
+  data,
+  direction = 'DELEGATE',
+}: {
+  data: ValidatorData;
+  direction: string;
+}) {
+  const { id } = useParams();
   const verb = useMemo(() => (direction === 'DELEGATE' ? 'delegate' : 'undelegate'), [direction]);
+  const { validator } = data;
+
+  if (!validator) return null;
 
   return (
     <StakingModal>
       <Modal.StakingWrapper>
-        <BackButton
-          clickHandler={() => {
-            alert('going back');
-          }}
-        />
+        <Link to={`/validators/${id}/`}>
+          <BackButton />
+        </Link>
 
-        <ValidatorNodeHeader />
+        <ValidatorNodeHeader
+          name={validator.description.moniker ?? ''}
+          url={validator.description.website}
+          estimatedAPR={validator.commission.commission_rates.rate.toNumber() * 100}
+        />
 
         <div>
           <Caption style={{ textTransform: 'capitalize' }}>{verb} NOMs</Caption>
@@ -93,7 +106,7 @@ export default function ValidatorDelegation({ direction = 'DELEGATE' }) {
         </div>
       </Modal.StakingWrapper>
       <ValidatorFooter>
-        <Link to="/validator-node">
+        <Link to={`/validators/${id}`}>
           <Modal.SecondaryButton type="button">Back</Modal.SecondaryButton>
         </Link>
         <Link to="/validator-delegation/success">

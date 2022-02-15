@@ -107,7 +107,7 @@ export default function BridgeSuccess() {
             </Section>
 
             <Section>
-              <Link to="/select-validator">
+              <Link to="/validators">
                 <Modal.FullWidthButton>Start Staking</Modal.FullWidthButton>
               </Link>
             </Section>
