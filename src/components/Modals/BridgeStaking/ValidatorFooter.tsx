@@ -1,5 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import BigNumber from 'bignumber.js';
+
+import { NomBalanceDisplay } from 'components/NomBalanceDisplay';
+import { EquivalentValue } from 'components/EquivalentValue';
+import { useOnomy } from 'context/chain/OnomyContext';
+import { format18 } from 'utils/math';
 
 const Footer = styled.footer`
   display: flex;
@@ -38,13 +44,19 @@ const Controls = styled.div`
 `;
 
 export default function ValidatorFooter({ children }: { children: React.ReactNode }) {
+  const { amount: nomBalance } = useOnomy();
+
   return (
     <Footer>
       <FooterBalance>
         <p>NOM Balance</p>
         <FooterBalanceValue>
-          <strong>23.20931</strong>
-          <span> = $16,208.04</span>
+          <strong>
+            <NomBalanceDisplay value={nomBalance} />
+          </strong>
+          <span>
+            <EquivalentValue amount={format18(new BigNumber(nomBalance)).toNumber()} asset="NOM" />
+          </span>
         </FooterBalanceValue>
       </FooterBalance>
       <Controls>{children}</Controls>
