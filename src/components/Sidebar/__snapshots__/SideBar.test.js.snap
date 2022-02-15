@@ -298,7 +298,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
   color: #9895a6;
 }
 
-.c22 {
+.c23 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -315,7 +315,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
   margin-top: auto;
 }
 
-.c24 {
+.c25 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -337,24 +337,24 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
   cursor: pointer;
 }
 
-.c24 svg {
+.c25 svg {
   width: 20px;
   height: 20px;
 }
 
-.c24:hover {
+.c25:hover {
   background-color: #47445a;
 }
 
-.c24:hover svg * {
+.c25:hover svg * {
   fill: #e1dfeb;
 }
 
-.c24:active {
+.c25:active {
   background-color: #191820;
 }
 
-.c23 {
+.c24 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -369,6 +369,10 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
   justify-content: space-between;
   gap: 16px;
   width: 100%;
+}
+
+.c22 {
+  margin-top: 20px;
 }
 
 .c1 {
@@ -646,13 +650,13 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
 }
 
 @media screen and (max-width:1440px) {
-  .c22 {
+  .c23 {
     padding: 20px 24px;
   }
 }
 
 @media screen and (max-width:1024px) {
-  .c22 {
+  .c23 {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -674,7 +678,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
 }
 
 @media screen and (max-width:700px) {
-  .c22 {
+  .c23 {
     padding: 24px 20px;
     position: relative;
     background-color: #1a1823;
@@ -682,20 +686,20 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
 }
 
 @media screen and (max-width:1440px) {
-  .c24 {
+  .c25 {
     width: 32px;
     height: 32px;
     font-size: 14px;
   }
 
-  .c24 svg {
+  .c25 svg {
     width: 16px;
     height: 16px;
   }
 }
 
 @media screen and (max-width:1024px) {
-  .c23 {
+  .c24 {
     -webkit-box-pack: end;
     -webkit-justify-content: flex-end;
     -ms-flex-pack: end;
@@ -910,12 +914,12 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                   <h5
                     class="c11"
                   >
-                    NOM Balance
+                    NOM Balance (Bridged)
                   </h5>
                   <p
                     class="c12"
                   >
-                    This shows your total wNOM balance and the amount approved for selling. You must approve wNOM for selling before it can be sold.
+                    Your NOM balance on the Onomy Network
                   </p>
                 </div>
                 <button
@@ -952,12 +956,12 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                   <h5
                     class="c11"
                   >
-                    NOM Balance
+                    NOM Delegated
                   </h5>
                   <p
                     class="c12"
                   >
-                    This shows your total wNOM balance and the amount approved for selling. You must approve wNOM for selling before it can be sold.
+                    NOM delegated to earn staking rewards
                   </p>
                 </div>
                 <button
@@ -967,15 +971,29 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                 </button>
               </div>
             </div>
-          </div>
-          <footer
-            class="c22"
-          >
             <div
-              class="c23"
+              class="c22"
             >
               <a
-                class="c24"
+                href="/validators"
+              >
+                <button
+                  class="c20"
+                  style="width: 100%;"
+                >
+                  Manage Staking
+                </button>
+              </a>
+            </div>
+          </div>
+          <footer
+            class="c23"
+          >
+            <div
+              class="c24"
+            >
+              <a
+                class="c25"
                 href="https://onomy.io/"
                 target="_blank"
               >
@@ -991,7 +1009,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                 </svg>
               </a>
               <a
-                class="c24"
+                class="c25"
                 href="https://discord.gg/27r73SYAkQ"
                 target="_blank"
               >
@@ -1006,7 +1024,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                 </svg>
               </a>
               <a
-                class="c24"
+                class="c25"
                 href="https://t.me/onomyprotocol"
                 target="_blank"
               >
@@ -1021,7 +1039,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                 </svg>
               </a>
               <a
-                class="c24"
+                class="c25"
                 href="https://medium.com/onomy-protocol"
                 target="_blank"
               >
@@ -1051,7 +1069,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                 </svg>
               </a>
               <a
-                class="c24"
+                class="c25"
                 href="https://twitter.com/onomyprotocol"
                 target="_blank"
               >
@@ -1373,7 +1391,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
   color: #9895a6;
 }
 
-.c22 {
+.c23 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1390,7 +1408,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
   margin-top: auto;
 }
 
-.c24 {
+.c25 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1412,24 +1430,24 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
   cursor: pointer;
 }
 
-.c24 svg {
+.c25 svg {
   width: 20px;
   height: 20px;
 }
 
-.c24:hover {
+.c25:hover {
   background-color: #47445a;
 }
 
-.c24:hover svg * {
+.c25:hover svg * {
   fill: #e1dfeb;
 }
 
-.c24:active {
+.c25:active {
   background-color: #191820;
 }
 
-.c23 {
+.c24 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1444,6 +1462,10 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
   justify-content: space-between;
   gap: 16px;
   width: 100%;
+}
+
+.c22 {
+  margin-top: 20px;
 }
 
 .c1 {
@@ -1721,13 +1743,13 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
 }
 
 @media screen and (max-width:1440px) {
-  .c22 {
+  .c23 {
     padding: 20px 24px;
   }
 }
 
 @media screen and (max-width:1024px) {
-  .c22 {
+  .c23 {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -1749,7 +1771,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
 }
 
 @media screen and (max-width:700px) {
-  .c22 {
+  .c23 {
     padding: 24px 20px;
     position: relative;
     background-color: #1a1823;
@@ -1757,20 +1779,20 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
 }
 
 @media screen and (max-width:1440px) {
-  .c24 {
+  .c25 {
     width: 32px;
     height: 32px;
     font-size: 14px;
   }
 
-  .c24 svg {
+  .c25 svg {
     width: 16px;
     height: 16px;
   }
 }
 
 @media screen and (max-width:1024px) {
-  .c23 {
+  .c24 {
     -webkit-box-pack: end;
     -webkit-justify-content: flex-end;
     -ms-flex-pack: end;
@@ -1987,12 +2009,12 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                   <h5
                     class="c11"
                   >
-                    NOM Balance
+                    NOM Balance (Bridged)
                   </h5>
                   <p
                     class="c12"
                   >
-                    This shows your total wNOM balance and the amount approved for selling. You must approve wNOM for selling before it can be sold.
+                    Your NOM balance on the Onomy Network
                   </p>
                 </div>
                 <button
@@ -2029,12 +2051,12 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                   <h5
                     class="c11"
                   >
-                    NOM Balance
+                    NOM Delegated
                   </h5>
                   <p
                     class="c12"
                   >
-                    This shows your total wNOM balance and the amount approved for selling. You must approve wNOM for selling before it can be sold.
+                    NOM delegated to earn staking rewards
                   </p>
                 </div>
                 <button
@@ -2044,15 +2066,29 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                 </button>
               </div>
             </div>
-          </div>
-          <footer
-            class="c22"
-          >
             <div
-              class="c23"
+              class="c22"
             >
               <a
-                class="c24"
+                href="/validators"
+              >
+                <button
+                  class="c20"
+                  style="width: 100%;"
+                >
+                  Manage Staking
+                </button>
+              </a>
+            </div>
+          </div>
+          <footer
+            class="c23"
+          >
+            <div
+              class="c24"
+            >
+              <a
+                class="c25"
                 href="https://onomy.io/"
                 target="_blank"
               >
@@ -2068,7 +2104,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                 </svg>
               </a>
               <a
-                class="c24"
+                class="c25"
                 href="https://discord.gg/27r73SYAkQ"
                 target="_blank"
               >
@@ -2083,7 +2119,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                 </svg>
               </a>
               <a
-                class="c24"
+                class="c25"
                 href="https://t.me/onomyprotocol"
                 target="_blank"
               >
@@ -2098,7 +2134,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                 </svg>
               </a>
               <a
-                class="c24"
+                class="c25"
                 href="https://medium.com/onomy-protocol"
                 target="_blank"
               >
@@ -2128,7 +2164,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                 </svg>
               </a>
               <a
-                class="c24"
+                class="c25"
                 href="https://twitter.com/onomyprotocol"
                 target="_blank"
               >

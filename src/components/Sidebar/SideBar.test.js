@@ -2,6 +2,7 @@ import React from 'react';
 import { cleanup, render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { BigNumber } from 'bignumber.js';
+import { MemoryRouter } from 'react-router-dom';
 
 import { darkNew } from 'theme/theme';
 import { ChainContext } from '../../context/chain/ChainContext';
@@ -14,19 +15,21 @@ describe('Given the Sidebar component and strongBalance, weakBalance are of BigN
 
     it('should match the snapshot', () => {
       const { asFragment } = render(
-        <ThemeProvider theme={darkNew}>
-          <ChainContext.Provider
-            value={{
-              blockNumber: 12345678,
-              strongBalance: new BigNumber(0),
-              weakBalance: new BigNumber(10),
-            }}
-          >
-            <ExchangeContext.Provider value={{ strong: 'ETH', weak: 'wNOM' }}>
-              <Sidebar />
-            </ExchangeContext.Provider>
-          </ChainContext.Provider>
-        </ThemeProvider>
+        <MemoryRouter>
+          <ThemeProvider theme={darkNew}>
+            <ChainContext.Provider
+              value={{
+                blockNumber: 12345678,
+                strongBalance: new BigNumber(0),
+                weakBalance: new BigNumber(10),
+              }}
+            >
+              <ExchangeContext.Provider value={{ strong: 'ETH', weak: 'wNOM' }}>
+                <Sidebar />
+              </ExchangeContext.Provider>
+            </ChainContext.Provider>
+          </ThemeProvider>
+        </MemoryRouter>
       );
       expect(asFragment()).toMatchSnapshot();
     });
@@ -39,20 +42,22 @@ describe('Given the Sidebar component and strongBalance, weakBalance are NOT of 
 
     it('should match the snapshot', () => {
       const { asFragment } = render(
-        <ThemeProvider theme={darkNew}>
-          <ChainContext.Provider
-            value={{
-              blockNumber: 12345678,
-              strongBalance: 0,
-              weakBalance: 10,
-              allowance: 'Loading',
-            }}
-          >
-            <ExchangeContext.Provider value={{ strong: 'ETH', weak: 'wNOM' }}>
-              <Sidebar />
-            </ExchangeContext.Provider>
-          </ChainContext.Provider>
-        </ThemeProvider>
+        <MemoryRouter>
+          <ThemeProvider theme={darkNew}>
+            <ChainContext.Provider
+              value={{
+                blockNumber: 12345678,
+                strongBalance: 0,
+                weakBalance: 10,
+                allowance: 'Loading',
+              }}
+            >
+              <ExchangeContext.Provider value={{ strong: 'ETH', weak: 'wNOM' }}>
+                <Sidebar />
+              </ExchangeContext.Provider>
+            </ChainContext.Provider>
+          </ThemeProvider>
+        </MemoryRouter>
       );
       expect(asFragment()).toMatchSnapshot();
     });
