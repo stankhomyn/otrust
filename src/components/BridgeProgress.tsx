@@ -12,9 +12,11 @@ export function BridgeProgress() {
         Total Bridged: <NomBalanceDisplay value={nomBalance} />
       </div>
       {nomAddress && bridgeProgress !== null && (
-        <div>
-          <span>Progress: {bridgeProgress}%</span>
-        </div>
+        <>
+          <div>
+            <span>Progress: {bridgeProgress}%</span>
+          </div>
+        </>
       )}
     </>
   );

@@ -5,6 +5,10 @@ import { Link } from 'react-router-dom';
 import * as Modal from '../styles';
 import { Dimmer } from 'components';
 import { Close, Success } from '../Icons';
+import {
+  MyBridgedNomBalanceDisplay,
+  MyWrappedNomBalanceDisplay,
+} from 'components/NomBalanceDisplay';
 
 const Wrapper = styled.div`
   display: flex;
@@ -78,11 +82,15 @@ export default function BridgeSuccess() {
             </Modal.ExchangeRateWrapper>
             <Modal.ExchangeRateWrapper>
               <span>New NOM balance</span>
-              <strong>1954.24 NOM</strong>
+              <strong>
+                <MyBridgedNomBalanceDisplay /> NOM
+              </strong>
             </Modal.ExchangeRateWrapper>
             <Modal.ExchangeRateWrapper>
               <span>New wNOM balance</span>
-              <strong>1500 wNOM</strong>
+              <strong>
+                <MyWrappedNomBalanceDisplay /> wNOM
+              </strong>
             </Modal.ExchangeRateWrapper>
           </Wrapper>
           <Modal.Info>
