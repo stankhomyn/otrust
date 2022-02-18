@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import BigNumber from 'bignumber.js';
 
 import { NomBalanceDisplay } from 'components/NomBalanceDisplay';
 import { EquivalentValue } from 'components/EquivalentValue';
-import { useOnomy } from 'context/chain/OnomyContext';
 import { format18 } from 'utils/math';
+import { useBridgedBalanceValue } from 'hooks/onomy-hooks';
 
 const Footer = styled.footer`
   display: flex;
@@ -44,7 +43,7 @@ const Controls = styled.div`
 `;
 
 export default function ValidatorFooter({ children }: { children: React.ReactNode }) {
-  const { amount: nomBalance } = useOnomy();
+  const nomBalance = useBridgedBalanceValue();
 
   return (
     <Footer>
@@ -52,10 +51,10 @@ export default function ValidatorFooter({ children }: { children: React.ReactNod
         <p>NOM Balance</p>
         <FooterBalanceValue>
           <strong>
-            <NomBalanceDisplay value={nomBalance} />
+            <NomBalanceDisplay value={nomBalance.toString()} />
           </strong>
           <span>
-            <EquivalentValue amount={format18(new BigNumber(nomBalance)).toNumber()} asset="NOM" />
+            <EquivalentValue amount={format18(nomBalance).toNumber()} asset="NOM" />
           </span>
         </FooterBalanceValue>
       </FooterBalance>

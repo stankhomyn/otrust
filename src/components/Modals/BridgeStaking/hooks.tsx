@@ -2,13 +2,13 @@ import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useOnomy } from 'context/chain/OnomyContext';
-import { useAsyncValue } from 'hooks/useAsyncValue';
+import { useAsyncPoll } from 'hooks/useAsyncPoll';
 
 export function useValidator() {
   const { onomyClient, address } = useOnomy();
   const { id } = useParams();
 
-  return useAsyncValue(
+  return useAsyncPoll(
     useCallback(async () => {
       if (!id) return { validator: null, delegation: null };
       const [validators, selfDelegation, delegationData, rewardsData] = await Promise.all([

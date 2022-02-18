@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { EquivalentValue } from 'components/EquivalentValue';
 import {
   Balances,
   Balance,
@@ -13,21 +12,28 @@ import {
   TooltipDesc,
 } from './SidebarStyles';
 import { PrimaryButton } from 'components/Modals/styles';
+import { NomBalanceDisplay } from 'components/NomBalanceDisplay';
+import { useBridgedBalanceValue, useDelegationTotalValue } from 'hooks/onomy-hooks';
+import { EquivalentValue } from 'components/EquivalentValue';
+import { format18 } from 'utils/math';
 
 const ButtonWrapper = styled.div`
   margin-top: 20px;
 `;
 
 export default function NOMBalances() {
+  const bridged = useBridgedBalanceValue();
+  const [delegated] = useDelegationTotalValue();
+
   return (
     <Balances>
       <Balance>
         <BalancePrice>
           <strong>NOM Balance (Bridged)</strong>
           <BalanceNumber strong>
-            23.2091
+            <NomBalanceDisplay value={bridged.toString()} />
             <small>
-              <EquivalentValue amount={4208.12} asset="ETH" />
+              <EquivalentValue amount={format18(bridged).toNumber()} asset="NOM" />
             </small>
           </BalanceNumber>
         </BalancePrice>
@@ -41,9 +47,9 @@ export default function NOMBalances() {
         <BalancePrice>
           <strong>NOM Delegated</strong>
           <BalanceNumber strong>
-            23.2091
+            <NomBalanceDisplay value={delegated.toString()} />
             <small>
-              <EquivalentValue amount={4208.12} asset="ETH" />
+              <EquivalentValue amount={format18(delegated).toNumber()} asset="NOM" />
             </small>
           </BalanceNumber>
         </BalancePrice>
