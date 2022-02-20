@@ -6,6 +6,7 @@ import LoadingSpinner from 'components/UI/LoadingSpinner';
 import ValidatorDetail from './ValidatorDetail';
 import ValidatorDelegation from './ValidatorDelegation';
 import { useValidator } from './hooks';
+import { ConnectKeplr } from 'components/ConnectKeplr';
 
 export default function ValidatorNode() {
   const [data, { error, pending }] = useValidator();
@@ -31,13 +32,19 @@ export default function ValidatorNode() {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<ValidatorDetail data={data} />} />
-      <Route path="/delegate" element={<ValidatorDelegation data={data} direction="DELEGATE" />} />
-      <Route
-        path="/undelegate"
-        element={<ValidatorDelegation data={data} direction="UNDELEGATE" />}
-      />
-    </Routes>
+    <>
+      <ConnectKeplr />
+      <Routes>
+        <Route path="/" element={<ValidatorDetail data={data} />} />
+        <Route
+          path="/delegate"
+          element={<ValidatorDelegation data={data} direction="DELEGATE" />}
+        />
+        <Route
+          path="/undelegate"
+          element={<ValidatorDelegation data={data} direction="UNDELEGATE" />}
+        />
+      </Routes>
+    </>
   );
 }

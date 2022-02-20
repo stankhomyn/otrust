@@ -6,12 +6,14 @@ import ValidatorFooter from './ValidatorFooter';
 import ValidatorTable from './ValidatorTable';
 import * as Modal from '../styles';
 import StakingModal from './StakingModal';
+import { ConnectKeplr } from 'components/ConnectKeplr';
 
 export default function SelectValidator() {
   const [selected, setSelected] = useState('');
 
   return (
     <StakingModal>
+      <ConnectKeplr />
       <Modal.StakingWrapper>
         <ValidatorHeader />
         <ValidatorTable selected={selected} setSelected={setSelected} />

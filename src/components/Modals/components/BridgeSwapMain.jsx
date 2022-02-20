@@ -15,6 +15,7 @@ import { responsive } from 'theme/constants';
 import { useGasPriceSelection } from 'hooks/useGasPriceSelection';
 import { REACT_APP_GRAVITY_CONTRACT_ADDRESS, REACT_APP_WNOM_CONTRACT_ADDRESS } from 'constants/env';
 import { useOnomy } from 'context/chain/OnomyContext';
+import { ConnectKeplr } from 'components/ConnectKeplr';
 
 export const initialErrorsState = { amountError: '', onomyWalletError: '', transactionError: '' };
 
@@ -249,6 +250,7 @@ export default function BridgeSwapMain() {
 
   return (
     <>
+      <ConnectKeplr />
       {standardBrigdeBreakpoint ? <BridgeSwapModal {...Props} /> : <BridgeSwapMobile {...Props} />}
     </>
   );
