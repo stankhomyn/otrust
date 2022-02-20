@@ -873,12 +873,16 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
           <div
             class="c19"
           >
-            <button
-              class="c20"
-              style="width: 100%;"
+            <a
+              href="/bridge"
             >
-              Bridge wNOM to NOM
-            </button>
+              <button
+                class="c20"
+                style="width: 100%;"
+              >
+                Bridge wNOM to NOM
+              </button>
+            </a>
           </div>
         </div>
         <div
@@ -899,10 +903,8 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                 <div
                   class="c14"
                 >
-                  23.2091
-                  <small>
-                     = $15,780,450
-                  </small>
+                  0
+                  <small />
                 </div>
               </div>
               <div
@@ -941,10 +943,8 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                 <div
                   class="c14"
                 >
-                  23.2091
-                  <small>
-                     = $15,780,450
-                  </small>
+                  0
+                  <small />
                 </div>
               </div>
               <div
@@ -1968,12 +1968,16 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
           <div
             class="c19"
           >
-            <button
-              class="c20"
-              style="width: 100%;"
+            <a
+              href="/bridge"
             >
-              Bridge wNOM to NOM
-            </button>
+              <button
+                class="c20"
+                style="width: 100%;"
+              >
+                Bridge wNOM to NOM
+              </button>
+            </a>
           </div>
         </div>
         <div
@@ -1994,10 +1998,8 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                 <div
                   class="c14"
                 >
-                  23.2091
-                  <small>
-                     = $15,780,450
-                  </small>
+                  0
+                  <small />
                 </div>
               </div>
               <div
@@ -2036,10 +2038,8 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                 <div
                   class="c14"
                 >
-                  23.2091
-                  <small>
-                     = $15,780,450
-                  </small>
+                  0
+                  <small />
                 </div>
               </div>
               <div

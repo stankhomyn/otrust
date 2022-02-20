@@ -15,6 +15,7 @@ import BridgeSuccess from 'components/Modals/BridgeStaking/BridgeSuccess';
 import SelectValidator from 'components/Modals/BridgeStaking/SelectValidator';
 import ValidatorNode from 'components/Modals/BridgeStaking/ValidatorNode';
 import './assets/font-faces.css';
+import BridgeSwapMain from 'components/Modals/components/BridgeSwapMain';
 
 function App() {
   return (
@@ -29,9 +30,9 @@ function App() {
                 <BondingCurve />
                 <Routes>
                   <Route path="/" element={<></>} />
-                  <Route path="/bridge-success" element={<BridgeSuccess />} />
                   <Route path="/validators/" element={<SelectValidator />} />
                   <Route path="/validators/:id/*" element={<ValidatorNode />} />
+                  <Route path="/bridge" element={<BridgeSwapMain />} />
                 </Routes>
               </ModalProvider>
             </ExchangeProvider>

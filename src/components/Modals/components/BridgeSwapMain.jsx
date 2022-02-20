@@ -4,6 +4,7 @@ import { BigNumber } from 'bignumber.js';
 import cosmos from 'cosmos-lib';
 import { ethers } from 'ethers';
 import { useMediaQuery } from 'react-responsive';
+import { useNavigate } from 'react-router-dom';
 
 import { useChain } from 'context/chain/ChainContext';
 import { GravityCont, NOMCont } from 'context/chain/contracts';
@@ -32,12 +33,13 @@ export const initialGasOptions = [
   },
 ];
 
-export default function BridgeSwapMain({ closeBridgeModal }) {
+export default function BridgeSwapMain() {
   const {
     address: onomyWalletValue,
     setAddress: setOnomyWalletValue,
     addPendingBridgeTransaction,
   } = useOnomy();
+  const navigate = useNavigate();
   const [amountValue, setAmountValue] = useState('');
   const [errors, setErrors] = useState(initialErrorsState);
   const [formattedWeakBalance, setFormattedWeakBalance] = useState(0);
@@ -117,6 +119,10 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
     setIsDisabled(false);
     updateAllowanceAmount();
   };
+
+  function closeBridgeModal() {
+    navigate('/');
+  }
 
   const closeModal = () => {
     if (!isTransactionPending) {

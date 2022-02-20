@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { MemoryRouter } from 'react-router-dom';
 import ApolloClient, { InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/client';
 import { render } from '@testing-library/react';
@@ -18,15 +19,19 @@ const client = new ApolloClient({
 export const renderWithTheme = (Component, props, children) => {
   if (children) {
     return render(
-      <ThemeProvider theme={darkNew}>
-        <Component {...props}>{children}</Component>
-      </ThemeProvider>
+      <MemoryRouter>
+        <ThemeProvider theme={darkNew}>
+          <Component {...props}>{children}</Component>
+        </ThemeProvider>
+      </MemoryRouter>
     );
   }
   return render(
-    <ThemeProvider theme={darkNew}>
-      <Component {...props} />
-    </ThemeProvider>
+    <MemoryRouter>
+      <ThemeProvider theme={darkNew}>
+        <Component {...props} />
+      </ThemeProvider>
+    </MemoryRouter>
   );
 };
 

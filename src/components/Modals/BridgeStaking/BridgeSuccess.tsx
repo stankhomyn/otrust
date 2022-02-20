@@ -41,14 +41,16 @@ const ResultWrapper = styled.div`
   justify-content: center;
 `;
 
-export default function BridgeSuccess() {
+export default function BridgeSuccess({ amountValue = '0' }) {
   return (
     <>
       <Dimmer />
       <Modal.BridgeModalWrapper>
-        <Modal.CloseIcon onClick={() => null}>
-          <Close />
-        </Modal.CloseIcon>
+        <Link to="/">
+          <Modal.CloseIcon>
+            <Close />
+          </Modal.CloseIcon>
+        </Link>
 
         <Modal.BridgeLayout>
           <Wrapper>
@@ -61,12 +63,12 @@ export default function BridgeSuccess() {
             <Modal.ExchangeResult>
               <ResultWrapper>
                 <div>
-                  + 123
+                  + {amountValue}
                   <sup>NOM</sup>
                 </div>
                 <Modal.DetailsSeparator>/</Modal.DetailsSeparator>
                 <Modal.Spent>
-                  - 123
+                  - {amountValue}
                   <sup>wNOM</sup>
                 </Modal.Spent>
               </ResultWrapper>
@@ -121,9 +123,11 @@ export default function BridgeSuccess() {
             </Section>
 
             <Section>
-              <Modal.SecondaryButton style={{ width: '100%', height: 52 }}>
-                Done
-              </Modal.SecondaryButton>
+              <Link to="/">
+                <Modal.SecondaryButton style={{ width: '100%', height: 52 }}>
+                  Done
+                </Modal.SecondaryButton>
+              </Link>
             </Section>
           </Modal.Info>
         </Modal.BridgeLayout>
