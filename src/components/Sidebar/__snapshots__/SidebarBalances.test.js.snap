@@ -452,12 +452,16 @@ exports[`Given the SidebarBalances component when the component is rendered shou
     <div
       class="c13"
     >
-      <button
-        class="c14"
-        style="width: 100%;"
+      <a
+        href="/bridge"
       >
-        Bridge wNOM to NOM
-      </button>
+        <button
+          class="c14"
+          style="width: 100%;"
+        >
+          Bridge wNOM to NOM
+        </button>
+      </a>
     </div>
   </div>
 </DocumentFragment>

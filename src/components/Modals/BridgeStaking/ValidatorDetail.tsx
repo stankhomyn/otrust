@@ -1,13 +1,17 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import BigNumber from 'bignumber.js';
 
-import ValidatorHeader from './ValidatorHeader';
 import ValidatorFooter from './ValidatorFooter';
 import ValidatorNodeHeader from './ValidatorNodeHeader';
 import * as Modal from '../styles';
 import BackButton from './BackButton';
 import StakingModal from './StakingModal';
+import { format18 } from 'utils/math';
+import { FormattedNumber } from 'components/FormattedNumber';
+import { EquivalentValue } from 'components/EquivalentValue';
+import { ValidatorData } from './hooks';
 
 const DelegateWrapper = styled.div`
   display: flex;
@@ -15,7 +19,9 @@ const DelegateWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const DelegateItem = styled.div`
+const DelegateItem = styled.div<{
+  reward?: boolean;
+}>`
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -81,60 +87,92 @@ const FooterInfo = styled.div`
   }
 `;
 
-export default function ValidatorNode() {
+export default function ValidatorDetail({ data }: { data: ValidatorData }) {
+  const { id } = useParams();
+  const { validator, delegation, rewards = null, selfStake = 0 } = data;
+
+  if (!validator) return null;
   return (
     <StakingModal>
       <Modal.StakingWrapper>
-        <BackButton
-          clickHandler={() => {
-            alert('going back');
-          }}
+        <Link to="/validators/">
+          <BackButton />
+        </Link>
+        <ValidatorNodeHeader
+          name={validator.description.moniker ?? ''}
+          url={validator.description.website}
+          estimatedAPR={validator.commission.commission_rates.rate.toNumber() * 100}
         />
-        <ValidatorHeader />
-
-        <ValidatorNodeHeader />
 
         <DelegateWrapper>
           <DelegateItem>
             <span>Delegated</span>
             <strong>
-              22,094.23 <sup>NOM</sup>
+              <FormattedNumber
+                value={format18(delegation?.balance.amount ?? new BigNumber(0)).toNumber()}
+              />
+              <sup>NOM</sup>
             </strong>
-            <span>$3,998.32</span>
+            <span>
+              <EquivalentValue
+                asset="NOM"
+                prefix="$"
+                amount={format18(delegation?.balance.amount ?? new BigNumber(0)).toNumber()}
+              />
+            </span>
           </DelegateItem>
           <DelegateItem reward>
             <span>Reward</span>
             <strong>
-              4,552.98 <sup>XRP</sup>
+              <FormattedNumber value={format18(rewards?.amount ?? new BigNumber(0)).toNumber()} />
+              <sup>XRP</sup>
             </strong>
-            <span>$3,998.32</span>
+            <EquivalentValue
+              asset="NOM"
+              prefix="$"
+              amount={format18(rewards?.amount ?? new BigNumber(0)).toNumber()}
+            />
           </DelegateItem>
         </DelegateWrapper>
 
         <Footer>
           <FooterInfo>
-            <span>Total Banded</span>
-            <strong>10,682,107 XRP</strong>
+            <span>Total Bonded</span>
+            <strong>
+              <FormattedNumber value={format18(validator.tokens).toNumber()} /> XRP
+            </strong>
           </FooterInfo>
           <FooterInfo>
             <span>Self Bonded Rate</span>
-            <strong>0.92%</strong>
+            <strong>
+              {(100 * selfStake).toFixed(2)}
+              <sup>%</sup>
+            </strong>
           </FooterInfo>
           <FooterInfo>
             <span>Commission</span>
-            <strong>8.90%</strong>
+            <strong>
+              <FormattedNumber
+                value={validator.commission.commission_rates.rate.toNumber() * 100}
+              />
+              <sup>%</sup>
+            </strong>
           </FooterInfo>
           <FooterInfo>
             <span>Voting Power</span>
-            <strong>13.9M</strong>
+            <strong>
+              <FormattedNumber value={format18(validator.delegator_shares).toNumber()} />
+            </strong>
           </FooterInfo>
         </Footer>
       </Modal.StakingWrapper>
       <ValidatorFooter>
-        <Modal.SecondaryButton type="button">Undelegate</Modal.SecondaryButton>
-        <Link to="/validator-delegation">
+        <Link to={`/validators/${id}/undelegate`}>
+          <Modal.SecondaryButton type="button">Undelegate</Modal.SecondaryButton>
+        </Link>
+        <Link to={`/validators/${id}/delegate`}>
           <Modal.PrimaryButton type="button">Delegate</Modal.PrimaryButton>
-        </Link>{' '}
+        </Link>
       </ValidatorFooter>
     </StakingModal>
   );

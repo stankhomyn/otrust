@@ -1,16 +1,14 @@
 /* eslint-disable react/jsx-key */
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import styled, { css } from 'styled-components/macro';
 import { useTable, useSortBy } from 'react-table';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import { SortBy, ValueChangeArrow } from '../Icons';
-
-/*
 import { useOnomy } from 'context/chain/OnomyContext';
 import { useAsyncValue } from 'hooks/useAsyncValue';
 import { format18 } from 'utils/math';
-*/
+import { FormattedNumber } from 'components/FormattedNumber';
 
 const StyledTable = styled.table`
   width: 100%;
@@ -169,15 +167,12 @@ const DelegatedChange = styled.span`
   }
 `;
 
-export default function ValidatorTable() {
-  const [activeValidatorId, setActiveValidatorId] = useState(null);
-  /*
+export default function ValidatorTable({ selected, setSelected }) {
   const { onomyClient } = useOnomy();
 
-  const [realData, { error }] = useAsyncValue(
+  const [data, { error }] = useAsyncValue(
     useCallback(async () => {
       const results = await onomyClient.getValidators();
-      console.log('results', results);
       return results.map(res => ({
         id: res.operator_address,
         validator: {
@@ -195,10 +190,10 @@ export default function ValidatorTable() {
     []
   );
 
-  console.log('realData', realData, error);
-  */
+  if (error) console.error('error', error);
 
-  const data = useMemo(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const fakeData = useMemo(
     () => [
       {
         id: '1',
@@ -292,7 +287,9 @@ export default function ValidatorTable() {
             {/* {value.img} */}
             <ValidatorContent>
               <strong>{value.name}</strong>
-              <span>{value.votingPower} Voting Power</span>
+              <span>
+                <FormattedNumber value={value.votingPower} /> Voting Power
+              </span>
             </ValidatorContent>
           </Validator>
         ),
@@ -307,7 +304,9 @@ export default function ValidatorTable() {
         accessor: 'delegated',
         Cell: ({ value }) => (
           <Delegated>
-            <strong>{value.value}</strong>
+            <strong>
+              <FormattedNumber value={value.value} />
+            </strong>
             <DelegatedChange changeType={value.changeType}>
               ${value.change}
               <ValueChangeArrow />
@@ -352,8 +351,8 @@ export default function ValidatorTable() {
             return (
               <ValidatorRow
                 {...row.getRowProps()}
-                active={row.original.id === activeValidatorId}
-                onClick={() => setActiveValidatorId(row.original.id)}
+                active={row.original.id === selected}
+                onClick={() => setSelected(row.original.id)}
               >
                 {row.cells.map(cell => (
                   <td {...cell.getCellProps()}>{cell.render('Cell')}</td>

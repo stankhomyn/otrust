@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import styled from 'styled-components/macro';
 
@@ -23,7 +24,7 @@ const IconButton = styled.button`
 export default function BackButton({
   clickHandler,
 }: {
-  clickHandler: React.MouseEventHandler<HTMLButtonElement>;
+  clickHandler?: React.MouseEventHandler<HTMLButtonElement>;
 }) {
   return (
     <IconButton onClick={clickHandler}>

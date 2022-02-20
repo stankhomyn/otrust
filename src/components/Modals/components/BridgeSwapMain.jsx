@@ -4,6 +4,7 @@ import { BigNumber } from 'bignumber.js';
 import cosmos from 'cosmos-lib';
 import { ethers } from 'ethers';
 import { useMediaQuery } from 'react-responsive';
+import { useNavigate } from 'react-router-dom';
 
 import { useChain } from 'context/chain/ChainContext';
 import { GravityCont, NOMCont } from 'context/chain/contracts';
@@ -14,6 +15,7 @@ import { responsive } from 'theme/constants';
 import { useGasPriceSelection } from 'hooks/useGasPriceSelection';
 import { REACT_APP_GRAVITY_CONTRACT_ADDRESS, REACT_APP_WNOM_CONTRACT_ADDRESS } from 'constants/env';
 import { useOnomy } from 'context/chain/OnomyContext';
+import { ConnectKeplr } from 'components/ConnectKeplr';
 
 export const initialErrorsState = { amountError: '', onomyWalletError: '', transactionError: '' };
 
@@ -32,12 +34,13 @@ export const initialGasOptions = [
   },
 ];
 
-export default function BridgeSwapMain({ closeBridgeModal }) {
+export default function BridgeSwapMain() {
   const {
     address: onomyWalletValue,
     setAddress: setOnomyWalletValue,
     addPendingBridgeTransaction,
   } = useOnomy();
+  const navigate = useNavigate();
   const [amountValue, setAmountValue] = useState('');
   const [errors, setErrors] = useState(initialErrorsState);
   const [formattedWeakBalance, setFormattedWeakBalance] = useState(0);
@@ -117,6 +120,10 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
     setIsDisabled(false);
     updateAllowanceAmount();
   };
+
+  function closeBridgeModal() {
+    navigate('/');
+  }
 
   const closeModal = () => {
     if (!isTransactionPending) {
@@ -243,6 +250,7 @@ export default function BridgeSwapMain({ closeBridgeModal }) {
 
   return (
     <>
+      <ConnectKeplr />
       {standardBrigdeBreakpoint ? <BridgeSwapModal {...Props} /> : <BridgeSwapMobile {...Props} />}
     </>
   );

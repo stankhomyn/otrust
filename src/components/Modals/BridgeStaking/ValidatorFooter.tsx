@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
+import { NomBalanceDisplay } from 'components/NomBalanceDisplay';
+import { EquivalentValue } from 'components/EquivalentValue';
+import { format18 } from 'utils/math';
+import { useBridgedBalanceValue } from 'hooks/onomy-hooks';
+
 const Footer = styled.footer`
   display: flex;
   align-items: center;
@@ -38,13 +43,19 @@ const Controls = styled.div`
 `;
 
 export default function ValidatorFooter({ children }: { children: React.ReactNode }) {
+  const nomBalance = useBridgedBalanceValue();
+
   return (
     <Footer>
       <FooterBalance>
         <p>NOM Balance</p>
         <FooterBalanceValue>
-          <strong>23.20931</strong>
-          <span> = $16,208.04</span>
+          <strong>
+            <NomBalanceDisplay value={nomBalance.toString()} />
+          </strong>
+          <span>
+            <EquivalentValue amount={format18(nomBalance).toNumber()} asset="NOM" />
+          </span>
         </FooterBalanceValue>
       </FooterBalance>
       <Controls>{children}</Controls>

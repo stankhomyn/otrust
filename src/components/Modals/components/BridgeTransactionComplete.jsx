@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { BridgeProgress } from 'components/BridgeProgress';
 import { Success } from '../Icons';
 import * as Modal from '../styles';
+import { useOnomy } from 'context/chain/OnomyContext';
+import BridgeSuccess from '../BridgeStaking/BridgeSuccess';
 
 export const ExplorerButton = styled(Modal.SecondaryButton)`
   width: 100%;
@@ -11,6 +13,11 @@ export const ExplorerButton = styled(Modal.SecondaryButton)`
 `;
 
 export default function BridgeTransactionComplete({ closeModalHandler, amountValue }) {
+  const { bridgeProgress } = useOnomy();
+
+  if (bridgeProgress === null) {
+    return <BridgeSuccess />;
+  }
   return (
     <Modal.BridgeSuccessWrapper>
       <main>

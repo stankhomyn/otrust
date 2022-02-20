@@ -148,7 +148,7 @@ const OnomyContext = createContext(DEFAULT_STATE);
 
 export function useOnomy() {
   const context = useContext(OnomyContext);
-  context.connectKeplr();
+  // context.connectKeplr();
   return context;
 }
 

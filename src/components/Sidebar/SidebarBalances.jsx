@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-// import ModalComponent from 'components/Modals/components/ModalComponent';
-import BridgeSwapMain from 'components/Modals/components/BridgeSwapMain';
 import { PrimaryButton } from 'components/Modals/styles';
 import { EquivalentValue } from 'components/EquivalentValue';
 import {
@@ -19,9 +18,6 @@ import { SidebarBridgedBalance } from './SidebarBridgedBalance';
 import { REACT_APP_SHOW_BRIDGED_NOM } from 'constants/env';
 
 export default function SidebarBalances({ strong, weak, strongBalance, weakBalance, allowance }) {
-  // const { handleModal } = useModal();
-  const [showBridge, setShowBridge] = useState(false);
-
   return (
     <>
       <Balances>
@@ -64,12 +60,11 @@ export default function SidebarBalances({ strong, weak, strongBalance, weakBalan
         {REACT_APP_SHOW_BRIDGED_NOM && <SidebarBridgedBalance />}
 
         <WithdrawBtnWrapper>
-          <PrimaryButton style={{ width: '100%' }} onClick={() => setShowBridge(true)}>
-            Bridge wNOM to NOM
-          </PrimaryButton>
+          <Link to="/bridge">
+            <PrimaryButton style={{ width: '100%' }}>Bridge wNOM to NOM</PrimaryButton>
+          </Link>
         </WithdrawBtnWrapper>
       </Balances>
-      {showBridge && <BridgeSwapMain closeBridgeModal={() => setShowBridge(false)} />}
     </>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import BigNumber from 'bignumber.js';
 
 import ValidatorFooter from './ValidatorFooter';
 import { Success } from '../Icons';
@@ -8,6 +9,8 @@ import { Caption, Desc } from './ValidatorHeader';
 import * as Modal from '../styles';
 import ValidatorNodeHeader from './ValidatorNodeHeader';
 import StakingModal from './StakingModal';
+import { ValidatorData } from './hooks';
+import { FormattedNumber } from 'components/FormattedNumber';
 
 const DeligatedWrapper = styled.div`
   display: flex;
@@ -46,14 +49,26 @@ const DeligatedWrapper = styled.div`
 
 export default function ValidatorDelegationSuccess({
   direction = 'DELEGATE',
-  validator_name = 'Test Validator',
+  data,
+  amount,
+}: {
+  direction: 'DELEGATE' | 'UNDELEGATE';
+  data: ValidatorData;
+  amount: BigNumber;
 }) {
+  const { id } = useParams();
   const verb = useMemo(() => (direction === 'DELEGATE' ? 'delegated' : 'undelegated'), [direction]);
+  const { validator } = data;
+  if (!validator) return null;
 
   return (
     <StakingModal>
       <Modal.StakingWrapper>
-        <ValidatorNodeHeader />
+        <ValidatorNodeHeader
+          name={validator.description.moniker ?? ''}
+          url={validator.description.website}
+          estimatedAPR={validator.commission.commission_rates.rate.toNumber() * 100}
+        />
 
         <div>
           <Modal.ModalIconWrapper>
@@ -65,20 +80,20 @@ export default function ValidatorDelegationSuccess({
           </Caption>
           <Desc style={{ textAlign: 'center' }}>
             {direction === 'DELEGATE'
-              ? `Your NOM has been successfully delegated to ${validator_name} and is now earning staking
+              ? `Your NOM has been successfully delegated to ${validator.description.moniker} and is now earning staking
             rewards!`
-              : `Your NOM has been successfully undelegated from ${validator_name} and is now available for other uses.`}
+              : `Your NOM has been successfully undelegated from ${validator.description.moniker} and is now available for other uses.`}
           </Desc>
           <DeligatedWrapper>
             <strong style={{ textTransform: 'capitalize' }}>{verb}</strong>
             <span>
-              2544.24<sup>NOM</sup>
+              <FormattedNumber value={amount.toNumber()} /> <sup>NOM</sup>
             </span>
           </DeligatedWrapper>
         </div>
       </Modal.StakingWrapper>
       <ValidatorFooter>
-        <Link to="/validator-node">
+        <Link to={`/validators/${id}`}>
           <Modal.SecondaryButton type="button">Back to validator</Modal.SecondaryButton>
         </Link>
         <Link to="/">

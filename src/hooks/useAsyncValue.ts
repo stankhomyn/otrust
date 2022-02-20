@@ -4,7 +4,7 @@ import { AsyncStatus, useAsyncProcess } from './useAsyncProcess';
 
 export function useAsyncValue<T, U>(fn: () => Promise<T>, defVal: U): [T | U, AsyncStatus] {
   const [value, setValue] = useState<T | U>(defVal);
-  const [run, state] = useAsyncProcess();
+  const [run, state] = useAsyncProcess({ allowMultiple: true });
 
   useEffect(() => {
     run(async () => setValue(await fn()));

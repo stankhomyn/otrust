@@ -11,12 +11,10 @@ import ChainProvider from 'context/chain/ChainContext';
 import ExchangeProvider from 'context/exchange/ExchangeContext';
 import ModalProvider from 'context/modal/ModalContext';
 import MainHeader from 'components/MainHeader';
-import BridgeSuccess from 'components/Modals/BridgeStaking/BridgeSuccess';
 import SelectValidator from 'components/Modals/BridgeStaking/SelectValidator';
 import ValidatorNode from 'components/Modals/BridgeStaking/ValidatorNode';
-import ValidatorDelegation from 'components/Modals/BridgeStaking/ValidatorDelegation';
-import ValidatorDelegationSuccess from 'components/Modals/BridgeStaking/ValidatorDelegationSuccess';
 import './assets/font-faces.css';
+import BridgeSwapMain from 'components/Modals/components/BridgeSwapMain';
 
 function App() {
   return (
@@ -31,17 +29,9 @@ function App() {
                 <BondingCurve />
                 <Routes>
                   <Route path="/" element={<></>} />
-                  <Route path="/bridge-success" element={<BridgeSuccess />} />
-                  <Route path="/select-validator" element={<SelectValidator />} />
-                  <Route path="/validator-node" element={<ValidatorNode />} />
-                  <Route
-                    path="/validator-delegation"
-                    element={<ValidatorDelegation direction="DELEGATE" />}
-                  />
-                  <Route
-                    path="/validator-delegation/success"
-                    element={<ValidatorDelegationSuccess />}
-                  />
+                  <Route path="/validators/" element={<SelectValidator />} />
+                  <Route path="/validators/:id/*" element={<ValidatorNode />} />
+                  <Route path="/bridge" element={<BridgeSwapMain />} />
                 </Routes>
               </ModalProvider>
             </ExchangeProvider>

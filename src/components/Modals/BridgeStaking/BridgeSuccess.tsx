@@ -5,6 +5,10 @@ import { Link } from 'react-router-dom';
 import * as Modal from '../styles';
 import { Dimmer } from 'components';
 import { Close, Success } from '../Icons';
+import {
+  MyBridgedNomBalanceDisplay,
+  MyWrappedNomBalanceDisplay,
+} from 'components/NomBalanceDisplay';
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,14 +41,16 @@ const ResultWrapper = styled.div`
   justify-content: center;
 `;
 
-export default function BridgeSuccess() {
+export default function BridgeSuccess({ amountValue = '0' }) {
   return (
     <>
       <Dimmer />
       <Modal.BridgeModalWrapper>
-        <Modal.CloseIcon onClick={() => null}>
-          <Close />
-        </Modal.CloseIcon>
+        <Link to="/">
+          <Modal.CloseIcon>
+            <Close />
+          </Modal.CloseIcon>
+        </Link>
 
         <Modal.BridgeLayout>
           <Wrapper>
@@ -57,12 +63,12 @@ export default function BridgeSuccess() {
             <Modal.ExchangeResult>
               <ResultWrapper>
                 <div>
-                  + 123
+                  + {amountValue}
                   <sup>NOM</sup>
                 </div>
                 <Modal.DetailsSeparator>/</Modal.DetailsSeparator>
                 <Modal.Spent>
-                  - 123
+                  - {amountValue}
                   <sup>wNOM</sup>
                 </Modal.Spent>
               </ResultWrapper>
@@ -78,11 +84,15 @@ export default function BridgeSuccess() {
             </Modal.ExchangeRateWrapper>
             <Modal.ExchangeRateWrapper>
               <span>New NOM balance</span>
-              <strong>1954.24 NOM</strong>
+              <strong>
+                <MyBridgedNomBalanceDisplay /> NOM
+              </strong>
             </Modal.ExchangeRateWrapper>
             <Modal.ExchangeRateWrapper>
               <span>New wNOM balance</span>
-              <strong>1500 wNOM</strong>
+              <strong>
+                <MyWrappedNomBalanceDisplay /> wNOM
+              </strong>
             </Modal.ExchangeRateWrapper>
           </Wrapper>
           <Modal.Info>
@@ -107,15 +117,17 @@ export default function BridgeSuccess() {
             </Section>
 
             <Section>
-              <Link to="/select-validator">
+              <Link to="/validators">
                 <Modal.FullWidthButton>Start Staking</Modal.FullWidthButton>
               </Link>
             </Section>
 
             <Section>
-              <Modal.SecondaryButton style={{ width: '100%', height: 52 }}>
-                Done
-              </Modal.SecondaryButton>
+              <Link to="/">
+                <Modal.SecondaryButton style={{ width: '100%', height: 52 }}>
+                  Done
+                </Modal.SecondaryButton>
+              </Link>
             </Section>
           </Modal.Info>
         </Modal.BridgeLayout>
