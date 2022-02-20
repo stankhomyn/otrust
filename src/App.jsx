@@ -11,7 +11,6 @@ import ChainProvider from 'context/chain/ChainContext';
 import ExchangeProvider from 'context/exchange/ExchangeContext';
 import ModalProvider from 'context/modal/ModalContext';
 import MainHeader from 'components/MainHeader';
-import BridgeSuccess from 'components/Modals/BridgeStaking/BridgeSuccess';
 import SelectValidator from 'components/Modals/BridgeStaking/SelectValidator';
 import ValidatorNode from 'components/Modals/BridgeStaking/ValidatorNode';
 import './assets/font-faces.css';
