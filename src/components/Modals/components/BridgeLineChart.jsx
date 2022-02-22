@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { select, line, curveCardinal, axisLeft, axisBottom, scaleLinear } from 'd3';
 
+import { OnomyFormulas } from 'OnomyClient/OnomyFormulas';
+import { OnomyConstants } from 'OnomyClient/OnomyConstants';
+
 const StyledSVG = styled.svg`
   width: 100%;
   height: ${props => props.chartHeight}px;
@@ -32,13 +35,7 @@ const ChartCaption = styled.h3`
   }
 `;
 
-export default function BridgeLineChart({
-  peakHeight,
-  peakPosition,
-  standardDeviation,
-  totalCoins,
-  coinsInCirculation,
-}) {
+export default function BridgeLineChart({ coinsInCirculation }) {
   const [data, setData] = useState([]);
   const [wrapperWidth, setWrapperWidth] = useState(0);
   const [activePoint, setActivePoint] = useState(0);
@@ -52,13 +49,6 @@ export default function BridgeLineChart({
   const WRAPPER_SIDE_PADDING = 40;
   const CHART_HEIGHT = 200;
   const CHART_DATA_STEP = 10000000;
-
-  // utils
-  const applyFormula = useCallback(
-    value =>
-      peakHeight * Math.exp((-1 * (value - peakPosition) ** 2) / (2 * standardDeviation ** 2)),
-    [peakHeight, peakPosition, standardDeviation]
-  );
 
   const updateWrapperWidth = useCallback(
     () => setWrapperWidth(wrapperRef?.current?.offsetWidth - WRAPPER_SIDE_PADDING * 2),
@@ -89,12 +79,12 @@ export default function BridgeLineChart({
   useEffect(() => {
     const generatedData = [];
 
-    for (let i = 0; i <= totalCoins; i += CHART_DATA_STEP) {
+    for (let i = 0; i <= OnomyConstants.TOTAL_COINS; i += CHART_DATA_STEP) {
       generatedData.push(i);
     }
 
     setData(generatedData);
-  }, [setData, totalCoins]);
+  }, [setData]);
 
   useEffect(() => {
     setActivePointIndex(getActivePointIndex(coinsInCirculation));
@@ -104,7 +94,7 @@ export default function BridgeLineChart({
     const svg = select(svgRef.current);
 
     // Scales
-    const xScale = scaleLinear().domain([0, totalCoins]).range([0, wrapperWidth]);
+    const xScale = scaleLinear().domain([0, OnomyConstants.TOTAL_COINS]).range([0, wrapperWidth]);
     const yScale = scaleLinear().domain([0, 100]).range([CHART_HEIGHT, 0]);
 
     const gradientStops = [
@@ -158,7 +148,7 @@ export default function BridgeLineChart({
     // Line
     const APYline = line()
       .x(d => xScale(d))
-      .y(d => yScale(applyFormula(d)))
+      .y(d => yScale(OnomyFormulas.stakingRewardAPR(d)))
       .curve(curveCardinal);
 
     svg
@@ -174,7 +164,7 @@ export default function BridgeLineChart({
       .data([data[activePointIndex]])
       .style('transform', d => {
         const x = `${xScale(d)}px`;
-        const y = `${yScale(applyFormula(d)) + 50}px`;
+        const y = `${yScale(OnomyFormulas.stakingRewardAPR(d)) + 50}px`;
 
         return `translate(${x}, ${y})`;
       })
@@ -182,19 +172,19 @@ export default function BridgeLineChart({
       .delay(100)
       .style('transform', d => {
         const x = `${xScale(d)}px`;
-        const y = `${yScale(applyFormula(d))}px`;
+        const y = `${yScale(OnomyFormulas.stakingRewardAPR(d))}px`;
 
         return `translate(${x}, ${y})`;
       })
       .style('opacity', 1)
       .call(g =>
         g.select('text').text(d => {
-          const calculatedPointValue = d && applyFormula(d).toFixed(0);
+          const calculatedPointValue = d && OnomyFormulas.stakingRewardAPR(d).toFixed(0);
           setActivePoint(calculatedPointValue);
           return `${calculatedPointValue}%`;
         })
       );
-  }, [data, activePointIndex, totalCoins, applyFormula, wrapperWidth]);
+  }, [data, activePointIndex, wrapperWidth]);
 
   return (
     <div ref={wrapperRef}>
