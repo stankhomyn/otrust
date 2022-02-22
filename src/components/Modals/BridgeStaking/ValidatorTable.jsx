@@ -3,6 +3,7 @@ import React, { useMemo, useCallback } from 'react';
 import styled, { css } from 'styled-components/macro';
 import { useTable, useSortBy } from 'react-table';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { BigNumber } from 'ethers';
 
 import { SortBy } from '../Icons';
 import { useOnomy } from 'context/chain/OnomyContext';
@@ -144,25 +145,35 @@ const Delegated = styled.div`
 `;
 
 export default function ValidatorTable({ selected, setSelected }) {
-  const { onomyClient, bridgedSupplyFormatted: bridgedSupply } = useOnomy();
+  const { address, onomyClient, bridgedSupplyFormatted: bridgedSupply } = useOnomy();
   const stakingAPR = useMemo(() => OnomyFormulas.stakingRewardAPR(bridgedSupply), [bridgedSupply]);
 
   const [data, { error }] = useAsyncValue(
     useCallback(async () => {
-      const results = await onomyClient.getValidators();
-      return results.map(res => ({
-        id: res.operator_address,
-        validator: {
-          name: res.description.moniker || res.operator_address,
-          votingPower: format18(res.tokens).toString(),
-        },
-        rewards: {
-          APR: stakingAPR,
-          commissionRate: res.commission.commission_rates.rate.toNumber() * 100,
-        },
-        delegated: 1000,
-      }));
-    }, [onomyClient, stakingAPR]),
+      const [validators, delegationData] = await Promise.all([
+        // TODO: more focused query?
+        onomyClient.getValidators(),
+        onomyClient.getDelegationsForDelegator(address),
+      ]);
+
+      return validators.map(res => {
+        const delegation = delegationData.find(
+          d => d.delegation.validator_address === res.operator_address
+        );
+        return {
+          id: res.operator_address,
+          validator: {
+            name: res.description.moniker || res.operator_address,
+            votingPower: format18(res.tokens).toString(),
+          },
+          rewards: {
+            APR: stakingAPR,
+            commissionRate: res.commission.commission_rates.rate.toNumber() * 100,
+          },
+          delegated: format18(delegation?.balance.amount ?? BigNumber.from(0)),
+        };
+      });
+    }, [onomyClient, stakingAPR, address]),
     []
   );
 
