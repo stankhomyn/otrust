@@ -3,12 +3,14 @@ import React, { useMemo, useCallback } from 'react';
 import styled, { css } from 'styled-components/macro';
 import { useTable, useSortBy } from 'react-table';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { BigNumber } from 'ethers';
 
-import { SortBy, ValueChangeArrow } from '../Icons';
+import { SortBy } from '../Icons';
 import { useOnomy } from 'context/chain/OnomyContext';
 import { useAsyncValue } from 'hooks/useAsyncValue';
 import { format18 } from 'utils/math';
 import { FormattedNumber } from 'components/FormattedNumber';
+import { OnomyFormulas } from 'OnomyClient/OnomyFormulas';
 
 const StyledTable = styled.table`
   width: 100%;
@@ -142,139 +144,40 @@ const Delegated = styled.div`
   }
 `;
 
-const changeTypeMixin = css`
-  ${props =>
-    props.changeType === 'DOWN'
-      ? props.theme.colors.highlightRed
-      : props.theme.colors.highlightGreen};
-`;
-
-const DelegatedChange = styled.span`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-
-  color: ${props => (props.changeType ? changeTypeMixin : props.theme.colors.textSecondary)};
-
-  svg {
-    display: ${props => (props.changeType ? 'block' : 'none')};
-
-    transform: ${props => (props.changeType === 'DOWN' ? 'rotate(180deg)' : 'rotate(0deg)')};
-
-    path {
-      fill: currentColor;
-    }
-  }
-`;
-
 export default function ValidatorTable({ selected, setSelected }) {
-  const { onomyClient } = useOnomy();
+  const { address, onomyClient, bridgedSupplyFormatted: bridgedSupply } = useOnomy();
+  const stakingAPR = useMemo(() => OnomyFormulas.stakingRewardAPR(bridgedSupply), [bridgedSupply]);
 
   const [data, { error }] = useAsyncValue(
     useCallback(async () => {
-      const results = await onomyClient.getValidators();
-      return results.map(res => ({
-        id: res.operator_address,
-        validator: {
-          name: res.description.moniker || res.operator_address,
-          votingPower: format18(res.tokens).toString(),
-        },
-        APR: res.commission.commission_rates.rate.toNumber(),
-        delegated: {
-          value: 23095.22,
-          change: 4552.98,
-          changeType: 'UP',
-        },
-      }));
-    }, [onomyClient]),
+      const [validators, delegationData] = await Promise.all([
+        // TODO: more focused query?
+        onomyClient.getValidators(),
+        onomyClient.getDelegationsForDelegator(address),
+      ]);
+
+      return validators.map(res => {
+        const delegation = delegationData.find(
+          d => d.delegation.validator_address === res.operator_address
+        );
+        return {
+          id: res.operator_address,
+          validator: {
+            name: res.description.moniker || res.operator_address,
+            votingPower: format18(res.tokens).toString(),
+          },
+          rewards: {
+            APR: stakingAPR,
+            commissionRate: res.commission.commission_rates.rate.toNumber() * 100,
+          },
+          delegated: format18(delegation?.balance.amount ?? BigNumber.from(0)),
+        };
+      });
+    }, [onomyClient, stakingAPR, address]),
     []
   );
 
   if (error) console.error('error', error);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const fakeData = useMemo(
-    () => [
-      {
-        id: '1',
-        validator: {
-          name: 'ACoinBase Custody',
-          votingPower: '13,9M',
-        },
-        APR: 13.54,
-        delegated: {
-          value: 1.22,
-          change: 4552.98,
-          changeType: 'UP',
-        },
-      },
-      {
-        id: '2',
-        validator: {
-          name: 'Binance Staking',
-          votingPower: '15,9M',
-        },
-        APR: 9.54,
-        delegated: {
-          value: 2.22,
-          change: 22.98,
-          changeType: 'DOWN',
-        },
-      },
-      {
-        id: '3',
-        validator: {
-          name: 'CoinBase Custody',
-          votingPower: '13,9M',
-        },
-        APR: 3.54,
-        delegated: {
-          value: 3.22,
-          change: 0,
-        },
-      },
-      {
-        id: '4',
-        validator: {
-          name: 'FCoinBase Custody',
-          votingPower: '3,9M',
-        },
-        APR: 113.54,
-        delegated: {
-          value: 873.22,
-          change: 11.11,
-          changeType: 'DOWN',
-        },
-      },
-      {
-        id: '5',
-        validator: {
-          name: 'DCoinBase Custody',
-          votingPower: '1,9M',
-        },
-        APR: 31.54,
-        delegated: {
-          value: 443.22,
-          change: 12.3,
-          changeType: 'UP',
-        },
-      },
-      {
-        id: '6',
-        validator: {
-          name: 'XCoinBase Custody',
-          votingPower: '7,9M',
-        },
-        APR: 1.54,
-        delegated: {
-          value: 9312.22,
-          change: 4412.3,
-          changeType: 'UP',
-        },
-      },
-    ],
-    []
-  );
 
   const columns = useMemo(
     () => [
@@ -296,8 +199,13 @@ export default function ValidatorTable({ selected, setSelected }) {
       },
       {
         Header: 'APR',
-        accessor: 'APR',
-        Cell: ({ value }) => <APR>{value}%</APR>,
+        accessor: 'rewards',
+        Cell: ({ value }) => (
+          <APR>
+            <div>{value.APR.toFixed(2)}%</div>
+            <div>{value.commissionRate.toFixed(2)}% fee</div>
+          </APR>
+        ),
       },
       {
         Header: 'Delegated',
@@ -305,12 +213,8 @@ export default function ValidatorTable({ selected, setSelected }) {
         Cell: ({ value }) => (
           <Delegated>
             <strong>
-              <FormattedNumber value={value.value} />
+              <FormattedNumber value={value} />
             </strong>
-            <DelegatedChange changeType={value.changeType}>
-              ${value.change}
-              <ValueChangeArrow />
-            </DelegatedChange>
           </Delegated>
         ),
       },

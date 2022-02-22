@@ -1,9 +1,11 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
 
+import { useOnomy } from 'context/chain/OnomyContext';
 import { Hint, TooltipCaption, TooltipDesc } from '../../Sidebar/SidebarStyles';
 import { ExternalLink } from '../Icons';
+import { OnomyFormulas } from 'OnomyClient/OnomyFormulas';
 
 const Header = styled.header`
   display: flex;
@@ -85,13 +87,17 @@ export default function ValidatorNodeHeader({
   imgSrc = 'https://picsum.photos/80/80',
   name,
   url,
-  estimatedAPR,
 }: {
   imgSrc?: string;
   name: string;
   url?: string;
-  estimatedAPR: number;
 }) {
+  const { bridgedSupplyFormatted: bridgedSupply } = useOnomy();
+  const estimatedAPR = useMemo(
+    () => OnomyFormulas.stakingRewardAPR(bridgedSupply),
+    [bridgedSupply]
+  );
+
   return (
     <Header>
       <Validator>
@@ -108,7 +114,7 @@ export default function ValidatorNodeHeader({
       <APR>
         <span>Estimated APR</span>
         <strong>
-          {estimatedAPR}
+          {estimatedAPR.toFixed(2)}
           <sup>%</sup>
         </strong>
       </APR>

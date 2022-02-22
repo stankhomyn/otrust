@@ -119,13 +119,7 @@ function BridgeSwapModalInfo({ closeModal }) {
         )}
       </ModalHeader>
 
-      <BridgeLineChart
-        peakHeight={100}
-        peakPosition={150000000}
-        standardDeviation={50000000}
-        totalCoins={300000000}
-        coinsInCirculation={bridgedSupply}
-      />
+      <BridgeLineChart coinsInCirculation={bridgedSupply} />
 
       <Modal.InfoRow>
         <div>

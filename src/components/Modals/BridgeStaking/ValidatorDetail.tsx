@@ -101,7 +101,6 @@ export default function ValidatorDetail({ data }: { data: ValidatorData }) {
         <ValidatorNodeHeader
           name={validator.description.moniker ?? ''}
           url={validator.description.website}
-          estimatedAPR={validator.commission.commission_rates.rate.toNumber() * 100}
         />
 
         <DelegateWrapper>
