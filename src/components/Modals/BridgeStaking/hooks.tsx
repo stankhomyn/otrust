@@ -15,8 +15,8 @@ export function useValidator() {
         // TODO: more focused query?
         onomyClient.getValidators(),
         onomyClient.getSelfDelegation(id),
-        onomyClient.getDelegation(id, address),
-        onomyClient.getRewardsForDelegator(id),
+        address ? onomyClient.getDelegation(id, address) : Promise.resolve(null),
+        address ? onomyClient.getRewardsForDelegator(address) : Promise.resolve(null),
       ]);
       const validatorData = validators.find(v => v.operator_address === id);
       if (!validatorData) return { validator: null, delegation: delegationData };

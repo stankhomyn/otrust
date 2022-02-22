@@ -3,7 +3,7 @@ import React, { useMemo, useCallback } from 'react';
 import styled, { css } from 'styled-components/macro';
 import { useTable, useSortBy } from 'react-table';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { BigNumber } from 'ethers';
+import { BigNumber } from 'bignumber.js';
 
 import { SortBy } from '../Icons';
 import { useOnomy } from 'context/chain/OnomyContext';
@@ -153,13 +153,14 @@ export default function ValidatorTable({ selected, setSelected }) {
       const [validators, delegationData] = await Promise.all([
         // TODO: more focused query?
         onomyClient.getValidators(),
-        onomyClient.getDelegationsForDelegator(address),
+        address ? onomyClient.getDelegationsForDelegator(address) : Promise.resolve([]),
       ]);
 
       return validators.map(res => {
         const delegation = delegationData.find(
           d => d.delegation.validator_address === res.operator_address
         );
+        console.log('amount', delegation?.balance.amount ?? new BigNumber(0));
         return {
           id: res.operator_address,
           validator: {
@@ -170,7 +171,7 @@ export default function ValidatorTable({ selected, setSelected }) {
             APR: stakingAPR,
             commissionRate: res.commission.commission_rates.rate.toNumber() * 100,
           },
-          delegated: format18(delegation?.balance.amount ?? BigNumber.from(0)),
+          delegated: format18(delegation?.balance.amount ?? new BigNumber(0)),
         };
       });
     }, [onomyClient, stakingAPR, address]),
