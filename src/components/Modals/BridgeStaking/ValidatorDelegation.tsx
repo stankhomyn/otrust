@@ -88,6 +88,10 @@ export default function ValidatorDelegation({
   const [amount, setAmount] = useState(new BigNumber(0));
 
   const isValid = useMemo(() => {
+    if (amount.lte(0) || amount.isNaN()) {
+      return false;
+    }
+
     if (direction === 'DELEGATE') {
       const bigNumBal = format18(new BigNumber(nomBalance));
       if (amount.lte(0)) return false;
