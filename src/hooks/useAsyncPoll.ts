@@ -21,9 +21,14 @@ export function useAsyncPoll<T, U>(
   const [currentState, setCurrentState] = useState<AsyncStatus>(state);
 
   useEffect(() => {
-    if (state.error || state.finished) {
+    if (currentState.finished) {
+      if (state.error || state.finished) {
+        setCurrentState(state);
+      }
+    } else {
       setCurrentState(state);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   return [value, currentState];

@@ -53,10 +53,13 @@ const ValidatorsResponse = t.type({
 const Account = t.type({
   '@type': t.string,
   address: t.string,
-  pub_key: t.type({
-    '@type': t.string,
-    key: t.string,
-  }),
+  pub_key: t.union([
+    t.null,
+    t.type({
+      '@type': t.string,
+      key: t.string,
+    }),
+  ]),
   account_number: T.IntFromString,
   sequence: T.IntFromString,
 });
