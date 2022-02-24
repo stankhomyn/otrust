@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { SigningStargateClient } from '@cosmjs/stargate';
 import BigNumber from 'bignumber.js';
-import { MsgDelegate, MsgUndelegate } from 'cosmjs-types/cosmos/staking/v1beta1/tx';
 
 import { decodeIoTs } from 'utils/decodeIoTs';
 import { ApiResponseCodec } from './ApiResponse';
 import { OnomyAddress } from './OnomyAddress';
 import { DENOM, KEPLR_CONFIG } from 'constants/env';
 import { OnomyStargateClient } from './OnomyStargateClient';
+import { OnomyConstants } from './OnomyConstants';
 
 export class OnomyClient {
   private REST_URL: string;
@@ -26,37 +26,35 @@ export class OnomyClient {
   async delegate(validatorAddress: string, amount: BigNumber, denom = DENOM) {
     const signer = this.getSigner();
     const [account] = await signer.getAccounts();
-    await this.sendTx([
+    const sg = await SigningStargateClient.connectWithSigner(this.WS_URL, signer, {
+      gasPrice: OnomyConstants.GAS_PRICE,
+    });
+    await sg.delegateTokens(
+      account.address,
+      validatorAddress,
       {
-        typeUrl: '/cosmos.staking.v1beta1.MsgDelegate',
-        value: MsgDelegate.fromPartial({
-          delegatorAddress: account.address,
-          validatorAddress: validatorAddress,
-          amount: {
-            amount: amount.toString(),
-            denom,
-          },
-        }),
+        amount: amount.toString(),
+        denom,
       },
-    ]);
+      'auto'
+    );
   }
 
   async undelegate(validatorAddress: string, amount: BigNumber, denom = DENOM) {
     const signer = this.getSigner();
     const [account] = await signer.getAccounts();
-    await this.sendTx([
+    const sg = await SigningStargateClient.connectWithSigner(this.WS_URL, signer, {
+      gasPrice: OnomyConstants.GAS_PRICE,
+    });
+    await sg.undelegateTokens(
+      account.address,
+      validatorAddress,
       {
-        typeUrl: '/cosmos.staking.v1beta1.MsgUndelegate',
-        value: MsgUndelegate.fromPartial({
-          delegatorAddress: account.address,
-          validatorAddress: validatorAddress,
-          amount: {
-            amount: amount.toString(),
-            denom,
-          },
-        }),
+        amount: amount.toString(),
+        denom,
       },
-    ]);
+      'auto'
+    );
   }
 
   async getAnomSupply() {
@@ -192,21 +190,5 @@ export class OnomyClient {
       window.getOfflineSigner && window.getOfflineSigner(KEPLR_CONFIG.chainId.split('-')[0]);
     if (!signer) throw new Error('No Signer: Install Keplr');
     return signer;
-  }
-
-  private async sendTx(msgs: any[]) {
-    const signer = this.getSigner();
-    const [account] = await signer.getAccounts();
-    const sg = await SigningStargateClient.connectWithSigner(this.WS_URL, signer);
-    await sg.signAndBroadcast(account.address, msgs, {
-      // TODO: are these gas settings right?
-      gas: '200000',
-      amount: [
-        {
-          denom: DENOM,
-          amount: '0.001',
-        },
-      ],
-    });
   }
 }
