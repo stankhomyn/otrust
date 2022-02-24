@@ -26,8 +26,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.11",
-    "@cosmjs/launchpad": "^0.26.0",
-    "@cosmjs/stargate": "^0.26.4",
+    "@cosmjs/launchpad": "^0.27.1",
+    "@cosmjs/stargate": "^0.27.1",
     "@cosmjs/tendermint-rpc": "^0.26.4",
     "@ethersproject/address": "^5.4.0",
     "@ethersproject/bignumber": "^5.4.1",
@@ -49,6 +49,7 @@
     "apollo-boost": "^0.4.9",
     "bech32": "^2.0.0",
     "bignumber.js": "^9.0.1",
+    "cosmjs-types": "^0.4.1",
     "cosmos-lib": "^1.1.0",
     "d3": "^6.5.0",
     "dotenv": "^10.0.0",

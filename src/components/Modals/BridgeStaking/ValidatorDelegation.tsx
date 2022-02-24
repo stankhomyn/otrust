@@ -97,7 +97,7 @@ export default function ValidatorDelegation({
       if (amount.lte(0)) return false;
       if (amount.gt(bigNumBal)) return false;
     } else {
-      const delegated = format18(delegation?.balance.amount ?? new BigNumber(0));
+      const delegated = format18(delegation ?? new BigNumber(0));
       if (amount.gt(delegated)) return false;
     }
     return true;
@@ -120,7 +120,7 @@ export default function ValidatorDelegation({
     if (direction === 'DELEGATE') {
       setAmount(format18(new BigNumber(nomBalance)));
     } else {
-      const delegated = format18(delegation?.balance.amount ?? new BigNumber(0));
+      const delegated = format18(delegation ?? new BigNumber(0));
       setAmount(delegated);
     }
   }
@@ -155,8 +155,8 @@ export default function ValidatorDelegation({
         </Link>
 
         <ValidatorNodeHeader
-          name={validator.description.moniker ?? ''}
-          url={validator.description.website}
+          name={validator.description?.moniker ?? ''}
+          url={validator.description?.website}
         />
 
         <div>

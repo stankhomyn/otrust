@@ -3,7 +3,7 @@ import { BigNumber } from 'bignumber.js';
 export const {
   REACT_APP_GRAPHQL_ENDPOINT = 'https://api.thegraph.com/subgraphs/name/onomyprotocol/ograph',
   REACT_APP_ETHERSCAN_API_KEY = '3CVJBSFD6KVNBTNFCBN2T2QHRVYP1K81YB',
-  REACT_APP_CHAIN_ID = 'onomy',
+  REACT_APP_CHAIN_ID = 'onomy-4',
   REACT_APP_CHAIN_NAME = 'Onomy Devnet',
   REACT_APP_ONOMY_RPC_URL = 'https://rpc-devnet-0445.onomy.io',
   REACT_APP_ONOMY_REST_URL = 'https://rest-devnet-0445.onomy.io',
@@ -22,6 +22,8 @@ export const BLOCKS_TO_WAIT_FOR_BRIDGE = new BigNumber(
 );
 
 export const KEPLR_CONFIG = {
+  features: ['stargate', 'no-legacy-stdTx'],
+
   // Chain-id of the Cosmos SDK chain.
   chainId: REACT_APP_CHAIN_ID,
   chainName: REACT_APP_CHAIN_NAME,

@@ -1,16 +1,12 @@
 /* eslint-disable react/jsx-key */
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo } from 'react';
 import styled, { css } from 'styled-components/macro';
 import { useTable, useSortBy } from 'react-table';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { BigNumber } from 'bignumber.js';
 
 import { SortBy } from '../Icons';
-import { useOnomy } from 'context/chain/OnomyContext';
-import { useAsyncValue } from 'hooks/useAsyncValue';
-import { format18 } from 'utils/math';
 import { FormattedNumber } from 'components/FormattedNumber';
-import { OnomyFormulas } from 'OnomyClient/OnomyFormulas';
+import { useValidatorsTable } from './hooks';
 
 const StyledTable = styled.table`
   width: 100%;
@@ -145,38 +141,7 @@ const Delegated = styled.div`
 `;
 
 export default function ValidatorTable({ selected, setSelected }) {
-  const { address, onomyClient, bridgedSupplyFormatted: bridgedSupply } = useOnomy();
-  const stakingAPR = useMemo(() => OnomyFormulas.stakingRewardAPR(bridgedSupply), [bridgedSupply]);
-
-  const [data, { error }] = useAsyncValue(
-    useCallback(async () => {
-      const [validators, delegationData] = await Promise.all([
-        // TODO: more focused query?
-        onomyClient.getValidators(),
-        address ? onomyClient.getDelegationsForDelegator(address) : Promise.resolve([]),
-      ]);
-
-      return validators.map(res => {
-        const delegation = delegationData.find(
-          d => d.delegation.validator_address === res.operator_address
-        );
-        console.log('amount', delegation?.balance.amount ?? new BigNumber(0));
-        return {
-          id: res.operator_address,
-          validator: {
-            name: res.description.moniker || res.operator_address,
-            votingPower: format18(res.tokens).toString(),
-          },
-          rewards: {
-            APR: stakingAPR,
-            commissionRate: res.commission.commission_rates.rate.toNumber() * 100,
-          },
-          delegated: format18(delegation?.balance.amount ?? new BigNumber(0)),
-        };
-      });
-    }, [onomyClient, stakingAPR, address]),
-    []
-  );
+  const [data, { error }] = useValidatorsTable();
 
   if (error) console.error('error', error);
 

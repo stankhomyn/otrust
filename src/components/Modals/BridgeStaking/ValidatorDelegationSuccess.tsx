@@ -65,8 +65,8 @@ export default function ValidatorDelegationSuccess({
     <StakingModal>
       <Modal.StakingWrapper>
         <ValidatorNodeHeader
-          name={validator.description.moniker ?? ''}
-          url={validator.description.website}
+          name={validator.description?.moniker ?? ''}
+          url={validator.description?.website}
         />
 
         <div>
@@ -79,9 +79,12 @@ export default function ValidatorDelegationSuccess({
           </Caption>
           <Desc style={{ textAlign: 'center' }}>
             {direction === 'DELEGATE'
-              ? `Your NOM has been successfully delegated to ${validator.description.moniker} and is now earning staking
-            rewards!`
-              : `Your NOM has been successfully undelegated from ${validator.description.moniker} and is now available for other uses.`}
+              ? `Your NOM has been successfully delegated to ${
+                  validator.description?.moniker ?? 'unknown'
+                } and is now earning staking rewards!`
+              : `Your NOM has been successfully undelegated from ${
+                  validator.description?.moniker ?? 'unknown'
+                } and is now available for other uses.`}
           </Desc>
           <DeligatedWrapper>
             <strong style={{ textTransform: 'capitalize' }}>{verb}</strong>
