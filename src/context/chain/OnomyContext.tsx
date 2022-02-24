@@ -9,7 +9,6 @@ import React, {
 } from 'react';
 import { BigNumber } from 'bignumber.js';
 
-import { useStateRef } from 'hooks/useStateRef';
 import {
   KEPLR_CONFIG,
   REACT_APP_ONOMY_REST_URL,
@@ -22,9 +21,7 @@ import { ChainContext } from './ChainContext';
 import { format18 } from 'utils/math';
 import { OnomyClient } from 'OnomyClient';
 import { useKeplr } from 'hooks/useKeplr';
-
-// This is lame, but can't find a way to subscribe to cosmos events
-const POLLING_INTERVAL = 1000;
+import { useAsyncPoll } from 'hooks/useAsyncPoll';
 
 type BridgeTransactionInProgress = {
   startBalance: BigNumber;
@@ -40,10 +37,19 @@ function useOnomyState() {
   }, []);
 
   blockNumRef.current = blockNumber;
-  const [address, setAddress, addressRef] = useStateRef('');
-  const [amount, setAmount, amountRef] = useStateRef('0');
+  const [address, setAddress] = useState('');
+  const [amount, , amountRef] = useAsyncPoll(
+    useCallback(async () => {
+      if (!address) return '0';
+      return onomyClient.getAddressBalance(address, DENOM);
+    }, [onomyClient, address]),
+    '0'
+  );
   const [bridgeTransactions, setBridgeTransactions] = useState<BridgeTransactionInProgress[]>([]);
-  const [bridgedSupply, setBridgedSupply] = useState(new BigNumber(0));
+  const [bridgedSupply] = useAsyncPoll(
+    useCallback(() => onomyClient.getAnomSupply(), [onomyClient]),
+    new BigNumber(0)
+  );
 
   const bridgedSupplyFormatted = useMemo(() => {
     if (!bridgedSupply) return 0;
@@ -87,35 +93,6 @@ function useOnomyState() {
     const progress = progressBlocks.dividedBy(totalBlocks).multipliedBy(100).toNumber();
     return Math.min(progress, 100);
   }, [blockNumber, bridgeTransactions]);
-
-  useEffect(() => {
-    async function updateBalance() {
-      if (!addressRef.current) return;
-      try {
-        setAmount(await onomyClient.getAddressBalance(addressRef.current, DENOM));
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.warn('Error fetching Onomy balance', e);
-      }
-    }
-
-    updateBalance();
-    const interval = setInterval(updateBalance, POLLING_INTERVAL);
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const updateBridgedSupply = useCallback(
-    async () => setBridgedSupply(await onomyClient.getAnomSupply()),
-    [onomyClient]
-  );
-
-  useEffect(() => {
-    updateBridgedSupply();
-    const interval = setInterval(() => updateBridgedSupply(), POLLING_INTERVAL);
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return {
     address,

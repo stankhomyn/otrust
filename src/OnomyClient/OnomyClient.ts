@@ -59,7 +59,7 @@ export class OnomyClient {
 
   async getAnomSupply() {
     const sg = await this.stargate;
-    return sg.getAnomSupply();
+    return sg.getDenomSupply(DENOM);
   }
 
   async getMintInflation() {

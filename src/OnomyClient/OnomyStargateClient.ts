@@ -15,8 +15,6 @@ import {
 import { Tendermint34Client } from '@cosmjs/tendermint-rpc';
 import BigNumber from 'bignumber.js';
 
-import { DENOM } from 'constants/env';
-
 export class OnomyStargateClient extends StargateClient {
   protected readonly onomyQueryClient: QueryClient &
     AuthExtension &
@@ -31,10 +29,8 @@ export class OnomyStargateClient extends StargateClient {
   }
 
   protected constructor(tmClient: Tendermint34Client) {
-    // @ts-ignore
     super(tmClient);
     this.onomyQueryClient = QueryClient.withExtensions(
-      // @ts-ignore
       tmClient,
       setupAuthExtension,
       setupBankExtension,
@@ -48,9 +44,9 @@ export class OnomyStargateClient extends StargateClient {
     return this.onomyQueryClient;
   }
 
-  public async getAnomSupply() {
+  public async getDenomSupply(denom: string) {
     const qc = this.getQueryClient();
-    const res = await qc?.bank.supplyOf(DENOM);
+    const res = await qc?.bank.supplyOf(denom);
     if (!res) return new BigNumber(0);
     return new BigNumber(res.amount);
   }
