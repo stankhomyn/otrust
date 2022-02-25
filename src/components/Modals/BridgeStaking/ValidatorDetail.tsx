@@ -99,37 +99,31 @@ export default function ValidatorDetail({ data }: { data: ValidatorData }) {
           <BackButton />
         </Link>
         <ValidatorNodeHeader
-          name={validator.description.moniker ?? ''}
-          url={validator.description.website}
+          name={validator.description?.moniker ?? ''}
+          url={validator.description?.website}
         />
 
         <DelegateWrapper>
           <DelegateItem>
             <span>Delegated</span>
             <strong>
-              <FormattedNumber
-                value={format18(delegation?.balance.amount ?? new BigNumber(0)).toNumber()}
-              />
+              <FormattedNumber value={format18(delegation).toNumber()} />
               <sup>NOM</sup>
             </strong>
             <span>
-              <EquivalentValue
-                asset="NOM"
-                prefix="$"
-                amount={format18(delegation?.balance.amount ?? new BigNumber(0)).toNumber()}
-              />
+              <EquivalentValue asset="NOM" prefix="$" amount={format18(delegation).toNumber()} />
             </span>
           </DelegateItem>
           <DelegateItem reward>
             <span>Reward</span>
             <strong>
-              <FormattedNumber value={format18(rewards?.amount ?? new BigNumber(0)).toNumber()} />
+              <FormattedNumber value={format18(new BigNumber(rewards?.amount ?? '0')).toNumber()} />
               <sup>XRP</sup>
             </strong>
             <EquivalentValue
               asset="NOM"
               prefix="$"
-              amount={format18(rewards?.amount ?? new BigNumber(0)).toNumber()}
+              amount={format18(new BigNumber(rewards?.amount ?? '0')).toNumber()}
             />
           </DelegateItem>
         </DelegateWrapper>
@@ -138,7 +132,7 @@ export default function ValidatorDetail({ data }: { data: ValidatorData }) {
           <FooterInfo>
             <span>Total Bonded</span>
             <strong>
-              <FormattedNumber value={format18(validator.tokens).toNumber()} /> XRP
+              <FormattedNumber value={format18(new BigNumber(validator.tokens)).toNumber()} /> XRP
             </strong>
           </FooterInfo>
           <FooterInfo>
@@ -152,7 +146,11 @@ export default function ValidatorDetail({ data }: { data: ValidatorData }) {
             <span>Commission</span>
             <strong>
               <FormattedNumber
-                value={validator.commission.commission_rates.rate.toNumber() * 100}
+                value={
+                  format18(
+                    new BigNumber(validator.commission?.commissionRates?.rate ?? '0')
+                  ).toNumber() * 100
+                }
               />
               <sup>%</sup>
             </strong>
@@ -160,7 +158,9 @@ export default function ValidatorDetail({ data }: { data: ValidatorData }) {
           <FooterInfo>
             <span>Voting Power</span>
             <strong>
-              <FormattedNumber value={format18(validator.delegator_shares).toNumber()} />
+              <FormattedNumber
+                value={format18(new BigNumber(validator.delegatorShares ?? '0')).toNumber()}
+              />
             </strong>
           </FooterInfo>
         </Footer>

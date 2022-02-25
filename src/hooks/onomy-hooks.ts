@@ -23,7 +23,7 @@ export function useDelegationTotalFetchCb() {
     if (!address) return new BigNumber(0);
     const resp = await onomyClient.getDelegationsForDelegator(address);
     return resp.reduce((val, item) => {
-      if (item.balance.denom !== DENOM) return val;
+      if (item?.balance?.denom !== DENOM) return val;
       return val.plus(new BigNumber(item.balance.amount));
     }, new BigNumber(0));
   }, [onomyClient, address]);

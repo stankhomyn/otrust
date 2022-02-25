@@ -133,7 +133,6 @@ export default function BridgeSwapMain() {
 
   const submitTransClickHandler = useCallback(
     async event => {
-      let cosmosAddressBytes32;
       event.preventDefault();
       setErrors(initialErrorsState);
       if (amountValue === '.' || !parseFloat(amountValue)) {
@@ -147,9 +146,7 @@ export default function BridgeSwapMain() {
 
       try {
         setIsDisabled(true);
-        const bytes = cosmos.address.getBytes(onomyWalletValue);
-        const ZEROS = Buffer.alloc(12);
-        cosmosAddressBytes32 = Buffer.concat([ZEROS, bytes]);
+        cosmos.address.getBytes(onomyWalletValue);
       } catch (error) {
         setErrors(prevState => {
           return {
@@ -168,7 +165,7 @@ export default function BridgeSwapMain() {
           setIsTransactionPending(true);
           tx = await GravityContract.sendToCosmos(
             REACT_APP_WNOM_CONTRACT_ADDRESS,
-            cosmosAddressBytes32,
+            onomyWalletValue,
             string18FromAmount,
             {
               gasPrice: gasPrice.toFixed(0),
