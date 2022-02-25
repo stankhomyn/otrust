@@ -119,8 +119,18 @@ const ValidatorRow = styled.tr`
 `;
 
 const APR = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
   color: ${props => props.theme.colors.highlightBlue};
   font-weight: 500;
+`;
+
+const APRFee = styled.div`
+  opacity: 0.4;
+
+  font-size: 12px;
 `;
 
 const Delegated = styled.div`
@@ -169,7 +179,7 @@ export default function ValidatorTable({ selected, setSelected }) {
         Cell: ({ value }) => (
           <APR>
             <div>{value.APR.toFixed(2)}%</div>
-            <div>{value.commissionRate.toFixed(2)}% fee</div>
+            <APRFee>{value.commissionRate.toFixed(2)}% fee</APRFee>
           </APR>
         ),
       },
