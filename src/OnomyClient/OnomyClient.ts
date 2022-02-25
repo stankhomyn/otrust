@@ -186,8 +186,10 @@ export class OnomyClient {
 
   private getSigner() {
     // TODO: support other signers than keplr
-    const signer =
-      window.getOfflineSigner && window.getOfflineSigner(KEPLR_CONFIG.chainId.split('-')[0]);
+    const chainIdParts = KEPLR_CONFIG.chainId.split('-');
+    chainIdParts.pop();
+    const chainId = chainIdParts.join('-');
+    const signer = window.getOfflineSigner && window.getOfflineSigner(chainId);
     if (!signer) throw new Error('No Signer: Install Keplr');
     return signer;
   }
