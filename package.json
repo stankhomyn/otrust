@@ -11,7 +11,7 @@
     "build": "yarn workspace otrust build",
     "verified-build": "yarn workspace otrust verified-build",
     "test": "yarn workspace otrust test",
-    "prepare": "yarn workspace otrust test"
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
