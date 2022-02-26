@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { SigningStargateClient } from '@cosmjs/stargate';
 import BigNumber from 'bignumber.js';
+import { OfflineSigner } from '@cosmjs/launchpad';
 
 import { decodeIoTs } from 'utils/decodeIoTs';
 import { ApiResponseCodec } from './ApiResponse';
 import { OnomyAddress } from './OnomyAddress';
-import { DENOM, KEPLR_CONFIG } from 'constants/env';
+import { DENOM } from 'constants/env';
 import { OnomyStargateClient } from './OnomyStargateClient';
 import { OnomyConstants } from './OnomyConstants';
 
@@ -16,11 +17,17 @@ export class OnomyClient {
 
   private stargate!: Promise<OnomyStargateClient>;
 
+  private signer: OfflineSigner | null = null;
+
   constructor(REST_URL: string, WS_URL: string) {
     this.REST_URL = REST_URL;
     this.WS_URL = WS_URL;
     this.connectStargate();
     this.getValidators();
+  }
+
+  setSigner(signer: OfflineSigner | null) {
+    this.signer = signer;
   }
 
   async delegate(validatorAddress: string, amount: BigNumber, denom = DENOM) {
@@ -185,12 +192,7 @@ export class OnomyClient {
   }
 
   private getSigner() {
-    // TODO: support other signers than keplr
-    const chainIdParts = KEPLR_CONFIG.chainId.split('-');
-    chainIdParts.pop();
-    const chainId = chainIdParts.join('-');
-    const signer = window.getOfflineSigner && window.getOfflineSigner(chainId);
-    if (!signer) throw new Error('No Signer: Install Keplr');
-    return signer;
+    if (!this.signer) throw new Error('No Signer: Install Keplr');
+    return this.signer;
   }
 }

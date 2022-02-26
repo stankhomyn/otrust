@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { BigNumber } from 'bignumber.js';
 import { useAsyncPoll } from '@onomy/react-utils';
+import { useKeplr } from '@onomy/react-keplr';
 
 import {
   KEPLR_CONFIG,
@@ -21,7 +22,6 @@ import {
 import { ChainContext } from './ChainContext';
 import { format18 } from 'utils/math';
 import { OnomyClient } from 'OnomyClient';
-import { useKeplr } from 'hooks/useKeplr';
 
 type BridgeTransactionInProgress = {
   startBalance: BigNumber;
@@ -57,10 +57,15 @@ function useOnomyState() {
     return formated.toNumber();
   }, [bridgedSupply]);
 
-  const { address: keplrAddress, hasKeplr, connect: connectKeplr } = useKeplr(KEPLR_CONFIG);
+  const { address: keplrAddress, hasKeplr, connect: connectKeplr, signer } = useKeplr(KEPLR_CONFIG);
+
   useEffect(() => {
     if (keplrAddress) setAddress(keplrAddress);
   }, [keplrAddress, setAddress]);
+
+  useEffect(() => {
+    onomyClient.setSigner(signer);
+  }, [signer, onomyClient]);
 
   const addPendingBridgeTransaction = useCallback((expectedIncrease: BigNumber) => {
     const transaction = {

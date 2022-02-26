@@ -1,7 +1,7 @@
 {
-  "name": "@onomy/react-utils",
+  "name": "@onomy/react-keplr",
   "version": "0.0.1",
-  "description": "Misc. react hooks and utilities",
+  "description": "React utils for interacting with keplr",
   "main": "./src/index.ts",
   "license": "MIT",
   "scripts": {
@@ -14,6 +14,7 @@
     "typescript": "^4.4.3"
   },
   "devDependencies": {
+    "@keplr-wallet/types": "^0.9.4-rc.0",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "eslint": "^7.32.0",

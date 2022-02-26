@@ -1,6 +1,7 @@
 const path = require("path");
 const { getLoader, loaderByName } = require("@craco/craco");
-const absolutePath = path.join(__dirname, "../react-utils");
+const reactUtilsPath = path.join(__dirname, "../react-utils");
+const reactKeplrPath = path.join(__dirname, "../react-keplr");
 
 module.exports = {
   webpack: {
@@ -15,7 +16,7 @@ module.exports = {
         const include = Array.isArray(match.loader.include)
           ? match.loader.include
           : [match.loader.include];
-        match.loader.include = include.concat([absolutePath]);
+        match.loader.include = include.concat([reactUtilsPath, reactKeplrPath]);
       }
       return webpackConfig;
     }
