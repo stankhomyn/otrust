@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import { BigNumber } from 'bignumber.js';
+import { useAsyncPoll } from '@onomy/react-utils';
 
 import {
   KEPLR_CONFIG,
@@ -21,7 +22,6 @@ import { ChainContext } from './ChainContext';
 import { format18 } from 'utils/math';
 import { OnomyClient } from 'OnomyClient';
 import { useKeplr } from 'hooks/useKeplr';
-import { useAsyncPoll } from 'hooks/useAsyncPoll';
 
 type BridgeTransactionInProgress = {
   startBalance: BigNumber;

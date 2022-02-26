@@ -4,9 +4,15 @@
   "description": "Workspace for Onomy Bonding Curve Development",
   "private": true,
   "scripts": {
-    "lint": "yarn workspace otrust lint",
-    "tsc": "yarn workspace otrust tsc",
-    "verify": "yarn workspace otrust verify-old",
+    "react-utils:verify": "yarn workspace @onomy/react-utils verify",
+    "react-utils:lint": "yarn workspace @onomy/react-utils lint",
+    "react-utils:tsc": "yarn workspace @onomy/react-utils tsc",
+    "ui:verify": "yarn workspace otrust verify-old",
+    "ui:lint": "yarn workspace otrust lint",
+    "ui:tsc": "yarn workspace otrust tsc",
+    "lint": "concurrently \"yarn react-utils:lint\" \"yarn ui:lint\"",
+    "tsc": "concurrently \"yarn react-utils:tsc\" \"yarn ui:tsc\"",
+    "verify": "concurrently \"yarn react-utils:verify\" \"yarn ui:verify\"",
     "start": "yarn workspace otrust start",
     "build": "yarn workspace otrust build",
     "verified-build": "yarn workspace otrust verified-build",
@@ -19,10 +25,16 @@
     }
   },
   "workspaces": {
-    "packages": ["packages/*", "submodules/*"]
+    "packages": [
+      "packages/*",
+      "submodules/*"
+    ]
   },
   "dependencies": {
     "lerna": "^4.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.1"
   },
   "resolutions": {
     "**/ganache-core/lodash": "^4.17.21",

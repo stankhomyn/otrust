@@ -1,10 +1,10 @@
 import BigNumber from 'bignumber.js';
 import * as t from 'io-ts';
 import { useCallback } from 'react';
+import { useAsyncValue } from '@onomy/react-utils';
 
 import { REACT_APP_ETHERSCAN_API_KEY } from 'constants/env';
 import { decodeIoTs } from 'utils/decodeIoTs';
-import { useAsyncValue } from './useAsyncValue';
 
 const GasOracleResponse = t.type({
   status: t.string,

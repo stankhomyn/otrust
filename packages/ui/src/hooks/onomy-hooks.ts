@@ -1,10 +1,10 @@
 import BigNumber from 'bignumber.js';
 import { useCallback, useMemo } from 'react';
+import { useAsyncPoll } from '@onomy/react-utils';
 
 import { DENOM } from 'constants/env';
 import { useOnomy } from 'context/chain/OnomyContext';
 import { useChain } from 'context/chain/ChainContext';
-import { useAsyncPoll } from './useAsyncPoll';
 
 export function useBridgedBalanceValue() {
   const { amount } = useOnomy();

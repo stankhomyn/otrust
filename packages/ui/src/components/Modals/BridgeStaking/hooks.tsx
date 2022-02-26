@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js';
+import { useAsyncPoll } from '@onomy/react-utils';
 
 import { useOnomy } from 'context/chain/OnomyContext';
-import { useAsyncPoll } from 'hooks/useAsyncPoll';
 import { format18 } from 'utils/math';
 import { OnomyFormulas } from 'OnomyClient/OnomyFormulas';
 
