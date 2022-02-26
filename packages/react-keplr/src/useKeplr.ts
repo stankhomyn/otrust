@@ -1,7 +1,7 @@
 import { useRef, useCallback, useState, useMemo } from 'react';
 import { ChainInfo, Keplr, Window as KeplrWindow } from '@keplr-wallet/types';
 
-type OfflineSigner = ReturnType<Keplr["getOfflineSigner"]>;
+type OfflineSigner = ReturnType<Keplr['getOfflineSigner']>;
 
 export function useKeplr(chainInfo: ChainInfo) {
   const [address, setAddress] = useState('');
