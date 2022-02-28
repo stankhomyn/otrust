@@ -33,7 +33,7 @@ export class OnomyClient {
       account.address,
       validatorAddress,
       {
-        amount: amount.toString(),
+        amount: amount.toFixed(),
         denom,
       },
       'auto'
@@ -50,7 +50,7 @@ export class OnomyClient {
       account.address,
       validatorAddress,
       {
-        amount: amount.toString(),
+        amount: amount.toFixed(),
         denom,
       },
       'auto'
