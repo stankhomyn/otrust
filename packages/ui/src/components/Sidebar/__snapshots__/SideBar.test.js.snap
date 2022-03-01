@@ -310,7 +310,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
   -webkit-box-align: flex-end;
   -ms-flex-align: flex-end;
   align-items: flex-end;
-  gap: 16px;
+  gap: 24px;
   padding: 24px 40px;
   margin-top: auto;
 }
@@ -369,6 +369,29 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
   justify-content: space-between;
   gap: 16px;
   width: 100%;
+}
+
+.c26 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+  color: #9895a6;
+}
+
+.c26 a {
+  color: #88d1ff;
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
 .c22 {
@@ -657,17 +680,6 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
 
 @media screen and (max-width:1024px) {
   .c23 {
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
     gap: 12px;
     width: 100%;
     padding: 40px 24px;
@@ -700,10 +712,20 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
 
 @media screen and (max-width:1024px) {
   .c24 {
-    -webkit-box-pack: end;
-    -webkit-justify-content: flex-end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    gap: 12px;
+  }
+}
+
+@media screen and (max-width:1024px) {
+  .c26 {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     gap: 12px;
   }
 }
@@ -1003,6 +1025,18 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                     opacity="0.5"
                   />
                 </svg>
+              </a>
+            </div>
+            <div
+              class="c26"
+            >
+              <span>
+                Contract Address
+              </span>
+              <a
+                href="https://etherscan.io/"
+              >
+                Etherscan
               </a>
             </div>
           </footer>
@@ -1323,7 +1357,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
   -webkit-box-align: flex-end;
   -ms-flex-align: flex-end;
   align-items: flex-end;
-  gap: 16px;
+  gap: 24px;
   padding: 24px 40px;
   margin-top: auto;
 }
@@ -1382,6 +1416,29 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
   justify-content: space-between;
   gap: 16px;
   width: 100%;
+}
+
+.c26 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+  color: #9895a6;
+}
+
+.c26 a {
+  color: #88d1ff;
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
 .c22 {
@@ -1670,17 +1727,6 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
 
 @media screen and (max-width:1024px) {
   .c23 {
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
     gap: 12px;
     width: 100%;
     padding: 40px 24px;
@@ -1713,10 +1759,20 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
 
 @media screen and (max-width:1024px) {
   .c24 {
-    -webkit-box-pack: end;
-    -webkit-justify-content: flex-end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    gap: 12px;
+  }
+}
+
+@media screen and (max-width:1024px) {
+  .c26 {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     gap: 12px;
   }
 }
@@ -2018,6 +2074,18 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                     opacity="0.5"
                   />
                 </svg>
+              </a>
+            </div>
+            <div
+              class="c26"
+            >
+              <span>
+                Contract Address
+              </span>
+              <a
+                href="https://etherscan.io/"
+              >
+                Etherscan
               </a>
             </div>
           </footer>

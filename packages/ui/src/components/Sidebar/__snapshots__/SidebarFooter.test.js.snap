@@ -14,7 +14,7 @@ exports[`Given the SidebarFooter component when the component is rendered should
   -webkit-box-align: flex-end;
   -ms-flex-align: flex-end;
   align-items: flex-end;
-  gap: 16px;
+  gap: 24px;
   padding: 24px 40px;
   margin-top: auto;
 }
@@ -75,6 +75,29 @@ exports[`Given the SidebarFooter component when the component is rendered should
   width: 100%;
 }
 
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+  color: #9895a6;
+}
+
+.c3 a {
+  color: #88d1ff;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 @media screen and (max-width:1440px) {
   .c0 {
     padding: 20px 24px;
@@ -83,17 +106,6 @@ exports[`Given the SidebarFooter component when the component is rendered should
 
 @media screen and (max-width:1024px) {
   .c0 {
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
     gap: 12px;
     width: 100%;
     padding: 40px 24px;
@@ -126,10 +138,20 @@ exports[`Given the SidebarFooter component when the component is rendered should
 
 @media screen and (max-width:1024px) {
   .c1 {
-    -webkit-box-pack: end;
-    -webkit-justify-content: flex-end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    gap: 12px;
+  }
+}
+
+@media screen and (max-width:1024px) {
+  .c3 {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     gap: 12px;
   }
 }
@@ -231,6 +253,18 @@ exports[`Given the SidebarFooter component when the component is rendered should
             opacity="0.5"
           />
         </svg>
+      </a>
+    </div>
+    <div
+      class="c3"
+    >
+      <span>
+        Contract Address
+      </span>
+      <a
+        href="https://etherscan.io/"
+      >
+        Etherscan
       </a>
     </div>
   </footer>

@@ -48,7 +48,7 @@ export default function NOMBalances() {
 
           <Balance>
             <BalancePrice>
-              <strong>NOM Delegated</strong>
+              <strong>Staked NOM</strong>
               <BalanceNumber strong>
                 <NomBalanceDisplay value={delegated.toString()} />
                 <small>
@@ -57,7 +57,7 @@ export default function NOMBalances() {
               </BalanceNumber>
             </BalancePrice>
             <Hint>
-              <TooltipCaption>NOM Delegated</TooltipCaption>
+              <TooltipCaption>Staked NOM</TooltipCaption>
               <TooltipDesc>NOM delegated to earn staking rewards</TooltipDesc>
             </Hint>
           </Balance>
