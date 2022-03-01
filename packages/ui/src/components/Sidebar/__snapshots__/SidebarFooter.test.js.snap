@@ -262,7 +262,8 @@ exports[`Given the SidebarFooter component when the component is rendered should
         Contract Address
       </span>
       <a
-        href="https://etherscan.io/"
+        href="https://rinkeby.etherscan.io/address/0x52A4A4FBB36A2f6A83dBf7De9425C1ec5FF528Da"
+        target="_new"
       >
         Etherscan
       </a>

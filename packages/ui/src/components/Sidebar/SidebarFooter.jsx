@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { REACT_APP_BONDING_NOM_CONTRACT_ADDRESS } from 'constants/env';
 import { responsive } from 'theme/constants';
 import { TelegramIcon, MediumIcon, TwitterIcon, SiteIcon, DiscordIcon } from './SidebarIcons';
 
@@ -165,7 +166,12 @@ export default function SidebarFooter() {
 
       <AddressWrapper>
         <span>Contract Address</span>
-        <a href="https://etherscan.io/">Etherscan</a>
+        <a
+          href={`https://rinkeby.etherscan.io/address/${REACT_APP_BONDING_NOM_CONTRACT_ADDRESS}`}
+          target="_new"
+        >
+          Etherscan
+        </a>
       </AddressWrapper>
     </SidebarFooterWrapper>
   );

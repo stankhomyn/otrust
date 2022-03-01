@@ -159,17 +159,21 @@ export class OnomyClient {
     ]);
     const stakingAPR = OnomyFormulas.stakingRewardAPR(bridgedSupply.toNumber());
 
+    const totalStaked = validators.reduce(
+      (sum, v) => new BigNumber(v.tokens).plus(sum),
+      new BigNumber(0)
+    );
+
     return validators.map(validator => {
       const delegation = delegationData.find(
         d => d.delegation?.validatorAddress === validator.operatorAddress
       );
+      const staked = new BigNumber(validator.tokens);
       return {
         id: validator.operatorAddress,
         validator: {
           name: validator.description?.moniker ?? validator.operatorAddress,
-          votingPower: this.denomDecimalFromFixed(
-            new BigNumber(validator.delegatorShares)
-          ).toString(),
+          votingPower: staked.multipliedBy(100).div(totalStaked).toNumber(),
         },
         rewards: {
           APR: stakingAPR,
@@ -192,13 +196,21 @@ export class OnomyClient {
       delegator ? this.getDelegation(validator, delegator) : Promise.resolve(new BigNumber(0)),
       delegator ? this.getRewardsForDelegator(delegator) : Promise.resolve(null),
     ]);
+    const totalStaked = validators.reduce(
+      (sum, v) => new BigNumber(v.tokens).plus(sum),
+      new BigNumber(0)
+    );
+
     const validatorData = validators.find(v => v.operatorAddress === validator);
+    const staked = new BigNumber(validatorData?.tokens ?? '0');
+    const votingPower = staked.multipliedBy(100).div(totalStaked).toNumber();
     if (!validatorData) return { validator: null, delegation: delegationData };
     const selfStakeRate = selfDelegation.div(validatorData.tokens);
     const rewardItems = rewardsData?.rewards.find(v => v.validatorAddress === validator);
     const rewardItem = rewardItems?.reward.find(r => r.denom === 'nom'); // TODO: don't hardcode?
     return {
       validator: validatorData,
+      votingPower,
       selfDelegation,
       selfStake: selfStakeRate ? selfStakeRate.toNumber() : 0,
       delegation: delegationData,

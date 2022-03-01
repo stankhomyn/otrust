@@ -89,7 +89,7 @@ const FooterInfo = styled.div`
 
 export default function ValidatorDetail({ data }: { data: ValidatorData }) {
   const { id } = useParams();
-  const { validator, delegation, rewards = null, selfStake = 0 } = data;
+  const { validator, votingPower, delegation, rewards = null, selfStake = 0 } = data;
 
   if (!validator) return null;
   return (
@@ -158,9 +158,7 @@ export default function ValidatorDetail({ data }: { data: ValidatorData }) {
           <FooterInfo>
             <span>Voting Power</span>
             <strong>
-              <FormattedNumber
-                value={format18(new BigNumber(validator.delegatorShares ?? '0')).toNumber()}
-              />
+              <FormattedNumber value={votingPower ?? 0} />%
             </strong>
           </FooterInfo>
         </Footer>

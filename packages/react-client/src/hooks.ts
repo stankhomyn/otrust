@@ -64,6 +64,7 @@ export function useValidatorDetail(id?: string) {
     delegation: new BigNumber(0),
     rewards: null,
     selfStake: 0,
+    votingPower: 0,
   });
 }
 
