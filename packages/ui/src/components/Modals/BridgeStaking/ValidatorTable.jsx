@@ -1,12 +1,14 @@
 /* eslint-disable react/jsx-key */
-import React, { useMemo } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components/macro';
 import { useTable, useSortBy } from 'react-table';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { useValidatorList } from '@onomy/react-client';
 
 import { SortBy } from '../Icons';
 import { FormattedNumber } from 'components/FormattedNumber';
-import { useValidatorsTable } from './hooks';
+import { ErrorDisplay } from 'components/ErrorDisplay';
+import LoadingSpinner from 'components/UI/LoadingSpinner';
 
 const StyledTable = styled.table`
   width: 100%;
@@ -150,53 +152,48 @@ const Delegated = styled.div`
   }
 `;
 
+const columns = [
+  {
+    Header: 'Name',
+    accessor: 'validator',
+    Cell: ({ value }) => (
+      <Validator>
+        <img src="https://picsum.photos/64/72" alt="" />
+        {/* {value.img} */}
+        <ValidatorContent>
+          <strong>{value.name}</strong>
+          <span>
+            <FormattedNumber value={value.votingPower} /> Voting Power
+          </span>
+        </ValidatorContent>
+      </Validator>
+    ),
+  },
+  {
+    Header: 'APR',
+    accessor: 'rewards',
+    Cell: ({ value }) => (
+      <APR>
+        <div>{value.APR.toFixed(2)}%</div>
+        <APRFee>{value.commissionRate.toFixed(2)}% fee</APRFee>
+      </APR>
+    ),
+  },
+  {
+    Header: 'Delegated',
+    accessor: 'delegated',
+    Cell: ({ value }) => (
+      <Delegated>
+        <strong>
+          <FormattedNumber value={value} />
+        </strong>
+      </Delegated>
+    ),
+  },
+];
+
 export default function ValidatorTable({ selected, setSelected }) {
-  const [data, { error }] = useValidatorsTable();
-
-  if (error) console.error('error', error);
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'Name',
-        accessor: 'validator',
-        Cell: ({ value }) => (
-          <Validator>
-            <img src="https://picsum.photos/64/72" alt="" />
-            {/* {value.img} */}
-            <ValidatorContent>
-              <strong>{value.name}</strong>
-              <span>
-                <FormattedNumber value={value.votingPower} /> Voting Power
-              </span>
-            </ValidatorContent>
-          </Validator>
-        ),
-      },
-      {
-        Header: 'APR',
-        accessor: 'rewards',
-        Cell: ({ value }) => (
-          <APR>
-            <div>{value.APR.toFixed(2)}%</div>
-            <APRFee>{value.commissionRate.toFixed(2)}% fee</APRFee>
-          </APR>
-        ),
-      },
-      {
-        Header: 'Delegated',
-        accessor: 'delegated',
-        Cell: ({ value }) => (
-          <Delegated>
-            <strong>
-              <FormattedNumber value={value} />
-            </strong>
-          </Delegated>
-        ),
-      },
-    ],
-    []
-  );
+  const [data, { error, pending }] = useValidatorList();
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
     {
@@ -205,6 +202,9 @@ export default function ValidatorTable({ selected, setSelected }) {
     },
     useSortBy
   );
+
+  if (error) return <ErrorDisplay error={error} />;
+  if (pending) return <LoadingSpinner />;
 
   return (
     <StyledTable {...getTableProps()}>

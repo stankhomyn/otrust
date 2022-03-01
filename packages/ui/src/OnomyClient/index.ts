@@ -1,1 +1,0 @@
-export { OnomyClient } from './OnomyClient';

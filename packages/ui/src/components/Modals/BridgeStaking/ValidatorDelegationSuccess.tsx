@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
 import { Link, useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js';
+import { ValidatorData } from '@onomy/react-client';
 
 import ValidatorFooter from './ValidatorFooter';
 import { Success } from '../Icons';
@@ -9,7 +10,6 @@ import { Caption, Desc } from './ValidatorHeader';
 import * as Modal from '../styles';
 import ValidatorNodeHeader from './ValidatorNodeHeader';
 import StakingModal from './StakingModal';
-import { ValidatorData } from './hooks';
 import { FormattedNumber } from 'components/FormattedNumber';
 
 const DeligatedWrapper = styled.div`

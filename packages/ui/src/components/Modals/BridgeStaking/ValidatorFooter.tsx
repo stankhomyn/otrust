@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import { useBridgedBalanceValue } from '@onomy/react-client';
 
 import { NomBalanceDisplay } from 'components/NomBalanceDisplay';
 import { EquivalentValue } from 'components/EquivalentValue';
 import { format18 } from 'utils/math';
-import { useBridgedBalanceValue } from 'hooks/onomy-hooks';
 
 const Footer = styled.footer`
   display: flex;

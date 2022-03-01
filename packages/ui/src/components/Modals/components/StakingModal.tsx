@@ -1,13 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
+import { useAsyncValue } from '@onomy/react-utils';
+import { useOnomy } from '@onomy/react-client';
 
 import { Close } from '../Icons';
 import * as Modal from '../styles';
 import { responsive } from 'theme/constants';
 import { useModal } from 'context/modal/ModalContext';
-import { useOnomy } from 'context/chain/OnomyContext';
-import { useAsyncValue } from 'hooks/useAsyncValue';
 
 const Message = styled.div`
   margin: 32px 0 0;

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-
-import { useOnomy } from 'context/chain/OnomyContext';
+import { useOnomy } from '@onomy/react-client';
 
 export function ConnectKeplr() {
   const { connectKeplr } = useOnomy();

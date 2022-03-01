@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { Link, useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js';
+import { ValidatorData } from '@onomy/react-client';
 
 import ValidatorFooter from './ValidatorFooter';
 import ValidatorNodeHeader from './ValidatorNodeHeader';
@@ -11,7 +12,6 @@ import StakingModal from './StakingModal';
 import { format18 } from 'utils/math';
 import { FormattedNumber } from 'components/FormattedNumber';
 import { EquivalentValue } from 'components/EquivalentValue';
-import { ValidatorData } from './hooks';
 
 const DelegateWrapper = styled.div`
   display: flex;

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useOnomy, useBridgedBalanceValue, useDelegationTotalValue } from '@onomy/react-client';
 
 import {
   Balances,
@@ -13,10 +14,8 @@ import {
 } from './SidebarStyles';
 import { PrimaryButton } from 'components/Modals/styles';
 import { NomBalanceDisplay } from 'components/NomBalanceDisplay';
-import { useBridgedBalanceValue, useDelegationTotalValue } from 'hooks/onomy-hooks';
 import { EquivalentValue } from 'components/EquivalentValue';
 import { format18 } from 'utils/math';
-import { useOnomy } from 'context/chain/OnomyContext';
 
 const ButtonWrapper = styled.div`
   margin-top: 20px;

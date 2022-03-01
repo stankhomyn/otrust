@@ -10,6 +10,7 @@ import {
 import { useInterval } from 'hooks/useInterval';
 import { randomInt } from 'utils/math';
 
+// eslint-disable-next-line react/display-name
 const LoadingBar = forwardRef(
   (
     {

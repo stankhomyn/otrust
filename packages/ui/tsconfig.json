@@ -21,12 +21,12 @@
     "jsx": "react-jsx",
     "baseUrl": "./src",
     "typeRoots": [
-      "./src/types"
+      "../react-utils/src/types"
     ]
   },
   "include": [
-    "src"
-  ],
+    "./src"
+, "../react-keplr/src/useKeplr.ts", "../react-utils/src/types"  ],
   "exclude": [
     "public",
     "src/charting_library"
