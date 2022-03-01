@@ -8,7 +8,7 @@ const SidebarFooterWrapper = styled.footer`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 16px;
+  gap: 24px;
 
   padding: 24px 40px;
   margin-top: auto;
@@ -18,9 +18,6 @@ const SidebarFooterWrapper = styled.footer`
   }
 
   @media screen and (max-width: ${responsive.tablet}) {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
     gap: 12px;
 
     width: 100%;
@@ -118,7 +115,27 @@ const IconsWrapper = styled.div`
   width: 100%;
 
   @media screen and (max-width: ${responsive.tablet}) {
-    justify-content: flex-end;
+    justify-content: center;
+    gap: 12px;
+  }
+`;
+
+const AddressWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  color: ${props => props.theme.colors.textSecondary};
+
+  a {
+    color: ${props => props.theme.colors.highlightBlue};
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: ${responsive.tablet}) {
+    justify-content: center;
     gap: 12px;
   }
 `;
@@ -145,6 +162,11 @@ export default function SidebarFooter() {
           <TwitterIcon />
         </SecondaryIcon>
       </IconsWrapper>
+
+      <AddressWrapper>
+        <span>Contract Address</span>
+        <a href="https://etherscan.io/">Etherscan</a>
+      </AddressWrapper>
     </SidebarFooterWrapper>
   );
 }
