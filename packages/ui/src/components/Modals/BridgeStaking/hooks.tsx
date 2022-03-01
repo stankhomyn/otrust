@@ -2,10 +2,10 @@ import { useCallback, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js';
 import { useAsyncPoll } from '@onomy/react-utils';
+import { OnomyFormulas } from '@onomy/client';
 
 import { useOnomy } from 'context/chain/OnomyContext';
 import { format18 } from 'utils/math';
-import { OnomyFormulas } from 'OnomyClient/OnomyFormulas';
 
 export function useValidator() {
   const { onomyClient, address } = useOnomy();

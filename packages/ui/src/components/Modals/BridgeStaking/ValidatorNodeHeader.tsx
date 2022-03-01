@@ -1,11 +1,11 @@
 /* eslint-disable react/require-default-props */
 import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
+import { OnomyFormulas } from '@onomy/client';
 
 import { useOnomy } from 'context/chain/OnomyContext';
 import { Hint, TooltipCaption, TooltipDesc } from '../../Sidebar/SidebarStyles';
 import { ExternalLink } from '../Icons';
-import { OnomyFormulas } from 'OnomyClient/OnomyFormulas';
 
 const Header = styled.header`
   display: flex;

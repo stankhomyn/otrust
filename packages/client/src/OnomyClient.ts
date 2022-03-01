@@ -1,27 +1,23 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { SigningStargateClient } from '@cosmjs/stargate';
 import BigNumber from 'bignumber.js';
 import { OfflineSigner } from '@cosmjs/launchpad';
 
-import { decodeIoTs } from 'utils/decodeIoTs';
-import { ApiResponseCodec } from './ApiResponse';
 import { OnomyAddress } from './OnomyAddress';
-import { DENOM } from 'constants/env';
 import { OnomyStargateClient } from './OnomyStargateClient';
 import { OnomyConstants } from './OnomyConstants';
 
 export class OnomyClient {
-  private REST_URL: string;
-
   private WS_URL: string;
 
   private stargate!: Promise<OnomyStargateClient>;
 
   private signer: OfflineSigner | null = null;
 
-  constructor(REST_URL: string, WS_URL: string) {
-    this.REST_URL = REST_URL;
+  private denom = OnomyConstants.DENOM;
+
+  constructor(WS_URL: string, denom = OnomyConstants.DENOM) {
     this.WS_URL = WS_URL;
+    this.denom = denom;
     this.connectStargate();
     this.getValidators();
   }
@@ -30,7 +26,7 @@ export class OnomyClient {
     this.signer = signer;
   }
 
-  async delegate(validatorAddress: string, amount: BigNumber, denom = DENOM) {
+  async delegate(validatorAddress: string, amount: BigNumber, denom = '') {
     const signer = this.getSigner();
     const [account] = await signer.getAccounts();
     const sg = await SigningStargateClient.connectWithSigner(this.WS_URL, signer, {
@@ -41,13 +37,13 @@ export class OnomyClient {
       validatorAddress,
       {
         amount: amount.toFixed(),
-        denom,
+        denom: denom || this.denom,
       },
       'auto'
     );
   }
 
-  async undelegate(validatorAddress: string, amount: BigNumber, denom = DENOM) {
+  async undelegate(validatorAddress: string, amount: BigNumber, denom = '') {
     const signer = this.getSigner();
     const [account] = await signer.getAccounts();
     const sg = await SigningStargateClient.connectWithSigner(this.WS_URL, signer, {
@@ -58,7 +54,7 @@ export class OnomyClient {
       validatorAddress,
       {
         amount: amount.toFixed(),
-        denom,
+        denom: denom || this.denom,
       },
       'auto'
     );
@@ -66,49 +62,31 @@ export class OnomyClient {
 
   async getAnomSupply() {
     const sg = await this.stargate;
-    return sg.getDenomSupply(DENOM);
+    return sg.getDenomSupply(this.denom);
   }
 
   async getMintInflation() {
-    // TODO: use stargate instead
-    const json = await this.getJson('/cosmos/mint/v1beta1/inflation');
-    const { inflation } = decodeIoTs(ApiResponseCodec.MintInflationResponse, json);
-    return inflation;
+    throw new Error('Not implemented');
   }
 
   async getMintParams() {
-    // TODO: use stargate instead
-    const json = await this.getJson('/cosmos/mint/v1beta1/params');
-    const { params } = decodeIoTs(ApiResponseCodec.MintParamsResponse, json);
-    return params;
+    throw new Error('Not implemented');
   }
 
   async getMintAnnualProvisions() {
-    // TODO: use stargate instead
-    const json = await this.getJson('/cosmos/mint/v1beta1/annual_provisions');
-    const { annual_provisions } = decodeIoTs(ApiResponseCodec.MintAnnualProvisionsResponse, json);
-    return annual_provisions;
+    throw new Error('Not implemented');
   }
 
   async getStakingPool() {
-    // TODO: use stargate instead
-    const json = await this.getJson('/cosmos/bank/v1beta1/pool');
-    const { pool } = decodeIoTs(ApiResponseCodec.StakingPoolResponse, json);
-    return pool;
+    throw new Error('Not implemented');
   }
 
   async getSlashingParams() {
-    // TODO: use stargate instead
-    const json = await this.getJson('/cosmos/slashing/v1beta1/params');
-    const { params } = decodeIoTs(ApiResponseCodec.SlashingParamsResponse, json);
-    return params;
+    throw new Error('Not implemented');
   }
 
   async getSlashingSigningInfos() {
-    // TODO: use stargate instead
-    const json = await this.getJson('/cosmos/slashing/v1beta1/signing_infos');
-    const { info } = decodeIoTs(ApiResponseCodec.SingingInfosResponse, json);
-    return info;
+    throw new Error('Not implemented');
   }
 
   async getDelegation(validatorAddress: string, delegatorAddress: string) {
@@ -128,12 +106,7 @@ export class OnomyClient {
   }
 
   async getUndelegationsForDelegator(delegatorAddress: string) {
-    // TODO: use stargate instead
-    const json = await this.getJson(
-      `/cosmos/staking/v1beta1/delegators/${delegatorAddress}/unbonding_delegations`
-    );
-    const { unbonding_responses } = decodeIoTs(ApiResponseCodec.UnbondingsResponse, json);
-    return unbonding_responses;
+    throw new Error('Not implemented');
   }
 
   async getRewardsForDelegator(delegatorAddress: string) {
@@ -142,10 +115,7 @@ export class OnomyClient {
   }
 
   async getAccountInfo(address: string) {
-    // TODO: use stargate instead
-    const json = await this.getJson(`/cosmos/auth/v1beta1/accounts/${address}`);
-    const { account } = decodeIoTs(ApiResponseCodec.SingleAccountResponse, json);
-    return account;
+    throw new Error('Not implemented');
   }
 
   async getTransactions(/* address: string */) {
@@ -153,7 +123,7 @@ export class OnomyClient {
     // `/cosmos/tx/v1beta1/txs?message.sender=${address}`
     // `/cosmos/tx/v1beta1/txs?transfer.recipient=${address}`
 
-    throw new Error('getTransactions not implemented');
+    throw new Error('Not implemented');
   }
 
   async getValidators() {
@@ -182,13 +152,6 @@ export class OnomyClient {
       console.error('Error connecting stargate to', this.WS_URL, e);
       throw e;
     }
-  }
-
-  private async getJson(path: string) {
-    // TODO: use stargate instead and remove this
-    const res = await fetch(`${this.REST_URL}${path}`);
-    const json = await res.json();
-    return json as unknown;
   }
 
   private getSigner() {

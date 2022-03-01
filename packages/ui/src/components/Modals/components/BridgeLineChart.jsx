@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { select, line, curveCardinal, axisLeft, axisBottom, scaleLinear } from 'd3';
-
-import { OnomyFormulas } from 'OnomyClient/OnomyFormulas';
-import { OnomyConstants } from 'OnomyClient/OnomyConstants';
+import { OnomyFormulas, OnomyConstants } from '@onomy/client';
 
 const StyledSVG = styled.svg`
   width: 100%;

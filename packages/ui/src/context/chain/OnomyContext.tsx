@@ -10,10 +10,10 @@ import React, {
 import { BigNumber } from 'bignumber.js';
 import { useAsyncPoll } from '@onomy/react-utils';
 import { useKeplr } from '@onomy/react-keplr';
+import { OnomyClient } from '@onomy/client';
 
 import {
   KEPLR_CONFIG,
-  REACT_APP_ONOMY_REST_URL,
   REACT_APP_ONOMY_WS_URL,
   DENOM,
   BLOCKS_TO_WAIT_FOR_BRIDGE,
@@ -21,7 +21,6 @@ import {
 // eslint-disable-next-line import/no-cycle
 import { ChainContext } from './ChainContext';
 import { format18 } from 'utils/math';
-import { OnomyClient } from 'OnomyClient';
 
 type BridgeTransactionInProgress = {
   startBalance: BigNumber;
@@ -33,7 +32,7 @@ function useOnomyState() {
   const { blockNumber } = useContext<{ blockNumber: BigNumber }>(ChainContext);
   const blockNumRef = useRef(blockNumber);
   const onomyClient = useMemo(() => {
-    return new OnomyClient(REACT_APP_ONOMY_REST_URL, REACT_APP_ONOMY_WS_URL);
+    return new OnomyClient(REACT_APP_ONOMY_WS_URL);
   }, []);
 
   blockNumRef.current = blockNumber;

@@ -1,8 +1,9 @@
 // based on https://github.com/luniehq/lunie-light/blob/master/common/address.js#L32
 import { bech32 } from 'bech32';
 
-function decodeB32(value: string) {
+function decodeB32(value: string): string {
   const words = bech32.decode(value);
+  // @ts-ignore
   return Buffer.from(bech32.fromWords(words.words)).toString(`hex`);
 }
 
