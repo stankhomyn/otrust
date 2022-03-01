@@ -163,7 +163,7 @@ const columns = [
         <ValidatorContent>
           <strong>{value.name}</strong>
           <span>
-            <FormattedNumber value={value.votingPower} /> Voting Power
+            Voting Power Share: <FormattedNumber value={value.votingPower} />%
           </span>
         </ValidatorContent>
       </Validator>
