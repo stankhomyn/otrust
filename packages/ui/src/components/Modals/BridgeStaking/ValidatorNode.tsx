@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
+import { useValidator } from '@onomy/react-client';
 
 import StakingModal from './StakingModal';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
 import ValidatorDetail from './ValidatorDetail';
 import ValidatorDelegation from './ValidatorDelegation';
 import { ConnectKeplr } from 'components/ConnectKeplr';
-import { useValidator } from '@onomy/react-client';
 
 export default function ValidatorNode() {
   const { id } = useParams();
