@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 import { Link, useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js';
 import { useAsyncProcess } from '@onomy/react-utils';
+import { useOnomy } from '@onomy/react-client';
 
 import ValidatorFooter from './ValidatorFooter';
 import { Caption, Desc } from './ValidatorHeader';
@@ -11,7 +12,6 @@ import * as Modal from '../styles';
 import BackButton from './BackButton';
 import StakingModal from './StakingModal';
 import { ValidatorData } from './hooks';
-import { useOnomy } from 'context/chain/OnomyContext';
 import { BigNumberInput } from 'components/BigNumberInput';
 import { format18, parse18 } from 'utils/math';
 import { ErrorDisplay } from 'components/ErrorDisplay';

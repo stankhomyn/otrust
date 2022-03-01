@@ -4,6 +4,7 @@ import { useWeb3React } from '@web3-react/core';
 import { useMediaQuery } from 'react-responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { useOnomy } from '@onomy/react-client';
 
 import { Dimmer } from 'components/UI/Dimmer';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
@@ -24,7 +25,6 @@ import whyBridgeImg from '../assets/why-bridge.svg';
 import bridgeCurveImg from '../assets/icon-bridge-curve.svg';
 import walletImg from '../assets/icon-onomy-wallet.svg';
 import BridgeLineChart from './BridgeLineChart';
-import { useOnomy } from 'context/chain/OnomyContext';
 
 const InputWrapper = styled.div`
   margin: 0 0 12px;

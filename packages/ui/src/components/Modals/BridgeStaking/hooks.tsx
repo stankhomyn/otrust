@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js';
 import { useAsyncPoll } from '@onomy/react-utils';
 import { OnomyFormulas } from '@onomy/client';
+import { useOnomy } from '@onomy/react-client';
 
-import { useOnomy } from 'context/chain/OnomyContext';
 import { format18 } from 'utils/math';
 
 export function useValidator() {

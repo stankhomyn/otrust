@@ -1,12 +1,17 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { BigNumber } from 'bignumber.js';
+import { useOnomy, useDelegationTotalValue } from '@onomy/react-client';
 
 import { format18 } from 'utils/math';
 import { FormattedNumber } from './FormattedNumber';
-import { useOnomy } from 'context/chain/OnomyContext';
 import { EquivalentValue } from './EquivalentValue';
-import { useDelegationTotalValue, useWrappedNomValue } from 'hooks/onomy-hooks';
+import { useChain } from 'context/chain/ChainContext';
+
+export function useWrappedNomValue() {
+  const { weakBalance } = useChain();
+  return useMemo(() => new BigNumber(weakBalance), [weakBalance]);
+}
 
 export function NomBalanceDisplay({
   value,

@@ -2,12 +2,16 @@ import React, { useReducer, useEffect, createContext, useContext } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { BigNumber } from 'bignumber.js';
+import { OnomyProvider } from '@onomy/react-client';
 
+import {
+  KEPLR_CONFIG,
+  REACT_APP_BONDING_NOM_CONTRACT_ADDRESS,
+  REACT_APP_GRAPHQL_ENDPOINT,
+} from 'constants/env';
 import { BondingCont, NOMCont } from 'context/chain/contracts';
 import { reducer } from 'context/chain/ChainReducer';
-import { REACT_APP_BONDING_NOM_CONTRACT_ADDRESS, REACT_APP_GRAPHQL_ENDPOINT } from 'constants/env';
 // eslint-disable-next-line import/no-cycle
-import { OnomyProvider } from './OnomyContext';
 
 export const ChainContext = createContext();
 export const useChain = () => useContext(ChainContext);
@@ -118,7 +122,9 @@ function ChainProvider({ theme, children }) {
     <ApolloProvider client={client}>
       <UpdateChainContext.Provider value={dispatch}>
         <ChainContext.Provider value={contextValue}>
-          <OnomyProvider>{children}</OnomyProvider>
+          <OnomyProvider chainInfo={KEPLR_CONFIG} ethBlockNumber={contextValue.blockNumber}>
+            {children}
+          </OnomyProvider>
         </ChainContext.Provider>
       </UpdateChainContext.Provider>
     </ApolloProvider>

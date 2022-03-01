@@ -9,7 +9,7 @@ import { OnomyConstants } from './OnomyConstants';
 export class OnomyClient {
   private WS_URL: string;
 
-  private stargate!: Promise<OnomyStargateClient>;
+  private stargate?: Promise<OnomyStargateClient>;
 
   private signer: OfflineSigner | null = null;
 
@@ -18,8 +18,6 @@ export class OnomyClient {
   constructor(WS_URL: string, denom = OnomyConstants.DENOM) {
     this.WS_URL = WS_URL;
     this.denom = denom;
-    this.connectStargate();
-    this.getValidators();
   }
 
   setSigner(signer: OfflineSigner | null) {
@@ -61,7 +59,7 @@ export class OnomyClient {
   }
 
   async getAnomSupply() {
-    const sg = await this.stargate;
+    const sg = await this.getStargate();
     return sg.getDenomSupply(this.denom);
   }
 
@@ -90,35 +88,35 @@ export class OnomyClient {
   }
 
   async getDelegation(validatorAddress: string, delegatorAddress: string) {
-    const sg = await this.stargate;
+    const sg = await this.getStargate();
     const res = await sg.getDelegation(delegatorAddress, validatorAddress);
     return new BigNumber(res?.amount ?? '0');
   }
 
   async getDelegationsForValidator(validatorAddress: string) {
-    const sg = await this.stargate;
+    const sg = await this.getStargate();
     return sg.getDelegationsForDelegator(validatorAddress);
   }
 
   async getDelegationsForDelegator(delegatorAddress: string) {
-    const sg = await this.stargate;
+    const sg = await this.getStargate();
     return sg.getDelegationsForDelegator(delegatorAddress);
   }
 
-  async getUndelegationsForDelegator(delegatorAddress: string) {
+  async getUndelegationsForDelegator(_delegatorAddress: string) {
     throw new Error('Not implemented');
   }
 
   async getRewardsForDelegator(delegatorAddress: string) {
-    const sg = await this.stargate;
+    const sg = await this.getStargate();
     return sg.getRewardsForDelegator(delegatorAddress);
   }
 
-  async getAccountInfo(address: string) {
+  async getAccountInfo(_address: string) {
     throw new Error('Not implemented');
   }
 
-  async getTransactions(/* address: string */) {
+  async getTransactions(_address: string) {
     // TODO: implement OnomyClient.getTransactions
     // `/cosmos/tx/v1beta1/txs?message.sender=${address}`
     // `/cosmos/tx/v1beta1/txs?transfer.recipient=${address}`
@@ -127,7 +125,7 @@ export class OnomyClient {
   }
 
   async getValidators() {
-    const sg = await this.stargate;
+    const sg = await this.getStargate();
     return sg.getValidators();
   }
 
@@ -138,9 +136,15 @@ export class OnomyClient {
   }
 
   async getAddressBalance(address: string, denom: string) {
-    const stargate = await this.stargate;
+    const stargate = await this.getStargate();
     const coin = await stargate.getBalance(address, denom);
     return coin.amount; // TODO: BigNumber rather than string return?
+  }
+
+  private getStargate() {
+    if (this.stargate) return this.stargate;
+    this.stargate = this.connectStargate();
+    return this.stargate;
   }
 
   private connectStargate() {

@@ -7,6 +7,8 @@
   "editor.formatOnSave": true,
   "eslint.workingDirectories": [
     { "directory": "packages/ui", "changeProcessCWD": true },
+    { "directory": "packages/client", "changeProcessCWD": true },
+    { "directory": "packages/react-client", "changeProcessCWD": true },
     { "directory": "packages/react-keplr", "changeProcessCWD": true },
     { "directory": "packages/react-utils", "changeProcessCWD": true }
   ]

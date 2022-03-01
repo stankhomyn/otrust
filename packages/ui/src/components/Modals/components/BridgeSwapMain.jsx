@@ -5,6 +5,7 @@ import cosmos from 'cosmos-lib';
 import { ethers } from 'ethers';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
+import { useOnomy } from '@onomy/react-client';
 
 import { useChain } from 'context/chain/ChainContext';
 import { GravityCont, NOMCont } from 'context/chain/contracts';
@@ -14,7 +15,6 @@ import { NOTIFICATION_MESSAGES } from '../../../constants/NotificationMessages';
 import { responsive } from 'theme/constants';
 import { useGasPriceSelection } from 'hooks/useGasPriceSelection';
 import { REACT_APP_GRAVITY_CONTRACT_ADDRESS, REACT_APP_WNOM_CONTRACT_ADDRESS } from 'constants/env';
-import { useOnomy } from 'context/chain/OnomyContext';
 import { ConnectKeplr } from 'components/ConnectKeplr';
 
 export const initialErrorsState = { amountError: '', onomyWalletError: '', transactionError: '' };

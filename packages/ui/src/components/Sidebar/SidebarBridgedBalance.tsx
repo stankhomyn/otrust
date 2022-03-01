@@ -1,6 +1,6 @@
 import React from 'react';
+import { useOnomy } from '@onomy/react-client';
 
-import { useOnomy } from 'context/chain/OnomyContext';
 import { NomBalanceDisplay } from 'components/NomBalanceDisplay';
 import {
   Balance,
