@@ -5,6 +5,7 @@ import { OfflineSigner } from '@cosmjs/launchpad';
 import { OnomyAddress } from './OnomyAddress';
 import { OnomyStargateClient } from './OnomyStargateClient';
 import { OnomyConstants } from './OnomyConstants';
+import { OnomyFormulas } from './OnomyFormulas';
 
 export class OnomyClient {
   private WS_URL: string;
@@ -22,6 +23,14 @@ export class OnomyClient {
 
   setSigner(signer: OfflineSigner | null) {
     this.signer = signer;
+  }
+
+  denomDecimalFromFixed(amount: BigNumber, decimalPlaces = OnomyConstants.DENOM_DECIMAL_PLACES) {
+    return amount.div(new BigNumber(10 ** decimalPlaces));
+  }
+
+  denomNumberFromFixed(amount: BigNumber, decimalPlaces = OnomyConstants.DENOM_DECIMAL_PLACES) {
+    return this.denomDecimalFromFixed(amount, decimalPlaces).toNumber();
   }
 
   async delegate(validatorAddress: string, amount: BigNumber, denom = '') {
@@ -60,7 +69,8 @@ export class OnomyClient {
 
   async getAnomSupply() {
     const sg = await this.getStargate();
-    return sg.getDenomSupply(this.denom);
+    const fixed = await sg.getDenomSupply(this.denom);
+    return this.denomDecimalFromFixed(fixed);
   }
 
   async getMintInflation() {
@@ -127,6 +137,38 @@ export class OnomyClient {
   async getValidators() {
     const sg = await this.getStargate();
     return sg.getValidators();
+  }
+
+  async getValidatorsForDelegator(address: string) {
+    const [validators, bridgedSupply, delegationData] = await Promise.all([
+      this.getValidators(),
+      this.getAnomSupply(),
+      address ? this.getDelegationsForDelegator(address) : Promise.resolve([]),
+    ]);
+    const stakingAPR = OnomyFormulas.stakingRewardAPR(bridgedSupply.toNumber());
+
+    return validators.map(validator => {
+      const delegation = delegationData.find(
+        d => d.delegation?.validatorAddress === validator.operatorAddress
+      );
+      return {
+        id: validator.operatorAddress,
+        validator: {
+          name: validator.description?.moniker ?? validator.operatorAddress,
+          votingPower: this.denomDecimalFromFixed(
+            new BigNumber(validator.delegatorShares)
+          ).toString(),
+        },
+        rewards: {
+          APR: stakingAPR,
+          commissionRate:
+            this.denomNumberFromFixed(
+              new BigNumber(validator.commission?.commissionRates?.rate ?? '0')
+            ) * 100,
+        },
+        delegated: this.denomDecimalFromFixed(new BigNumber(delegation?.balance?.amount ?? '0')),
+      };
+    });
   }
 
   async getSelfDelegation(validatorAddress: string) {

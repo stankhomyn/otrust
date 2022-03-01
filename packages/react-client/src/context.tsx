@@ -28,9 +28,7 @@ function useOnomyState({
   ethBlockNumber?: BigNumber;
 }) {
   const blockNumRef = useRef(ethBlockNumber);
-  const onomyClient = useMemo(() => {
-    return new OnomyClient(chainInfo.rpc);
-  }, [chainInfo.rpc]);
+  const onomyClient = useMemo(() => new OnomyClient(chainInfo.rpc), [chainInfo.rpc]);
 
   blockNumRef.current = ethBlockNumber;
   const [address, setAddress] = useState('');
@@ -42,17 +40,6 @@ function useOnomyState({
     '0'
   );
   const [bridgeTransactions, setBridgeTransactions] = useState<BridgeTransactionInProgress[]>([]);
-  const [bridgedSupply] = useAsyncPoll(
-    useCallback(() => onomyClient.getAnomSupply(), [onomyClient]),
-    new BigNumber(0)
-  );
-
-  const bridgedSupplyFormatted = useMemo(() => {
-    if (!bridgedSupply) return 0;
-    const formated = bridgedSupply.div(new BigNumber(10 ** 18));
-    return formated.toNumber();
-  }, [bridgedSupply]);
-
   const { address: keplrAddress, hasKeplr, connect: connectKeplr, signer } = useKeplr(chainInfo);
 
   useEffect(() => {
@@ -99,7 +86,6 @@ function useOnomyState({
     address,
     onomyClient,
     amount,
-    bridgedSupplyFormatted,
     bridgeProgress,
     hasKeplr,
     setAddress,
@@ -114,7 +100,6 @@ const DEFAULT_STATE: OnomyState = {
   onomyClient: new OnomyClient(''),
   address: '',
   amount: '0',
-  bridgedSupplyFormatted: 0,
   bridgeProgress: null,
   hasKeplr: false,
   connectKeplr: () => Promise.resolve(),

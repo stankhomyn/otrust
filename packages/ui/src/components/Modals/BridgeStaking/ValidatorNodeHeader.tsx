@@ -1,8 +1,7 @@
 /* eslint-disable react/require-default-props */
-import React, { useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
-import { OnomyFormulas } from '@onomy/client';
-import { useOnomy } from '@onomy/react-client';
+import { useStakingRewardAPR } from '@onomy/react-client';
 
 import { Hint, TooltipCaption, TooltipDesc } from '../../Sidebar/SidebarStyles';
 import { ExternalLink } from '../Icons';
@@ -92,11 +91,7 @@ export default function ValidatorNodeHeader({
   name: string;
   url?: string;
 }) {
-  const { bridgedSupplyFormatted: bridgedSupply } = useOnomy();
-  const estimatedAPR = useMemo(
-    () => OnomyFormulas.stakingRewardAPR(bridgedSupply),
-    [bridgedSupply]
-  );
+  const estimatedAPR = useStakingRewardAPR();
 
   return (
     <Header>

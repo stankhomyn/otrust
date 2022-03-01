@@ -1,15 +1,16 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 
 import StakingModal from './StakingModal';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
 import ValidatorDetail from './ValidatorDetail';
 import ValidatorDelegation from './ValidatorDelegation';
-import { useValidator } from './hooks';
 import { ConnectKeplr } from 'components/ConnectKeplr';
+import { useValidator } from '@onomy/react-client';
 
 export default function ValidatorNode() {
-  const [data, { error, pending }] = useValidator();
+  const { id } = useParams();
+  const [data, { error, pending }] = useValidator(id);
 
   if (pending) {
     return (

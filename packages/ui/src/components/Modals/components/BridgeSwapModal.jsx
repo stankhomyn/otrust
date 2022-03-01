@@ -4,7 +4,7 @@ import { useWeb3React } from '@web3-react/core';
 import { useMediaQuery } from 'react-responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { useOnomy } from '@onomy/react-client';
+import { useAnomSupply, useOnomy } from '@onomy/react-client';
 
 import { Dimmer } from 'components/UI/Dimmer';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
@@ -108,7 +108,7 @@ const KeplrLink = styled.a`
 
 function BridgeSwapModalInfo({ closeModal }) {
   const collapsedInfoBreakpoint = useMediaQuery({ maxWidth: responsive.laptopSmall });
-  const { bridgedSupplyFormatted: bridgedSupply } = useOnomy();
+  const [bridgedSupply] = useAnomSupply();
   return (
     <Modal.Info>
       <ModalHeader collapsedInfoBreakpoint={collapsedInfoBreakpoint}>
@@ -119,7 +119,7 @@ function BridgeSwapModalInfo({ closeModal }) {
         )}
       </ModalHeader>
 
-      <BridgeLineChart coinsInCirculation={bridgedSupply} />
+      <BridgeLineChart coinsInCirculation={bridgedSupply.toNumber()} />
 
       <Modal.InfoRow>
         <div>
