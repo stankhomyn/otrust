@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import styled, { css } from 'styled-components/macro';
 import { useTable, useSortBy } from 'react-table';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { useValidators } from '@onomy/react-client';
+import { useValidatorList } from '@onomy/react-client';
 
 import { SortBy } from '../Icons';
 import { FormattedNumber } from 'components/FormattedNumber';
@@ -151,7 +151,7 @@ const Delegated = styled.div`
 `;
 
 export default function ValidatorTable({ selected, setSelected }) {
-  const [data, { error }] = useValidators();
+  const [data, { error }] = useValidatorList();
 
   if (error) console.error('error', error);
 

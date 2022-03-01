@@ -139,11 +139,23 @@ export class OnomyClient {
     return sg.getValidators();
   }
 
-  async getValidatorsForDelegator(address: string) {
+  async getSelfDelegation(validatorAddress: string) {
+    const hexOperatorAddress = OnomyAddress.decodeB32(validatorAddress);
+    const delegatorAddress = OnomyAddress.encodeB32(hexOperatorAddress, 'onomy');
+    return this.getDelegation(validatorAddress, delegatorAddress);
+  }
+
+  async getAddressBalance(address: string, denom: string) {
+    const stargate = await this.getStargate();
+    const coin = await stargate.getBalance(address, denom);
+    return coin.amount; // TODO: BigNumber rather than string return?
+  }
+
+  async getValidatorsForDelegator(delegator: string) {
     const [validators, bridgedSupply, delegationData] = await Promise.all([
       this.getValidators(),
       this.getAnomSupply(),
-      address ? this.getDelegationsForDelegator(address) : Promise.resolve([]),
+      delegator ? this.getDelegationsForDelegator(delegator) : Promise.resolve([]),
     ]);
     const stakingAPR = OnomyFormulas.stakingRewardAPR(bridgedSupply.toNumber());
 
@@ -171,16 +183,27 @@ export class OnomyClient {
     });
   }
 
-  async getSelfDelegation(validatorAddress: string) {
-    const hexOperatorAddress = OnomyAddress.decodeB32(validatorAddress);
-    const delegatorAddress = OnomyAddress.encodeB32(hexOperatorAddress, 'onomy');
-    return this.getDelegation(validatorAddress, delegatorAddress);
-  }
-
-  async getAddressBalance(address: string, denom: string) {
-    const stargate = await this.getStargate();
-    const coin = await stargate.getBalance(address, denom);
-    return coin.amount; // TODO: BigNumber rather than string return?
+  async getValidatorForDelegator(delegator: string, validator?: string) {
+    if (!validator) return { validator: null, delegation: new BigNumber(0) };
+    const [validators, selfDelegation, delegationData, rewardsData] = await Promise.all([
+      // TODO: more focused query?
+      this.getValidators(),
+      this.getSelfDelegation(validator),
+      delegator ? this.getDelegation(validator, delegator) : Promise.resolve(new BigNumber(0)),
+      delegator ? this.getRewardsForDelegator(delegator) : Promise.resolve(null),
+    ]);
+    const validatorData = validators.find(v => v.operatorAddress === validator);
+    if (!validatorData) return { validator: null, delegation: delegationData };
+    const selfStakeRate = selfDelegation.div(validatorData.tokens);
+    const rewardItems = rewardsData?.rewards.find(v => v.validatorAddress === validator);
+    const rewardItem = rewardItems?.reward.find(r => r.denom === 'nom'); // TODO: don't hardcode?
+    return {
+      validator: validatorData,
+      selfDelegation,
+      selfStake: selfStakeRate ? selfStakeRate.toNumber() : 0,
+      delegation: delegationData,
+      rewards: rewardItem,
+    };
   }
 
   private getStargate() {

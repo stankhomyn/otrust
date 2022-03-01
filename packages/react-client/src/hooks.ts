@@ -41,43 +41,25 @@ export function useStakingRewardAPR() {
   return useMemo(() => OnomyFormulas.stakingRewardAPR(bridgedSupply.toNumber()), [bridgedSupply]);
 }
 
-function useValidatorsFetchCb() {
+function useValidatorListFetchCb() {
   const { address, onomyClient } = useOnomy();
   return useCallback(() => onomyClient.getValidatorsForDelegator(address), [address, onomyClient]);
 }
 
-export function useValidators() {
-  return useAsyncPoll(useValidatorsFetchCb(), []);
+export function useValidatorList() {
+  return useAsyncPoll(useValidatorListFetchCb(), []);
 }
 
-function useValidatorFetchCb(id?: string) {
+function useValidatorDetailFetchCb(id?: string) {
   const { onomyClient, address } = useOnomy();
-  return useCallback(async () => {
-    if (!id) return { validator: null, delegation: new BigNumber(0) };
-    const [validators, selfDelegation, delegationData, rewardsData] = await Promise.all([
-      // TODO: more focused query?
-      onomyClient.getValidators(),
-      onomyClient.getSelfDelegation(id),
-      address ? onomyClient.getDelegation(id, address) : Promise.resolve(new BigNumber(0)),
-      address ? onomyClient.getRewardsForDelegator(address) : Promise.resolve(null),
-    ]);
-    const validatorData = validators.find(v => v.operatorAddress === id);
-    if (!validatorData) return { validator: null, delegation: delegationData };
-    const selfStakeRate = selfDelegation.div(validatorData.tokens);
-    const rewardItems = rewardsData?.rewards.find(v => v.validatorAddress === id);
-    const rewardItem = rewardItems?.reward.find(r => r.denom === 'nom'); // TODO: don't hardcode?
-    return {
-      validator: validatorData,
-      selfDelegation,
-      selfStake: selfStakeRate ? selfStakeRate.toNumber() : 0,
-      delegation: delegationData,
-      rewards: rewardItem,
-    };
-  }, [onomyClient, id, address]);
+  return useCallback(
+    () => onomyClient.getValidatorForDelegator(address, id),
+    [onomyClient, id, address]
+  );
 }
 
-export function useValidator(id?: string) {
-  return useAsyncPoll(useValidatorFetchCb(id), {
+export function useValidatorDetail(id?: string) {
+  return useAsyncPoll(useValidatorDetailFetchCb(id), {
     validator: null,
     delegation: new BigNumber(0),
     rewards: null,
@@ -85,4 +67,4 @@ export function useValidator(id?: string) {
   });
 }
 
-export type ValidatorData = ReturnType<typeof useValidator>[0];
+export type ValidatorData = ReturnType<typeof useValidatorDetail>[0];
