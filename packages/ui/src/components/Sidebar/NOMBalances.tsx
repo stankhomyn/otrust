@@ -21,6 +21,19 @@ const ButtonWrapper = styled.div`
   margin-top: 20px;
 `;
 
+const Message = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 15px;
+
+  background-color: #252b39;
+  border-radius: 4px;
+
+  color: ${props => props.theme.colors.highlightBlue};
+`;
+
 export default function NOMBalances() {
   const { address } = useOnomy();
   const bridged = useBridgedBalanceValue();
@@ -28,7 +41,7 @@ export default function NOMBalances() {
 
   return (
     <Balances>
-      {address && (
+      {address ? (
         <>
           <Balance>
             <BalancePrice>
@@ -62,6 +75,8 @@ export default function NOMBalances() {
             </Hint>
           </Balance>
         </>
+      ) : (
+        <Message>Your NOM balances will be shown here after bridging wNOM.</Message>
       )}
 
       <ButtonWrapper>
