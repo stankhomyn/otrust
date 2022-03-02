@@ -123,6 +123,7 @@
     "improved-yarn-audit": "^2.3.3",
     "jest-styled-components": "^7.0.5",
     "prettier": "^2.4.0",
+    "react-error-overlay": "6.0.9",
     "react-scripts": "^4.0.3",
     "react-test-renderer": "^17.0.2"
   },
