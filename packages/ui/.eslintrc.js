@@ -37,6 +37,7 @@ module.exports = {
     "react/jsx-props-no-spreading": "off",
     "react/prefer-stateless-function": [2],
     "react/prop-types": "off",
+    "react/require-default-props": "off",
     "prettier/prettier": "error",
     "class-methods-use-this": "off",
     "consistent-return": "off",

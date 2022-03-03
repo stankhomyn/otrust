@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { select, arc } from 'd3';
 
@@ -15,8 +15,24 @@ const Label = styled.span`
   color: ${props => props.theme.colors.txtPrimary};
 `;
 
-export default function ProgressCircle({ percent }) {
-  const svgRef = useRef();
+export default function ProgressCircle({
+  percent,
+  message = '',
+}: {
+  percent: number;
+  message?: string;
+}) {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const startTime = useMemo(() => new Date().getTime(), []);
+  const estimatedMinutes = useMemo(() => {
+    const now = new Date().getTime();
+    const elapsed = now - startTime;
+    const speed = percent / elapsed;
+    const remaining = 100 - percent;
+    if (remaining === 0) return null;
+    const time = remaining / speed;
+    return Math.round(time / 60000) || null;
+  }, [percent, startTime]);
 
   useEffect(() => {
     const svg = select(svgRef.current);
@@ -30,6 +46,7 @@ export default function ProgressCircle({ percent }) {
 
     svg
       .append('path')
+      // @ts-ignore
       .attr('d', generatedArc())
       .style('transform', 'translate(50px, 50px)')
       .style('fill', '#fff');
@@ -41,7 +58,14 @@ export default function ProgressCircle({ percent }) {
         <circle cx="50" cy="50" r="47" stroke="#302e3d" strokeWidth="3" fill="none" />
       </svg>
 
-      <Label>Bridging assets… 7 minutes left</Label>
+      <Label>
+        {message}{' '}
+        {estimatedMinutes && (
+          <>
+            {Math.max(estimatedMinutes, 1)} minute{estimatedMinutes === 1 ? '' : 's'} left
+          </>
+        )}
+      </Label>
     </Wrapper>
   );
 }
