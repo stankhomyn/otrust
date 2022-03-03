@@ -746,4 +746,8 @@ export const StakingWrapper = styled.div`
 
   background-color: ${props => props.theme.colors.bgDarken};
   border-radius: 8px;
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    padding: 20px;
+  }
 `;

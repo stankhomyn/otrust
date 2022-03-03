@@ -5,6 +5,7 @@ import { useBridgedBalanceValue } from '@onomy/react-client';
 import { NomBalanceDisplay } from 'components/NomBalanceDisplay';
 import { EquivalentValue } from 'components/EquivalentValue';
 import { format18 } from 'utils/math';
+import { responsive } from 'theme/constants';
 
 const Footer = styled.footer`
   display: flex;
@@ -12,6 +13,10 @@ const Footer = styled.footer`
   justify-content: space-between;
 
   padding: 32px 40px;
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    padding: 20px;
+  }
 `;
 
 const FooterBalance = styled.div`
