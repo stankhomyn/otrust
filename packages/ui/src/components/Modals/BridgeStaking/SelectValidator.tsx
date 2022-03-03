@@ -8,6 +8,7 @@ import ValidatorTable from './ValidatorTable';
 import * as Modal from '../styles';
 import StakingModal from './StakingModal';
 import { ConnectKeplr } from 'components/ConnectKeplr';
+import warningSrc from '../assets/warning.svg';
 
 const Message = styled.div`
   display: flex;
@@ -32,7 +33,7 @@ export default function SelectValidator() {
         <ValidatorHeader />
 
         <Message>
-          <img src="" alt="" />
+          <img src={warningSrc} alt="" />
           NOTE: To stop staking and make your balance available, there is a 3-week unbonding time.
         </Message>
 
