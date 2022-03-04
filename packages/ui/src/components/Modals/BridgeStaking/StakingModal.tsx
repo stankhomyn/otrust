@@ -23,7 +23,6 @@ const ModalBody = styled.div`
 
   @media screen and (max-width: ${responsive.tabletSmall}) {
     max-width: calc(100% - 20px);
-    min-height: 100vh;
     margin: 0 10px;
 
     top: 50px;
@@ -34,6 +33,7 @@ const ModalBody = styled.div`
 
   @media screen and (max-width: ${responsive.smartphone}) {
     width: 100%;
+    min-height: 100vh;
     max-width: none;
     margin: 0;
 
