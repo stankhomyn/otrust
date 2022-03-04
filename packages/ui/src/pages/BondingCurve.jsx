@@ -115,24 +115,24 @@ export default function BondingCurve() {
                   <img src={welcome} alt="" />
                 </div>
                 <div className="content">
-                  <h4>Welcome to the Onomy Bonding Curve Offering</h4>
-                  <p>The BCO is your gateway to the Onomy Network and the NOM token.</p>
+                  <h4>Onomy Bonding Curve Platform</h4>
+                  <p>Purchase and access NOM, the native utility token of the Onomy Network.</p>
 
                   <p>
-                    Use the Bonding Curve Platform to buy and sell wNOM, and bridge for NOM to use
-                    on the Onomy Network for staking, collateral, governance, and rewards.
+                    The Bonding Curve supplies wNOM and ETH, providing liquidity for both purchases
+                    and sales.
                   </p>
 
                   <p>
-                    By continuing, you have read our documentation and agree to our disclosures{' '}
+                    Bridge wNOM to NOM to access staking rewards, governance, and{' '}
                     <a
-                      href="https://docs.onomy.io/nom-distribution/bonding-curve-offering"
+                      href="https://docs.onomy.io/nom-distribution/what-is-nom"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      here
+                      more
                     </a>
-                    .
+                    !
                   </p>
 
                   <Checkbox>
@@ -141,7 +141,16 @@ export default function BondingCurve() {
                       defaultChecked={accepted}
                       onChange={() => setAccepted(!accepted)}
                     />
-                    I&apos;ve read the documentation and agreed to disclosures
+                    <p>
+                      I have read and understood the{' '}
+                      <a
+                        href="https://docs.onomy.io/nom-distribution/bonding-curve-offering"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        documentation and disclosures.
+                      </a>
+                    </p>
                   </Checkbox>
                   <PrimaryButton
                     type="button"
