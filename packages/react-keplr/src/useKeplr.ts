@@ -15,14 +15,14 @@ export function useKeplr(chainInfo: ChainInfo) {
     return chainIdParts.join('-');
   }, [chainInfo.chainId]);
 
-  const connect = useCallback(async () => {
+  const connectActual = useCallback(async () => {
     if (keplrConnected.current) return;
-    keplrConnected.current = true;
     try {
       if (keplrWindow.keplr) {
         await keplrWindow.keplr.experimentalSuggestChain(chainInfo);
-        // Staking coin information
         await keplrWindow.keplr.enable(chainId);
+
+        keplrConnected.current = true;
         if (!keplrWindow.getOfflineSigner) throw new Error('No Offline Signer');
         const offlineSigner = keplrWindow.getOfflineSigner(chainId);
         const accounts = await offlineSigner.getAccounts();
@@ -38,6 +38,24 @@ export function useKeplr(chainInfo: ChainInfo) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId]);
+
+  const connect = useCallback(async () => {
+    if (!keplrWindow.keplr) {
+      // eslint-disable-next-line no-console
+      console.error('Install keplr chrome extension');
+      return;
+    }
+
+    // This weirdness is necessary to work around how keplr forgets chain suggest prompt after unlock
+    try {
+      await keplrWindow.keplr.enable(chainId);
+      await connectActual();
+    } catch (e) {
+      if ((e as Error)?.message.indexOf('no chain info')) {
+        setTimeout(connectActual, 1000);
+      }
+    }
+  }, [chainId, connectActual, keplrWindow.keplr]);
 
   return {
     keplr: keplrWindow.keplr,
