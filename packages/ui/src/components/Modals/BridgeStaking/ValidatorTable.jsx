@@ -158,7 +158,7 @@ const columns = [
     accessor: 'validator',
     Cell: ({ value }) => (
       <Validator>
-        <img src="https://picsum.photos/64/72" alt="" />
+        {/* <img src="https://picsum.photos/64/72" alt="" /> */}
         {/* {value.img} */}
         <ValidatorContent>
           <strong>{value.name}</strong>

@@ -12,6 +12,7 @@ import StakingModal from './StakingModal';
 import { format18 } from 'utils/math';
 import { FormattedNumber } from 'components/FormattedNumber';
 import { EquivalentValue } from 'components/EquivalentValue';
+import { responsive } from 'theme/constants';
 
 const DelegateWrapper = styled.div`
   display: flex;
@@ -65,6 +66,12 @@ const Footer = styled.footer`
   margin-top: 40px;
 
   border-top: 1px solid ${props => props.theme.colors.bgHighlightBorder};
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 16px;
+  }
 `;
 
 const FooterInfo = styled.div`
@@ -73,6 +80,10 @@ const FooterInfo = styled.div`
   justify-content: space-between;
 
   width: calc(50% - 50px);
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    width: auto;
+  }
 
   > span {
     font-size: 14px;

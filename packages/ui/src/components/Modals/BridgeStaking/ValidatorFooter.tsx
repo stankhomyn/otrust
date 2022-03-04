@@ -14,6 +14,12 @@ const Footer = styled.footer`
 
   padding: 32px 40px;
 
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+  }
+
   @media screen and (max-width: ${responsive.smartphone}) {
     padding: 20px;
   }

@@ -23,6 +23,7 @@ const ModalBody = styled.div`
 
   @media screen and (max-width: ${responsive.tabletSmall}) {
     max-width: calc(100% - 20px);
+    min-height: 100vh;
     margin: 0 10px;
 
     top: 50px;

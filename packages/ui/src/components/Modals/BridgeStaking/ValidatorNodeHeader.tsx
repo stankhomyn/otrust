@@ -5,6 +5,7 @@ import { useStakingRewardAPR } from '@onomy/react-client';
 
 import { Hint, TooltipCaption, TooltipDesc } from '../../Sidebar/SidebarStyles';
 import { ExternalLink } from '../Icons';
+import { responsive } from 'theme/constants';
 
 const Header = styled.header`
   display: flex;
@@ -50,6 +51,13 @@ const ValidatorName = styled.strong`
   letter-spacing: 2.08px;
 
   color: ${props => props.theme.colors.textPrimary};
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    font-family: Poppins, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: normal;
+  }
 `;
 
 const APR = styled.div`
@@ -58,6 +66,10 @@ const APR = styled.div`
   gap: 8px;
 
   margin-left: auto;
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    flex-direction: column-reverse;
+  }
 
   > span {
     font-size: 12px;
@@ -80,14 +92,18 @@ const APR = styled.div`
 
 const Icon = styled.div`
   margin-left: 150px;
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    display: none;
+  }
 `;
 
 export default function ValidatorNodeHeader({
-  imgSrc = 'https://picsum.photos/80/80',
+  // imgSrc = 'https://picsum.photos/80/80',
   name,
   url,
 }: {
-  imgSrc?: string;
+  // imgSrc?: string;
   name: string;
   url?: string;
 }) {
@@ -96,7 +112,7 @@ export default function ValidatorNodeHeader({
   return (
     <Header>
       <Validator>
-        <img src={imgSrc} alt="" />
+        {/* <img src={imgSrc} alt="" /> */}
         <ValidatorDesc>
           <ValidatorName>{name}</ValidatorName>
           {url && (
