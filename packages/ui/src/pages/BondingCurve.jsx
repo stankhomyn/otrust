@@ -184,7 +184,11 @@ export default function BondingCurve() {
                 <div class="img-wrapper"><img src=${panel} alt=""/></div>
                 <div class="content">
                   <h4>Account Panel</h4>
-                  <p>Here you can view your ETH and wNOM balances. You also can bridge wNOM to your Onomy wallet (and create one) from here.</p>
+                  <p>Here you can view your ETH and wNOM balances.
+                  <br>
+                  <br>
+                  After bridging wNOM to NOM, your NOM balance will appear and you may begin staking!
+                  </p>
                 </div>`,
                 element: '#tour-sidebar',
               },
@@ -200,7 +204,7 @@ export default function BondingCurve() {
               {
                 intro: `
                 <div class="content">
-                  <h4>Buying wNOM</h4>
+                  <h4>Buy wNOM</h4>
                   <p>Enter the amount of ETH you would like to use to purchase wNOM here. A 1% fee will be applied per trade.</p>
                 </div>
               `,
@@ -209,7 +213,7 @@ export default function BondingCurve() {
               {
                 intro: `
                 <div class="content">
-                  <h4>Selling wNOM</h4>
+                  <h4>Sell wNOM</h4>
                   Enter the amount of wNOM you would like to sell here. A 1% fee will be applied per trade.
                 </div>`,
                 element: '#tour-sell',
@@ -219,7 +223,7 @@ export default function BondingCurve() {
                 <div class="img-wrapper"><img src=${bondingCurve} alt=""/></div>
                 <div class="content">
                   <h4>Bonding Curve Chart</h4>
-                  <p>Choose between viewing the Bonding Curve chart and using TradingView to monitor price action and issuance of wNOM.</p>
+                  <p>Choose between viewing the Bonding Curve chart and using TradingView to monitor issuance and price of wNOM.</p>
                 </div>`,
                 element: '#tour-chart',
               },
