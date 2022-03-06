@@ -223,7 +223,7 @@ export default function BondingCurve() {
                 <div class="img-wrapper"><img src=${bondingCurve} alt=""/></div>
                 <div class="content">
                   <h4>Bonding Curve Chart</h4>
-                  <p>Choose between viewing the Bonding Curve chart and using TradingView to monitor issuance and price of wNOM.</p>
+                  <p>Choose between the Bonding Curve and TradingView charts to monitor issuance and price of wNOM.</p>
                 </div>`,
                 element: '#tour-chart',
               },
