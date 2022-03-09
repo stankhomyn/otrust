@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
 
-import { SUPPORTED_WALLETS } from '../connectors';
+import { SUPPORTED_WALLETS } from './connectors';
 
 export function useEagerConnect() {
   const { activate, active } = useWeb3React();
@@ -15,7 +15,7 @@ export function useEagerConnect() {
       if (sWallet.name === connectorId) {
         // This part of code never can be executed with SUPPORTED_WALLETS constants. Can it be deleted?
         if (sWallet.name === 'Injected') {
-          if (typeof web3 !== 'undefined') {
+          if (typeof (window as unknown as any).web3 !== 'undefined') {
             activate(sWallet.connector);
           } else {
             window.open('https://metamask.io/download.html');

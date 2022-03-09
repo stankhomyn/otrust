@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { isMobile } from 'react-device-detect';
+import { SUPPORTED_WALLETS } from '@onomy/react-eth';
 
 import { AccentButton } from 'components/UI/Button';
 import { responsive } from 'theme/constants';
@@ -10,7 +11,6 @@ import metamask from '../assets/images/metamask.png';
 import ledger from '../assets/images/ledger.png';
 import coinbase from '../assets/images/coinbase.png';
 import walletConnect from '../assets/images/walletConnect.png';
-import { SUPPORTED_WALLETS } from '../connectors';
 
 export const wallets = [
   { title: 'Metamask', img: metamask },

@@ -4,7 +4,7 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { LedgerConnector } from '@web3-react/ledger-connector';
 
-import { Networks } from '../utils';
+import { Networks } from './Networks';
 
 /**
 
@@ -33,6 +33,7 @@ export const walletconnect = new WalletConnectConnector({
   rpc: { 1: NETWORK_URL },
   bridge: 'https://bridge.walletconnect.org',
   qrcode: true,
+  // @ts-ignore
   pollingInterval: 5000,
 });
 

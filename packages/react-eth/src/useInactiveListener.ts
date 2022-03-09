@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
 
-import { injected } from '../connectors';
+import { injected } from './connectors';
 
 export function useInactiveListener(suppress = false) {
   const { active, error, activate } = useWeb3React();
@@ -10,7 +10,7 @@ export function useInactiveListener(suppress = false) {
     if (suppress) {
       return () => {};
     }
-    const { ethereum } = window;
+    const { ethereum } = window as unknown as any; // TODO find types
     if (ethereum && ethereum.on && !active && !error) {
       const handleConnect = () => {
         // console.log("Handling 'connect' event");
@@ -21,7 +21,7 @@ export function useInactiveListener(suppress = false) {
         activate(injected);
       };
 
-      const handleAccountsChanged = accounts => {
+      const handleAccountsChanged = (accounts: any[]) => {
         if (accounts.length > 0) {
           activate(injected);
         }
