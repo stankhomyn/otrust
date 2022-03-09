@@ -1,9 +1,16 @@
 import React, { useState, useEffect, createContext, useContext, useMemo } from 'react';
-import { useWeb3React } from '@web3-react/core';
+import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { BigNumber } from 'bignumber.js';
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
 
 import { BondingCont, GravityCont, NOMCont } from './contracts';
+
+function getWeb3Library(provider: ExternalProvider) {
+  const library = new Web3Provider(provider);
+  library.pollingInterval = 12000;
+  return library;
+}
 
 const DEFAULT_STATE = {
   blockNumber: new BigNumber(0),
@@ -85,10 +92,10 @@ function useOnomyEthState({
       }
     }
 
-    library.on('block', onBlock);
+    if (library) library.on('block', onBlock);
     // remove listener when the component is unmounted
     return () => {
-      library.removeListener('block', onBlock);
+      if (library) library.removeListener('block', onBlock);
     };
   }, [NOMContract, account, bondContract, bondContractAddress, library, state.blockNumber]);
 
@@ -107,12 +114,34 @@ export const OnomyEthContext = createContext<OnomyEthContextType>(
 );
 export const useOnomyEth = () => useContext(OnomyEthContext);
 
-export function OnomyEthProvider({
+function OnomyEthProviderInner({
   children,
-  graphQlEndpoint,
   nomContractAddress,
   bondContractAddress,
   gravityContractAddress,
+}: {
+  children: JSX.Element | JSX.Element[];
+  nomContractAddress: string;
+  bondContractAddress: string;
+  gravityContractAddress: string;
+}) {
+  return (
+    <OnomyEthContext.Provider
+      value={useOnomyEthState({
+        nomContractAddress,
+        bondContractAddress,
+        gravityContractAddress,
+      })}
+    >
+      {children}
+    </OnomyEthContext.Provider>
+  );
+}
+
+export function OnomyEthProvider({
+  children,
+  graphQlEndpoint,
+  ...props
 }: {
   children: JSX.Element | JSX.Element[];
   graphQlEndpoint: string;
@@ -131,15 +160,9 @@ export function OnomyEthProvider({
 
   return (
     <ApolloProvider client={client}>
-      <OnomyEthContext.Provider
-        value={useOnomyEthState({
-          nomContractAddress,
-          bondContractAddress,
-          gravityContractAddress,
-        })}
-      >
-        {children}
-      </OnomyEthContext.Provider>
+      <Web3ReactProvider getLibrary={getWeb3Library}>
+        <OnomyEthProviderInner {...props}>{children}</OnomyEthProviderInner>
+      </Web3ReactProvider>
     </ApolloProvider>
   );
 }

@@ -11,7 +11,7 @@ import GravityContractJSON from './Gravity.json';
 
 const uniswapUsdcAddress = '0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc';
 
-type LibParam = { getSigner: () => Signer | Provider | undefined };
+type LibParam = { getSigner: () => Signer | Provider | undefined } | undefined;
 
 /**
  * NOM ERC20 Contract instance
@@ -39,5 +39,5 @@ export function UniSwapCont(library: LibParam) {
 
 export function GravityCont(library: LibParam, address: string) {
   const ABI = GravityContractJSON.abi;
-  return new Contract(address, ABI, library.getSigner());
+  return new Contract(address, ABI, library?.getSigner());
 }

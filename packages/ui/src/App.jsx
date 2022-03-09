@@ -20,8 +20,8 @@ function App() {
   return (
     <CookiesProvider>
       <ThemeProvider theme={darkNew}>
-        <AutoLogin>
-          <ChainProvider theme={darkNew}>
+        <ChainProvider theme={darkNew}>
+          <AutoLogin>
             <ExchangeProvider>
               <ModalProvider>
                 <GlobalStyle />
@@ -35,8 +35,8 @@ function App() {
                 </Routes>
               </ModalProvider>
             </ExchangeProvider>
-          </ChainProvider>
-        </AutoLogin>
+          </AutoLogin>
+        </ChainProvider>
       </ThemeProvider>
     </CookiesProvider>
   );
