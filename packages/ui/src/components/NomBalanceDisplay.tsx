@@ -2,14 +2,14 @@
 import React, { useMemo } from 'react';
 import { BigNumber } from 'bignumber.js';
 import { useOnomy, useDelegationTotalValue } from '@onomy/react-client';
+import { useOnomyEth } from '@onomy/react-eth';
 
 import { format18 } from 'utils/math';
 import { FormattedNumber } from './FormattedNumber';
 import { EquivalentValue } from './EquivalentValue';
-import { useChain } from 'context/chain/ChainContext';
 
 export function useWrappedNomValue() {
-  const { weakBalance } = useChain();
+  const { weakBalance } = useOnomyEth();
   return useMemo(() => new BigNumber(weakBalance), [weakBalance]);
 }
 

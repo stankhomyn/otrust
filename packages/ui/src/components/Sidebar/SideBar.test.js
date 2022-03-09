@@ -3,9 +3,9 @@ import { cleanup, render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { BigNumber } from 'bignumber.js';
 import { MemoryRouter } from 'react-router-dom';
+import { OnomyEthContext } from '@onomy/react-eth';
 
 import { darkNew } from 'theme/theme';
-import { ChainContext } from '../../context/chain/ChainContext';
 import { ExchangeContext } from '../../context/exchange/ExchangeContext';
 import Sidebar from './Sidebar';
 
@@ -17,7 +17,7 @@ describe('Given the Sidebar component and strongBalance, weakBalance are of BigN
       const { asFragment } = render(
         <MemoryRouter>
           <ThemeProvider theme={darkNew}>
-            <ChainContext.Provider
+            <OnomyEthContext.Provider
               value={{
                 blockNumber: 12345678,
                 strongBalance: new BigNumber(0),
@@ -27,7 +27,7 @@ describe('Given the Sidebar component and strongBalance, weakBalance are of BigN
               <ExchangeContext.Provider value={{ strong: 'ETH', weak: 'wNOM' }}>
                 <Sidebar />
               </ExchangeContext.Provider>
-            </ChainContext.Provider>
+            </OnomyEthContext.Provider>
           </ThemeProvider>
         </MemoryRouter>
       );
@@ -44,7 +44,7 @@ describe('Given the Sidebar component and strongBalance, weakBalance are NOT of 
       const { asFragment } = render(
         <MemoryRouter>
           <ThemeProvider theme={darkNew}>
-            <ChainContext.Provider
+            <OnomyEthContext.Provider
               value={{
                 blockNumber: 12345678,
                 strongBalance: 0,
@@ -55,7 +55,7 @@ describe('Given the Sidebar component and strongBalance, weakBalance are NOT of 
               <ExchangeContext.Provider value={{ strong: 'ETH', weak: 'wNOM' }}>
                 <Sidebar />
               </ExchangeContext.Provider>
-            </ChainContext.Provider>
+            </OnomyEthContext.Provider>
           </ThemeProvider>
         </MemoryRouter>
       );

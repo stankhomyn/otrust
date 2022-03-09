@@ -1,11 +1,11 @@
 import React from 'react';
+import { useOnomyEth } from '@onomy/react-eth';
 
 import { useExchange } from 'context/exchange/ExchangeContext';
-import { useChain } from 'context/chain/ChainContext';
 import { SellBtn } from './exchangeStyles';
 
 export default function NOMButton({ onBid, onApprove }) {
-  const { weakBalance, NOMallowance } = useChain();
+  const { weakBalance, NOMallowance } = useOnomyEth();
 
   const { bidAmount, bidDenom, input, weak } = useExchange();
 

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { BigNumber } from 'bignumber.js';
 import { useWeb3React } from '@web3-react/core';
 import _ from 'lodash';
+import { useOnomyEth } from '@onomy/react-eth';
 
 import ConfirmTransactionModal from 'components/Modals/components/ConfirmTransactionModal';
 import PendingModal from 'components/Modals/components/PendingModal';
@@ -11,7 +12,6 @@ import ApproveTokensModal from 'components/Modals/components/ApproveTokensModal'
 import RequestFailedModal from 'components/Modals/components/RequestFailedModal';
 import TransactionCompletedModal from 'components/Modals/components/TransactionCompletedModal';
 import TransactionFailedModal from 'components/Modals/components/TransactionFailedModal';
-import { useChain } from 'context/chain/ChainContext';
 import { BondingCont, NOMCont } from 'context/chain/contracts';
 import { useExchange, useUpdateExchange } from 'context/exchange/ExchangeContext';
 import {
@@ -39,7 +39,7 @@ const AvailableDiv = styled.strong`
 `;
 
 export default function ExchangeQuote({ strength }) {
-  const { strongBalance, weakBalance } = useChain();
+  const { strongBalance, weakBalance, NOMallowance } = useOnomyEth();
   const { handleModal } = useModal();
   const { library } = useWeb3React();
 
@@ -48,7 +48,6 @@ export default function ExchangeQuote({ strength }) {
 
   const { askAmount, bidAmount, approveAmount, bidDenom, input, output, strong, weak } =
     useExchange();
-  const { NOMallowance } = useChain();
   const { objDispatch, strDispatch } = useUpdateExchange();
   const isBuying = strength === 'strong';
 

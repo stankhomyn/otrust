@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
+import { useOnomyEth } from '@onomy/react-eth';
 
 import { Panel } from 'components/UI';
-import { useChain } from 'context/chain/ChainContext';
 import { useExchange } from 'context/exchange/ExchangeContext';
 import { responsive } from 'theme/constants';
 import { format18 } from 'utils/math';
@@ -52,7 +52,7 @@ export default function Sidebar() {
   // const { active, error, chainId, account, deactivate } = useWeb3React();
   // const { blockNumber, strongBalance, weakBalance, NOMallowance } = useChain();
   const { account, deactivate } = useWeb3React();
-  const { strongBalance, weakBalance, NOMallowance } = useChain();
+  const { strongBalance, weakBalance, NOMallowance } = useOnomyEth();
   const { strong, weak } = useExchange();
 
   const handleLogout = () => {

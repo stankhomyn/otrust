@@ -5,9 +5,9 @@ import ApolloClient, { InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/client';
 import { render } from '@testing-library/react';
 import { BigNumber } from 'bignumber.js';
+import { OnomyEthContext } from '@onomy/react-eth';
 
 import { darkNew } from 'theme/theme';
-import { ChainContext } from '../context/chain/ChainContext';
 import { ExchangeContext, UpdateExchangeContext } from '../context/exchange/ExchangeContext';
 import { ModalContext } from '../context/modal/ModalContext';
 
@@ -45,7 +45,7 @@ export const ThemeWrapper = (Component, props, children) => {
 
 export const ChainContextWrapper = (children, contextProps) => {
   return (
-    <ChainContext.Provider
+    <OnomyEthContext.Provider
       value={{
         blockNumber: BigNumber(0),
         currentETHPrice: BigNumber(0),
@@ -54,12 +54,11 @@ export const ChainContextWrapper = (children, contextProps) => {
         strongBalance: BigNumber(0),
         supplyNOM: BigNumber(0),
         weakBalance: BigNumber(0),
-        theme: { darkNew },
         ...contextProps,
       }}
     >
       {children}
-    </ChainContext.Provider>
+    </OnomyEthContext.Provider>
   );
 };
 
@@ -115,7 +114,7 @@ export const renderWithContext = (Component, props, contextValues) => {
   return render(
     <ThemeProvider theme={darkNew}>
       <ApolloProvider client={client}>
-        <ChainContext.Provider
+        <OnomyEthContext.Provider
           value={{
             supplyNOM: BigNumber(0),
             blockNumber: BigNumber(0),
@@ -124,7 +123,6 @@ export const renderWithContext = (Component, props, contextValues) => {
             NOMallowance: BigNumber(0),
             strongBalance: BigNumber(0),
             weakBalance: BigNumber(0),
-            theme: darkNew,
             ...contextValues,
           }}
         >
@@ -159,7 +157,7 @@ export const renderWithContext = (Component, props, contextValues) => {
               </ModalContext.Provider>
             </ExchangeContext.Provider>
           </UpdateExchangeContext.Provider>
-        </ChainContext.Provider>
+        </OnomyEthContext.Provider>
       </ApolloProvider>
     </ThemeProvider>
   );

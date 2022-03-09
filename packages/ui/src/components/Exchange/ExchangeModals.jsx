@@ -6,6 +6,7 @@ import { useWeb3React } from '@web3-react/core';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { useOnomyEth } from '@onomy/react-eth';
 
 import ConfirmTransactionModal from 'components/Modals/components/ConfirmTransactionModal';
 import PendingModal from 'components/Modals/components/PendingModal';
@@ -24,7 +25,6 @@ import {
   ReceivingValue,
   SendingBox,
 } from './exchangeStyles';
-import { useChain } from 'context/chain/ChainContext';
 import { BondingCont, NOMCont } from 'context/chain/contracts';
 import { useExchange, useUpdateExchange } from 'context/exchange/ExchangeContext';
 import { useModal } from 'context/modal/ModalContext';
@@ -171,7 +171,7 @@ export default function ExchangeModals() {
   const [isStrongOrWeak, setIsStrongOrWeak] = useState('');
 
   const { askAmount, bidAmount, approveAmount, bidDenom, strong, weak } = useExchange();
-  const { strongBalance, weakBalance, currentETHPrice, NOMallowance } = useChain();
+  const { strongBalance, weakBalance, currentETHPrice, NOMallowance } = useOnomyEth();
   const { objDispatch, strDispatch } = useUpdateExchange();
   const { library } = useWeb3React();
   const { handleModal } = useModal();

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import useInterval from '@use-it/interval';
 import { BigNumber } from 'bignumber.js';
+import { useOnomyEth } from '@onomy/react-eth';
 
 import { Close } from '../Icons';
 import * as Modal from '../styles';
 import { responsive } from 'theme/constants';
 import { useModal } from 'context/modal/ModalContext';
 import { MaxBtn } from 'components/Exchange/exchangeStyles';
-import { useChain } from 'context/chain/ChainContext';
 import { useExchange, useUpdateExchange } from 'context/exchange/ExchangeContext';
 import { format18, parse18 } from 'utils/math';
 import RequestFailedModal from './RequestFailedModal';
@@ -73,7 +73,7 @@ export default function ApproveTokensModal({ onConfirmApprove }) {
   const { handleModal } = useModal();
   const { approve, bidAmount, input } = useExchange();
   const { objDispatch, strDispatch } = useUpdateExchange();
-  const { NOMallowance, weakBalance } = useChain();
+  const { NOMallowance, weakBalance } = useOnomyEth();
 
   const initialApproveAmount = bidAmount.minus(NOMallowance);
 

@@ -6,8 +6,8 @@ import { ethers } from 'ethers';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import { useOnomy } from '@onomy/react-client';
+import { useOnomyEth } from '@onomy/react-eth';
 
-import { useChain } from 'context/chain/ChainContext';
 import { GravityCont, NOMCont } from 'context/chain/contracts';
 import BridgeSwapMobile from './BridgeSwapMobile';
 import BridgeSwapModal from './BridgeSwapModal';
@@ -56,7 +56,7 @@ export default function BridgeSwapMain() {
   const standardBrigdeBreakpoint = useMediaQuery({ minWidth: responsive.smartphoneLarge });
 
   const { account, library } = useWeb3React();
-  const { weakBalance } = useChain();
+  const { weakBalance } = useOnomyEth();
 
   const GravityContract = useMemo(() => GravityCont(library), [library]);
   const NOMContract = useMemo(() => NOMCont(library), [library]);

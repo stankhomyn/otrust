@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
+import { useWeb3React } from '@web3-react/core';
+import { useApolloClient } from '@apollo/client';
 
 import { responsive } from 'theme/constants';
 import BondLineChart from 'components/Chart/BondLineChart';
@@ -85,6 +87,8 @@ const chartTypes = [
 ];
 
 export default function Chart() {
+  const { library } = useWeb3React();
+  const client = useApolloClient();
   const [chartType, setChartType] = useState('bondingCurve');
 
   const isBigScreen = useMediaQuery({ minWidth: responsive.smartphoneLarge });
@@ -104,7 +108,7 @@ export default function Chart() {
   const renderChart = type => {
     switch (type) {
       case 'tradingView':
-        return <TVChartContainer />;
+        return <TVChartContainer library={library} client={client} />;
       case 'bondingCurve':
       default:
         return <BondLineChart />;

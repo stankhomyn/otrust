@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BigNumber } from 'bignumber.js';
+import { useOnomyEth } from '@onomy/react-eth';
 
 import logo from 'assets/logo.svg';
 import { Container } from './UI';
 import { responsive } from 'theme/constants';
 import { EquivalentValue } from './EquivalentValue';
 import { format18 } from 'utils/math';
-import { useChain } from 'context/chain/ChainContext';
 
 const HeaderWrapper = styled.header`
   display: flex;
@@ -165,7 +165,7 @@ const Details = styled.span`
 `;
 
 export default function MainHeader() {
-  const { supplyNOM, currentETHPrice } = useChain();
+  const { supplyNOM, currentETHPrice } = useOnomyEth();
 
   return (
     <header>

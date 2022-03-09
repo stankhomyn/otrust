@@ -1,0 +1,61 @@
+{
+  "name": "@onomy/react-eth",
+  "version": "0.0.1",
+  "description": "Onomy ethereum functionality for react",
+  "main": "./src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "dep-audit": "yarn improved-yarn-audit --fail-on-missing-exclusions --ignore-dev-deps",
+    "lint": "eslint src --ext js,jsx,ts,tsx --quiet --fix",
+    "tsc": "tsc",
+    "verify": "yarn tsc && yarn lint"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.4.11",
+    "@ethersproject/address": "^5.4.0",
+    "@ethersproject/bignumber": "^5.4.1",
+    "@ethersproject/contracts": "^5.4.1",
+    "@ethersproject/providers": "^5.4.5",
+    "@ethersproject/units": "^5.4.0",
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
+    "@web3-react/ledger-connector": "^6.1.9",
+    "@web3-react/network-connector": "^6.1.9",
+    "@web3-react/walletconnect-connector": "^6.2.4",
+    "@web3-react/walletlink-connector": "^6.2.5",
+    "bignumber.js": "^9.0.1",
+    "ethers": "^5.4.6",
+    "graphql": "^15.5.3",
+    "mock-web3-provider": "^1.0.0",
+    "typescript": "^4.4.3",
+    "web3": "^1.5.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.31.1",
+    "@typescript-eslint/parser": "^4.31.1",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-airbnb-typescript": "^14.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest-dom": "^3.9.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-react": "^7.25.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-testing-library": "^4.12.2",
+    "prettier": "^2.4.0"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  }
+}

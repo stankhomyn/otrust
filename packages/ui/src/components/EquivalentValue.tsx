@@ -1,8 +1,8 @@
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import { BigNumber } from 'bignumber.js';
+import { useOnomyEth } from '@onomy/react-eth';
 
-import { useChain } from 'context/chain/ChainContext';
 import { format18 } from 'utils/math';
 
 const USD_PER_ETH = 3750;
@@ -18,7 +18,7 @@ type EquivalentValueProps = {
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function EquivalentValue({ amount, asset, prefix = ' = $' }: EquivalentValueProps) {
-  const { currentETHPrice } = useChain() || { currentETHPrice: 0 };
+  const { currentETHPrice } = useOnomyEth();
   const nomPerEth = BigNumber.isBigNumber(currentETHPrice)
     ? format18(currentETHPrice).toNumber()
     : 0;

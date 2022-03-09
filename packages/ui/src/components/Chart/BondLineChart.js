@@ -1,9 +1,9 @@
-import React, { useRef, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useRef, useEffect, useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 import { area, extent, select, scaleLinear, line, curveCardinal, axisBottom, axisLeft } from 'd3';
+import { useOnomyEth } from '@onomy/react-eth';
 
 import { format18 } from 'utils/math';
-import { useChain } from 'context/chain/ChainContext';
 import { useExchange } from 'context/exchange/ExchangeContext';
 import { NOMsupplyETH, priceAtSupply, supplyAtPrice } from 'utils/bonding';
 import { useResizeObserver } from './utils';
@@ -59,8 +59,9 @@ function LineChart({ id = 'bondingChart' }) {
   const svgRef = useRef();
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
+  const theme = useContext(ThemeContext);
 
-  const { supplyNOM, theme } = useChain();
+  const { supplyNOM } = useOnomyEth();
   const { askAmount, bidAmount, bidDenom } = useExchange();
 
   let supplyTop = supplyNOM;

@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import { widget } from '../../charting_library';
 import { ChartData } from 'utils/ChartData';
-import { ChainContext } from 'context/chain/ChainContext';
 
 function getLanguageFromURL() {
   const regex = new RegExp('[\\?&]lang=([^&#]*)');
@@ -31,7 +30,7 @@ export class TVChartContainer extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { client, library } = this.context;
+    const { client, library } = this.props;
     const datafeed = new ChartData(client, library);
     this.setState({ datafeed });
     const widgetOptions = {
@@ -94,5 +93,3 @@ export class TVChartContainer extends React.PureComponent {
     return <div id={this.state.containerId} style={{ height: HEIGHT }} />;
   }
 }
-
-TVChartContainer.contextType = ChainContext;
