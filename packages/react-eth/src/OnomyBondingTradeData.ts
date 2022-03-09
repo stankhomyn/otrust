@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 
-import { ApolloClient, NormalizedCacheObject, gql } from '@apollo/client';
+import { ApolloClient, gql } from '@apollo/client';
 import { BigNumber } from 'bignumber.js';
 
 import {
@@ -14,7 +14,7 @@ import {
   ResolveCallback,
   SearchSymbolsCallback,
   SubscribeBarsCallback,
-} from 'charting_library/charting_library';
+} from './types/tv-datafeed-api';
 
 const WNOM_HISTORICAL_DATA_QUERY = gql`
   query transactions($filter: String!, $skipped: Int!, $first: Int, $from: Int, $to: Int) {
@@ -87,8 +87,8 @@ type BarSubscription = {
 };
 
 // @ts-ignore
-export class ChartData implements IDatafeedChartApi {
-  private apolloClient: ApolloClient<NormalizedCacheObject>;
+export class OnomyBondingTradeData implements IDatafeedChartApi {
+  private apolloClient: ApolloClient<object>;
 
   private web3Library: EventEmitter;
 
@@ -98,7 +98,7 @@ export class ChartData implements IDatafeedChartApi {
 
   private lastTick: Record<string, number>;
 
-  constructor(apolloClient: ApolloClient<NormalizedCacheObject>, web3Library: EventEmitter) {
+  constructor(apolloClient: ApolloClient<object>, web3Library: EventEmitter) {
     this.apolloClient = apolloClient;
     this.web3Library = web3Library;
     this.barSubs = {};

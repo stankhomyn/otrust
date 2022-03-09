@@ -1,8 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { MemoryRouter } from 'react-router-dom';
-import ApolloClient, { InMemoryCache } from 'apollo-boost';
-import { ApolloProvider } from '@apollo/client';
 import { render } from '@testing-library/react';
 import { BigNumber } from 'bignumber.js';
 import { OnomyEthContext } from '@onomy/react-eth';
@@ -10,11 +8,6 @@ import { OnomyEthContext } from '@onomy/react-eth';
 import { darkNew } from 'theme/theme';
 import { ExchangeContext, UpdateExchangeContext } from '../context/exchange/ExchangeContext';
 import { ModalContext } from '../context/modal/ModalContext';
-
-const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
-  cache: new InMemoryCache(),
-});
 
 export const renderWithTheme = (Component, props, children) => {
   if (children) {
@@ -113,52 +106,50 @@ export const ModalContextWrapper = (children, contextProps) => {
 export const renderWithContext = (Component, props, contextValues) => {
   return render(
     <ThemeProvider theme={darkNew}>
-      <ApolloProvider client={client}>
-        <OnomyEthContext.Provider
+      <OnomyEthContext.Provider
+        value={{
+          supplyNOM: BigNumber(0),
+          blockNumber: BigNumber(0),
+          currentETHPrice: BigNumber(0),
+          currentNOMPrice: BigNumber(0),
+          NOMallowance: BigNumber(0),
+          strongBalance: BigNumber(0),
+          weakBalance: BigNumber(0),
+          ...contextValues,
+        }}
+      >
+        <UpdateExchangeContext.Provider
           value={{
-            supplyNOM: BigNumber(0),
-            blockNumber: BigNumber(0),
-            currentETHPrice: BigNumber(0),
-            currentNOMPrice: BigNumber(0),
-            NOMallowance: BigNumber(0),
-            strongBalance: BigNumber(0),
-            weakBalance: BigNumber(0),
+            objDispatch: jest.fn(),
+            strDispatch: jest.fn(),
+            setInputPending: false,
             ...contextValues,
           }}
         >
-          <UpdateExchangeContext.Provider
+          <ExchangeContext.Provider
             value={{
-              objDispatch: jest.fn(),
-              strDispatch: jest.fn(),
-              setInputPending: false,
+              askAmount: BigNumber(0),
+              bidAmount: BigNumber(0),
+              bidDenom: 'strong',
+              status: 'Not Approved',
+              strong: 'ETH',
+              weak: 'NOM',
               ...contextValues,
             }}
           >
-            <ExchangeContext.Provider
+            <ModalContext.Provider
               value={{
-                askAmount: BigNumber(0),
-                bidAmount: BigNumber(0),
-                bidDenom: 'strong',
-                status: 'Not Approved',
-                strong: 'ETH',
-                weak: 'NOM',
+                handleModal: jest.fn(),
+                modal: false,
+                modalContent: 'Modal Content',
                 ...contextValues,
               }}
             >
-              <ModalContext.Provider
-                value={{
-                  handleModal: jest.fn(),
-                  modal: false,
-                  modalContent: 'Modal Content',
-                  ...contextValues,
-                }}
-              >
-                <Component {...props} />
-              </ModalContext.Provider>
-            </ExchangeContext.Provider>
-          </UpdateExchangeContext.Provider>
-        </OnomyEthContext.Provider>
-      </ApolloProvider>
+              <Component {...props} />
+            </ModalContext.Provider>
+          </ExchangeContext.Provider>
+        </UpdateExchangeContext.Provider>
+      </OnomyEthContext.Provider>
     </ThemeProvider>
   );
 };

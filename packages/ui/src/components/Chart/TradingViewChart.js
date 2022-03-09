@@ -2,7 +2,6 @@
 import * as React from 'react';
 
 import { widget } from '../../charting_library';
-import { ChartData } from 'utils/ChartData';
 
 function getLanguageFromURL() {
   const regex = new RegExp('[\\?&]lang=([^&#]*)');
@@ -17,10 +16,12 @@ export class TVChartContainer extends React.PureComponent {
 
   constructor(props) {
     super(props);
+    const { datafeed } = this.props;
+
     this.state = {
       symbol: 'NOM',
       interval: '1D',
-      datafeed: null,
+      datafeed,
       containerId: 'tv_chart_container',
       libraryPath: '../../charting_library/',
       fullscreen: false,
@@ -30,12 +31,10 @@ export class TVChartContainer extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { client, library } = this.props;
-    const datafeed = new ChartData(client, library);
-    this.setState({ datafeed });
+    const { datafeed } = this.props;
     const widgetOptions = {
       symbol: this.state.symbol,
-      datafeed: new ChartData(client, library),
+      datafeed,
       interval: this.state.interval,
       container: this.state.containerId,
       library_path: this.state.libraryPath,
