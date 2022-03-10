@@ -16,7 +16,7 @@ export default function BridgeTransactionComplete({ closeModalHandler, amountVal
   const { bridgeProgress } = useOnomy();
 
   if (bridgeProgress === null) {
-    return <BridgeSuccess />;
+    return <BridgeSuccess amountValue={amountValue} />;
   }
   return (
     <Modal.BridgeSuccessWrapper>
