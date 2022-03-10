@@ -23,8 +23,8 @@ export default function ValidatorHeader() {
     <header>
       <Caption>Select validator node</Caption>
       <Desc>
-        As you gonna stake your NOMs, you need to select a validator for it. Please chose on of the
-        list of available validator nodes
+        Earn staking rewards for delegating your NOM to a validator. Please choose one from the list
+        below.
       </Desc>
     </header>
   );

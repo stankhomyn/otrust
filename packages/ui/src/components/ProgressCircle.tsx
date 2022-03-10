@@ -31,7 +31,7 @@ export default function ProgressCircle({
     const remaining = 100 - percent;
     if (remaining === 0) return null;
     const time = remaining / speed;
-    return Math.round(time / 60000) + 1;
+    return Math.round(time / 60000) || null;
   }, [percent, startTime]);
 
   useEffect(() => {
