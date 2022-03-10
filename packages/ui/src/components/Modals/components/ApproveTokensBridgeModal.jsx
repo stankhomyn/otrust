@@ -1,19 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import useInterval from '@use-it/interval';
-import { useWeb3React } from '@web3-react/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BigNumber } from 'bignumber.js';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ethers } from 'ethers';
+import { useOnomyEth } from '@onomy/react-eth';
 
 import LoadingSpinner from 'components/UI/LoadingSpinner';
-import { NOMCont } from 'context/chain/contracts';
 import * as Modal from '../styles';
 import { responsive } from 'theme/constants';
 import { MaxBtn } from 'components/Exchange/exchangeStyles';
 import { NOTIFICATION_MESSAGES } from '../../../constants/NotificationMessages';
-import { REACT_APP_GRAVITY_CONTRACT_ADDRESS } from 'constants/env';
 
 const Message = styled.div`
   margin: 32px 0 0;
@@ -116,15 +114,15 @@ const OptionBtn = styled.button`
 `;
 
 export default function ApproveTokensBridgeModal({
-  amountValue,
-  allowanceAmountGravity,
-  onCancelHandler,
-  formattedWeakBalance,
-  weakBalance,
-  gasOptions,
-  gasPriceChoice,
-  setGasPriceChoice,
-  gasPrice,
+  amountValue, // string
+  allowanceAmountGravity, // BigNumber
+  onCancelHandler, // () => void
+  formattedWeakBalance, // BigNumber
+  weakBalance, // BigNumber
+  gasOptions, // { id: number, text: string, gas: BigNumber }
+  gasPriceChoice, // number
+  setGasPriceChoice, // (id: number) => void
+  gasPrice, // BigNumber
 }) {
   const [count, setCount] = useState(60);
   const [delay, setDelay] = useState(1000);
@@ -134,9 +132,7 @@ export default function ApproveTokensBridgeModal({
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [isTransactionCompleted, setIsTransactionCompleted] = useState(false);
-
-  const { library } = useWeb3React();
-  const NOMContract = NOMCont(library);
+  const { bondingCurve } = useOnomyEth();
 
   useEffect(() => {
     if (amountValue && allowanceAmountGravity) {
@@ -185,11 +181,7 @@ export default function ApproveTokensBridgeModal({
   const confirmApproveHandler = useCallback(
     async event => {
       event.preventDefault();
-      if (approveAmountInputValue === '.' || !approveAmountInputValue) {
-        return;
-      }
-
-      let tx;
+      if (approveAmountInputValue === '.' || !approveAmountInputValue) return;
 
       try {
         setErrorMessage('');
@@ -197,33 +189,28 @@ export default function ApproveTokensBridgeModal({
         setIsBtnDisabled(true);
         setDelay(null);
         setShowLoader(true);
-        tx = await NOMContract.increaseAllowance(
-          REACT_APP_GRAVITY_CONTRACT_ADDRESS,
-          BigNumber(approveAmountInputValue).shiftedBy(18).toString(10),
-          {
-            gasPrice: gasPrice.toFixed(0),
-          }
+
+        await bondingCurve.bNomIncreaseBridgeAllowance(
+          BigNumber(approveAmountInputValue).shiftedBy(18),
+          gasPrice
         );
 
-        tx.wait().then(() => {
-          setSuccessMessage(
-            NOTIFICATION_MESSAGES.success.approvedBridgeTokens(approveAmountInputValue)
-          );
-          setShowLoader(false);
-          setIsBtnDisabled(false);
-          setIsTransactionCompleted(true);
-        });
+        setSuccessMessage(
+          NOTIFICATION_MESSAGES.success.approvedBridgeTokens(approveAmountInputValue)
+        );
+        setIsTransactionCompleted(true);
       } catch (error) {
         if (error.code === 4001) {
           setErrorMessage(NOTIFICATION_MESSAGES.error.rejectedTransaction);
         } else {
           setErrorMessage(error.message);
         }
-        setIsBtnDisabled(false);
+      } finally {
         setShowLoader(false);
+        setIsBtnDisabled(false);
       }
     },
-    [NOMContract, approveAmountInputValue, gasPrice]
+    [bondingCurve, approveAmountInputValue, gasPrice]
   );
 
   const amountDisplay = parseFloat(amountValue || 0).toFixed(6);

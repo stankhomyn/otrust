@@ -5,6 +5,7 @@ import { BigNumber } from 'bignumber.js';
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
 
 import { BondingCont, GravityCont, NOMCont } from './contracts';
+import { NomBondingCurve } from './NomBondingCurve';
 
 function getWeb3Library(provider: ExternalProvider) {
   const library = new Web3Provider(provider);
@@ -54,6 +55,11 @@ function useOnomyEthState({
     [gravityContractAddress, library]
   );
 
+  const bondingCurve = useMemo(
+    () => new NomBondingCurve(bondContract, NOMContract, gravityContract),
+    [bondContract, NOMContract, gravityContract]
+  );
+
   useEffect(() => {
     // listen for changes on an Ethereum address
     async function onBlock(bNumber: number) {
@@ -101,6 +107,7 @@ function useOnomyEthState({
 
   return {
     ...state,
+    bondingCurve,
     bondContract,
     NOMContract,
     gravityContract,
