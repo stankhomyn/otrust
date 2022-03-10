@@ -129,7 +129,7 @@ export default function ValidatorDetail({ data }: { data: ValidatorData }) {
             <span>Reward</span>
             <strong>
               <FormattedNumber value={format18(new BigNumber(rewards?.amount ?? '0')).toNumber()} />
-              <sup>XRP</sup>
+              <sup>NOM</sup>
             </strong>
             <EquivalentValue
               asset="NOM"
@@ -143,7 +143,7 @@ export default function ValidatorDetail({ data }: { data: ValidatorData }) {
           <FooterInfo>
             <span>Total Bonded</span>
             <strong>
-              <FormattedNumber value={format18(new BigNumber(validator.tokens)).toNumber()} /> XRP
+              <FormattedNumber value={format18(new BigNumber(validator.tokens)).toNumber()} /> NOM
             </strong>
           </FooterInfo>
           <FooterInfo>

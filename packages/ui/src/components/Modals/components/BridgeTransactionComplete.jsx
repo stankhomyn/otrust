@@ -24,7 +24,7 @@ export default function BridgeTransactionComplete({ closeModalHandler, amountVal
         <Modal.ModalIconWrapper>
           <Success />
         </Modal.ModalIconWrapper>
-        <Modal.Caption>Transaction Completed!</Modal.Caption>
+        <Modal.Caption>Bridge in progress!</Modal.Caption>
 
         <Modal.ExchangeResult data-testid="completed-modal-exchange-result">
           + {amountValue} <sup>NOM</sup> / - {amountValue} <sup>bNOM</sup>
