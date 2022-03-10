@@ -45,7 +45,7 @@ export default function BridgeSwapModalDisconnected() {
                 <span>0x526..123sdas8b</span>
               </Modal.ConnectionItemContent>
               <Modal.Balance>
-                <strong>wNOM Balance</strong>
+                <strong>bNOM Balance</strong>
                 <span>10,429.22</span>
               </Modal.Balance>
             </Modal.ConnectionItem>
@@ -76,7 +76,7 @@ export default function BridgeSwapModalDisconnected() {
                 Choose to bridge when you are ready to do so to finalize your purchase of NOM!{' '}
                 <strong>
                   After bridging, you can no longer sell back to the bonding curve or bridge back
-                  for wNOM.
+                  for bNOM.
                 </strong>{' '}
                 There are no guarantees of liquid markets.
               </Modal.Desc>
@@ -90,11 +90,11 @@ export default function BridgeSwapModalDisconnected() {
               <Modal.InfoSubCaption>Why Bridge?</Modal.InfoSubCaption>
 
               <Modal.List>
-                <li>You must hold NOM to participate in the Onomy Network. </li>
+                <li>NOM is the native token of the Onomy Network. </li>
                 <li>Early stakers of NOM take advantage of larger staking yield. </li>
                 <li>NOM is used for governance, staking, and collateral to mint stablecoins.</li>
-                <li>All bridged wNOM is burned from the bonding curve supply. </li>
-                <li>NOM would be listed on exchanges rather than wNOM. </li>
+                <li>All bridged bNOM is burned from the bonding curve supply. </li>
+                <li>NOM would be listed on exchanges rather than bNOM. </li>
               </Modal.List>
             </div>
 

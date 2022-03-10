@@ -291,13 +291,13 @@ exports[`Given an Exchange component when the component is rendered should match
         class="c2"
         data-testid="exchanges-modals-buy-button"
       >
-        Buy wNOM
+        Buy bNOM
       </button>
       <button
         class="c2 c3"
         data-testid="exchanges-modals-sell-button"
       >
-        Sell wNOM
+        Sell bNOM
       </button>
     </div>
     <div

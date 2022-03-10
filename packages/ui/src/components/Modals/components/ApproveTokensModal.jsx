@@ -154,15 +154,15 @@ export default function ApproveTokensModal({ onConfirmApprove }) {
         <Caption>Approve Tokens</Caption>
 
         <Message>
-          You have approved the Bonding Curve to sell up to <strong>{inputDisplay} wNOM</strong>. To
-          sell <strong>{inputDisplay} wNOM</strong>, you must approve at least an additional{' '}
-          <strong>{initApproveAmountDisplay} wNOM</strong>.
+          You have approved the Bonding Curve to sell up to <strong>{inputDisplay} bNOM</strong>. To
+          sell <strong>{inputDisplay} bNOM</strong>, you must approve at least an additional{' '}
+          <strong>{initApproveAmountDisplay} bNOM</strong>.
         </Message>
 
         <ApproveTokensWrapper>
           <div>
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label htmlFor="">Approve tokens (wNOM)</label>
+            <label htmlFor="">Approve tokens (bNOM)</label>
             <input type="text" placeholder="0.00" value={approve} onChange={onTextChange} />
           </div>
           <MaxBtn onClick={onMax}>MAX</MaxBtn>

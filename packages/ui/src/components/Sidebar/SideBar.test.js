@@ -24,7 +24,7 @@ describe('Given the Sidebar component and strongBalance, weakBalance are of BigN
                 weakBalance: new BigNumber(10),
               }}
             >
-              <ExchangeContext.Provider value={{ strong: 'ETH', weak: 'wNOM' }}>
+              <ExchangeContext.Provider value={{ strong: 'ETH', weak: 'bNOM' }}>
                 <Sidebar />
               </ExchangeContext.Provider>
             </OnomyEthContext.Provider>
@@ -52,7 +52,7 @@ describe('Given the Sidebar component and strongBalance, weakBalance are NOT of 
                 allowance: 'Loading',
               }}
             >
-              <ExchangeContext.Provider value={{ strong: 'ETH', weak: 'wNOM' }}>
+              <ExchangeContext.Provider value={{ strong: 'ETH', weak: 'bNOM' }}>
                 <Sidebar />
               </ExchangeContext.Provider>
             </OnomyEthContext.Provider>

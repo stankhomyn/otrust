@@ -27,13 +27,13 @@ export default function BridgeTransactionComplete({ closeModalHandler, amountVal
         <Modal.Caption>Transaction Completed!</Modal.Caption>
 
         <Modal.ExchangeResult data-testid="completed-modal-exchange-result">
-          + {amountValue} <sup>NOM</sup> / - {amountValue} <sup>wNOM</sup>
+          + {amountValue} <sup>NOM</sup> / - {amountValue} <sup>bNOM</sup>
         </Modal.ExchangeResult>
 
         <Modal.ExchangeRateWrapper data-testid="completed-modal-exchange-rate">
           <span>Exchange Rate</span>
 
-          <strong>1 NOM = 1 wNOM</strong>
+          <strong>1 NOM = 1 bNOM</strong>
         </Modal.ExchangeRateWrapper>
         <BridgeProgress />
       </main>

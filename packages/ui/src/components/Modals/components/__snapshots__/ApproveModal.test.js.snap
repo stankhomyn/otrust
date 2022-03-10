@@ -224,11 +224,11 @@ exports[`Given the ApproveModal component when the component is rendered should 
       <div
         class="c4"
       >
-        Onomy blockchain requires access for selling
+        You must submit an approval transaction to sell
         <strong>
-          1234 wNOM
+          1234 bNOM
         </strong>
-        . Please confirm you want to do it
+        . After approval, you may sell.
       </div>
     </main>
     <footer>

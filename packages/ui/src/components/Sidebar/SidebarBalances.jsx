@@ -51,8 +51,8 @@ export default function SidebarBalances({ strong, weak, strongBalance, weakBalan
           <Hint>
             <TooltipCaption>NOM Balance</TooltipCaption>
             <TooltipDesc>
-              This shows your total wNOM balance and the amount approved for selling. You must
-              approve wNOM for selling before it can be sold.
+              This shows your total bNOM balance and the amount approved for selling. You must
+              approve bNOM for selling before it can be sold.
             </TooltipDesc>
           </Hint>
         </Balance>
@@ -61,7 +61,7 @@ export default function SidebarBalances({ strong, weak, strongBalance, weakBalan
 
         <WithdrawBtnWrapper>
           <Link to="/bridge">
-            <PrimaryButton style={{ width: '100%' }}>Bridge wNOM to NOM</PrimaryButton>
+            <PrimaryButton style={{ width: '100%' }}>Bridge bNOM to NOM</PrimaryButton>
           </Link>
         </WithdrawBtnWrapper>
       </Balances>

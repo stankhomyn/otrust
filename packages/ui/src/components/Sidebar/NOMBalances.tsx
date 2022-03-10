@@ -76,7 +76,7 @@ export default function NOMBalances() {
           </Balance>
         </>
       ) : (
-        <Message>Your NOM balances will be shown here after bridging wNOM.</Message>
+        <Message>Your NOM balances will be shown here after bridging bNOM.</Message>
       )}
 
       <ButtonWrapper>

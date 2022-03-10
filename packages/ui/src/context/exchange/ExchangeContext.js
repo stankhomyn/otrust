@@ -28,7 +28,7 @@ function ExchangeProvider({ children }) {
     approve: '',
     status: '',
     strong: 'ETH',
-    weak: 'wNOM',
+    weak: 'bNOM',
   });
 
   const contextValue = {

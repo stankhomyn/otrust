@@ -439,7 +439,7 @@ exports[`Given the SidebarBalances component when the component is rendered shou
           <p
             class="c6"
           >
-            This shows your total wNOM balance and the amount approved for selling. You must approve wNOM for selling before it can be sold.
+            This shows your total bNOM balance and the amount approved for selling. You must approve bNOM for selling before it can be sold.
           </p>
         </div>
         <button
@@ -459,7 +459,7 @@ exports[`Given the SidebarBalances component when the component is rendered shou
           class="c14"
           style="width: 100%;"
         >
-          Bridge wNOM to NOM
+          Bridge bNOM to NOM
         </button>
       </a>
     </div>
