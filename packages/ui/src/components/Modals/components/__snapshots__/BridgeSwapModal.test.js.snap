@@ -987,7 +987,7 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
               class="c10"
             >
               <strong>
-                wNOM Balance
+                bNOM Balance
               </strong>
               <span>
                 0.000000
@@ -1046,7 +1046,7 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
                 type="text"
                 value=""
               />
-              wNOM
+              bNOM
               <button
                 class="c21 c22"
               >
@@ -1084,7 +1084,7 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
             class="c26 c27"
             disabled=""
           >
-            Bridge wNOM to NOM
+            Bridge bNOM to NOM
           </button>
         </form>
       </main>
@@ -1409,7 +1409,7 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
             >
               Choose to bridge when you are ready to do so to finalize your purchase of NOM! 
               <strong>
-                After bridging, you can no longer sell back to the bonding curve or bridge back for wNOM.
+                After bridging, you can no longer sell back to the bonding curve or bridge back for bNOM.
               </strong>
                There are no guarantees of liquid markets.
             </p>
@@ -1432,7 +1432,7 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
               class="c35"
             >
               <li>
-                You must hold NOM to participate in the Onomy Network. 
+                NOM is the native token of the Onomy Network. 
               </li>
               <li>
                 Early stakers of NOM take advantage of larger staking yield. 
@@ -1441,10 +1441,10 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
                 NOM is used for governance, staking, and collateral to mint stablecoins.
               </li>
               <li>
-                All bridged wNOM is burned from the bonding curve supply. 
+                All bridged bNOM is burned from the bonding curve supply. 
               </li>
               <li>
-                NOM would be listed on exchanges rather than wNOM. 
+                NOM would be listed on exchanges rather than bNOM. 
               </li>
             </ol>
           </div>

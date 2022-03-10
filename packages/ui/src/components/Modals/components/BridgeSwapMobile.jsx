@@ -259,7 +259,7 @@ export default function BridgeSwapMobile({ ...props }) {
                     Choose to bridge when you are ready to do so to finalize your purchase of NOM!{' '}
                     <strong>
                       After bridging, you can no longer sell back to the bonding curve or bridge
-                      back for wNOM.
+                      back for bNOM.
                     </strong>{' '}
                     There are no guarantees of liquid markets.
                   </Modal.Desc>
@@ -273,13 +273,13 @@ export default function BridgeSwapMobile({ ...props }) {
                   <Modal.InfoSubCaption>Why Bridge?</Modal.InfoSubCaption>
 
                   <Modal.List>
-                    <li>You must hold NOM to participate in the Onomy Network. </li>
+                    <li>NOM is the native token of the Onomy Network. </li>
                     <li>Early stakers of NOM take advantage of larger staking yield. </li>
                     <li>
                       NOM is used for governance, staking, and collateral to mint stablecoins.
                     </li>
-                    <li>All bridged wNOM is burned from the bonding curve supply. </li>
-                    <li>NOM would be listed on exchanges rather than wNOM. </li>
+                    <li>All bridged bNOM is burned from the bonding curve supply. </li>
+                    <li>NOM would be listed on exchanges rather than bNOM. </li>
                   </Modal.List>
                 </div>
 
@@ -310,7 +310,7 @@ export default function BridgeSwapMobile({ ...props }) {
 
           <ModalInfo>
             <HeaderInfoItem>
-              <strong>wNom Balance</strong>
+              <strong>bNom Balance</strong>
               <HeaderInfoItemValue>
                 <strong>{`${values.formattedWeakBalance.toFixed(6)}`}</strong>
               </HeaderInfoItemValue>
@@ -346,7 +346,7 @@ export default function BridgeSwapMobile({ ...props }) {
                 value={values.amountValue}
                 onChange={handlers.amountChangeHandler}
               />
-              wNOM
+              bNOM
               <BridgeMaxBtn
                 onClick={handlers.maxBtnClickHandler}
                 disabled={flags.isTransactionPending}
@@ -378,7 +378,7 @@ export default function BridgeSwapMobile({ ...props }) {
               onClick={handlers.submitTransClickHandler}
               disabled={flags.isDisabled || !active}
             >
-              Bridge wNOM to NOM
+              Bridge bNOM to NOM
             </Modal.FullWidthButton>
             <Modal.SecondaryButton
               style={{ width: '100%', height: 52 }}

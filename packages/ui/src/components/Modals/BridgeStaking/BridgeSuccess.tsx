@@ -69,14 +69,14 @@ export default function BridgeSuccess({ amountValue = '0' }) {
                 <Modal.DetailsSeparator>/</Modal.DetailsSeparator>
                 <Modal.Spent>
                   - {amountValue}
-                  <sup>wNOM</sup>
+                  <sup>bNOM</sup>
                 </Modal.Spent>
               </ResultWrapper>
             </Modal.ExchangeResult>
 
             <Modal.ExchangeRateWrapper>
               <span>Exchange Rate</span>
-              <strong>1 NOM = 1 wNOM</strong>
+              <strong>1 NOM = 1 bNOM</strong>
             </Modal.ExchangeRateWrapper>
             <Modal.ExchangeRateWrapper>
               <span>Transaction Fee</span>
@@ -89,9 +89,9 @@ export default function BridgeSuccess({ amountValue = '0' }) {
               </strong>
             </Modal.ExchangeRateWrapper>
             <Modal.ExchangeRateWrapper>
-              <span>New wNOM balance</span>
+              <span>New bNOM balance</span>
               <strong>
-                <MyWrappedNomBalanceDisplay /> wNOM
+                <MyWrappedNomBalanceDisplay /> bNOM
               </strong>
             </Modal.ExchangeRateWrapper>
           </Wrapper>

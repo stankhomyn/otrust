@@ -165,7 +165,7 @@ export default function ConfirmTransactionModal({ isApproving, submitTrans }) {
             ? format18(askAmount).toFixed(6)
             : ''}{' '}
           {/* eslint-disable-next-line no-nested-ternary */}
-          <sup>{isApproving ? 'wNOM' : bidDenom === 'strong' ? 'wNOM' : 'ETH'}</sup>
+          <sup>{isApproving ? 'bNOM' : bidDenom === 'strong' ? 'bNOM' : 'ETH'}</sup>
         </Modal.ExchangeResult>
 
         <TransactionDetailsRow>
@@ -177,7 +177,7 @@ export default function ConfirmTransactionModal({ isApproving, submitTrans }) {
                 1 {bidDenom === 'strong' ? strong : weak} ={' '}
                 {BigNumber.isBigNumber(bidAmount) ? askAmount.div(bidAmount).toFixed(6) : 'Loading'}
                 */}
-                1 wNOM ={' '}
+                1 bNOM ={' '}
                 {BigNumber.isBigNumber(bidAmount)
                   ? (bidDenom === 'strong'
                       ? bidAmount.div(askAmount)

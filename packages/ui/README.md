@@ -1,6 +1,6 @@
 # Onomy Trust (OTRUST) Bonding Curve Front-End
 
-wNOM will be continuously distributed through a bonding curve until all 100,000,000 wNOM ERC20 have been bridged.
+bNOM will be continuously distributed through a bonding curve until all 100,000,000 bNOM ERC20 have been bridged.
 
 ## Prerequisites
 

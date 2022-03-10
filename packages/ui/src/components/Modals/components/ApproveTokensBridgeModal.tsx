@@ -234,15 +234,15 @@ export default function ApproveTokensBridgeModal({
 
       <main>
         <Message>
-          Please approve <strong>{amountDisplay} wNOM</strong> for bridging to the Onomy Network.
-          Your wNOM will be burned and you will receive an equivalent number of NOM tokens in your
+          Please approve <strong>{amountDisplay} bNOM</strong> for bridging to the Onomy Network.
+          Your bNOM will be burned and you will receive an equivalent number of NOM tokens in your
           Cosmos-based wallet. After approval, you may bridge up to the approved amount in an
           additional transaction.
         </Message>
         <ApproveTokensWrapper>
           <div>
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label htmlFor="">Approve tokens (wNOM)</label>
+            <label htmlFor="">Approve tokens (bNOM)</label>
             <input
               type="text"
               placeholder="0.00"

@@ -611,7 +611,7 @@ exports[`Given the BridgeSwapModalDisconnected component when the component is r
               class="c10"
             >
               <strong>
-                wNOM Balance
+                bNOM Balance
               </strong>
               <span>
                 10,429.22
@@ -659,7 +659,7 @@ exports[`Given the BridgeSwapModalDisconnected component when the component is r
             >
               Choose to bridge when you are ready to do so to finalize your purchase of NOM! 
               <strong>
-                After bridging, you can no longer sell back to the bonding curve or bridge back for wNOM.
+                After bridging, you can no longer sell back to the bonding curve or bridge back for bNOM.
               </strong>
                There are no guarantees of liquid markets.
             </p>
@@ -682,7 +682,7 @@ exports[`Given the BridgeSwapModalDisconnected component when the component is r
               class="c19"
             >
               <li>
-                You must hold NOM to participate in the Onomy Network. 
+                NOM is the native token of the Onomy Network. 
               </li>
               <li>
                 Early stakers of NOM take advantage of larger staking yield. 
@@ -691,10 +691,10 @@ exports[`Given the BridgeSwapModalDisconnected component when the component is r
                 NOM is used for governance, staking, and collateral to mint stablecoins.
               </li>
               <li>
-                All bridged wNOM is burned from the bonding curve supply. 
+                All bridged bNOM is burned from the bonding curve supply. 
               </li>
               <li>
-                NOM would be listed on exchanges rather than wNOM. 
+                NOM would be listed on exchanges rather than bNOM. 
               </li>
             </ol>
           </div>

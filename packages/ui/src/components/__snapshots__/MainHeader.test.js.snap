@@ -266,7 +266,7 @@ exports[`Given the MainHeader component and supplyNOM, currentETHPrice are not o
                 class="c7 c8"
               >
                 <strong>
-                  wNOM / USDT
+                  bNOM / USDT
                 </strong>
                 <div
                   class="c9"
@@ -280,7 +280,7 @@ exports[`Given the MainHeader component and supplyNOM, currentETHPrice are not o
                 class="c7 c8"
               >
                 <strong>
-                  wNOM / ETH
+                  bNOM / ETH
                 </strong>
                 <div
                   class="c9"
@@ -300,7 +300,7 @@ exports[`Given the MainHeader component and supplyNOM, currentETHPrice are not o
                 class="c7 c8"
               >
                 <strong>
-                  wNOM Issued
+                  bNOM Issued
                 </strong>
                 <div
                   class="c9"
@@ -592,7 +592,7 @@ exports[`Given the MainHeader component and supplyNOM, currentETHPrice are of Bi
                 class="c7 c8"
               >
                 <strong>
-                  wNOM / USDT
+                  bNOM / USDT
                 </strong>
                 <div
                   class="c9"
@@ -606,7 +606,7 @@ exports[`Given the MainHeader component and supplyNOM, currentETHPrice are of Bi
                 class="c7 c8"
               >
                 <strong>
-                  wNOM / ETH
+                  bNOM / ETH
                 </strong>
                 <div
                   class="c9"
@@ -626,7 +626,7 @@ exports[`Given the MainHeader component and supplyNOM, currentETHPrice are of Bi
                 class="c7 c8"
               >
                 <strong>
-                  wNOM Issued
+                  bNOM Issued
                 </strong>
                 <div
                   class="c9"

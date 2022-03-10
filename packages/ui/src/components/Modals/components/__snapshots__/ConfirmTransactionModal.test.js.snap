@@ -426,7 +426,7 @@ exports[`Given the ConfirmTransactionModal component and bidDenom is weak should
           Current Exchange Rate
         </span>
         <strong>
-          1 wNOM = NaN ETH
+          1 bNOM = NaN ETH
         </strong>
       </div>
       <div
@@ -1025,7 +1025,7 @@ exports[`Given the ConfirmTransactionModal component when the component is rende
         </div>
         ~ 0.000000 
         <sup>
-          wNOM
+          bNOM
         </sup>
       </div>
       <div
@@ -1035,7 +1035,7 @@ exports[`Given the ConfirmTransactionModal component when the component is rende
           Current Exchange Rate
         </span>
         <strong>
-          1 wNOM = NaN ETH
+          1 bNOM = NaN ETH
         </strong>
       </div>
       <div

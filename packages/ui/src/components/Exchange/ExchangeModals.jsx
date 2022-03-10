@@ -415,7 +415,7 @@ export default function ExchangeModals() {
 
             case 'weak':
               switch (weak) {
-                case 'wNOM':
+                case 'bNOM':
                   tx = await bondContract.sellNOM(
                     bidAmount.toFixed(0),
                     askAmount.toFixed(0),
@@ -495,11 +495,11 @@ export default function ExchangeModals() {
         data-testid="exchanges-modals-buy-button"
         onClick={() => setBuyModalOpen(true)}
       >
-        Buy wNOM
+        Buy bNOM
       </ExchangeButton>
 
       <SellBtn data-testid="exchanges-modals-sell-button" onClick={() => setSellModalOpen(true)}>
-        Sell wNOM
+        Sell bNOM
       </SellBtn>
 
       <Modal
@@ -513,7 +513,7 @@ export default function ExchangeModals() {
             <ModalBtn onClick={() => setBuyModalOpen(false)}>
               <FontAwesomeIcon icon={faChevronLeft} />
             </ModalBtn>
-            <h6>Buy wNOM</h6>
+            <h6>Buy bNOM</h6>
             <ModalBtn
               onClick={() => {
                 setSellModalOpen(!sellModalOpen);
@@ -536,7 +536,7 @@ export default function ExchangeModals() {
               </HeaderInfoItemValue>
             </HeaderInfoItem>
             <HeaderInfoItem>
-              <strong>wNOM Balance</strong>
+              <strong>bNOM Balance</strong>
               <HeaderInfoItemValue>
                 <strong>
                   {BigNumber.isBigNumber(weakBalance)
@@ -564,7 +564,7 @@ export default function ExchangeModals() {
           </ModalInfo>
 
           <FormWrapper data-testid="buy-nom-modal-results">
-            <strong>Buy wNOM</strong>
+            <strong>Buy bNOM</strong>
             <Sending>
               {sellAmount.ETHValue === '' && <strong>I&apos;m buying for</strong>}
               <ExchangeInput
@@ -604,7 +604,7 @@ export default function ExchangeModals() {
             <ModalBtn onClick={() => setSellModalOpen(false)}>
               <FontAwesomeIcon icon={faChevronLeft} />
             </ModalBtn>
-            <h6>Sell wNOM</h6>
+            <h6>Sell bNOM</h6>
             <ModalBtn
               onClick={() => {
                 setSellModalOpen(!sellModalOpen);
@@ -629,7 +629,7 @@ export default function ExchangeModals() {
               </HeaderInfoItemValue>
             </HeaderInfoItem>
             <HeaderInfoItem>
-              <strong>wNOM Balance</strong>
+              <strong>bNOM Balance</strong>
               <HeaderInfoItemValue>
                 <strong>
                   {BigNumber.isBigNumber(weakBalance)
@@ -657,7 +657,7 @@ export default function ExchangeModals() {
           </ModalInfo>
 
           <FormWrapper data-testid="sell-nom-modal-results">
-            <strong>Sell wNOM</strong>
+            <strong>Sell bNOM</strong>
             <Sending>
               {sellAmount.ETHValue === '' && <strong>I&apos;m selling</strong>}
               <ExchangeInput
@@ -669,8 +669,8 @@ export default function ExchangeModals() {
                 autoComplete="off"
               />
               <SendingBox>
-                <strong style={{ marginLeft: '16px' }}>wNOM</strong>
-                <MaxBtn onClick={handleMaxBtn} name="WNOMValue">
+                <strong style={{ marginLeft: '16px' }}>bNOM</strong>
+                <MaxBtn onClick={handleMaxBtn} name="bNOMValue">
                   Max
                 </MaxBtn>
               </SendingBox>
@@ -680,7 +680,7 @@ export default function ExchangeModals() {
               <ReceivingValue>{calculatedAmount.ETHCalcValue}</ReceivingValue>
             </Receiving>
             <div>
-              <SellBtn onClick={onSellNomHandler}>Sell wNOM</SellBtn>
+              <SellBtn onClick={onSellNomHandler}>Sell bNOM</SellBtn>
             </div>
           </FormWrapper>
         </ExchangeModalWrapper>

@@ -859,7 +859,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
               class=""
             >
               <strong>
-                wNOM Balance
+                bNOM Balance
               </strong>
               <div
                 class="c14"
@@ -898,7 +898,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                 <p
                   class="c12"
                 >
-                  This shows your total wNOM balance and the amount approved for selling. You must approve wNOM for selling before it can be sold.
+                  This shows your total bNOM balance and the amount approved for selling. You must approve bNOM for selling before it can be sold.
                 </p>
               </div>
               <button
@@ -918,7 +918,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
                 class="c20"
                 style="width: 100%;"
               >
-                Bridge wNOM to NOM
+                Bridge bNOM to NOM
               </button>
             </a>
           </div>
@@ -932,7 +932,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
             <div
               class="c22"
             >
-              Your NOM balances will be shown here after bridging wNOM.
+              Your NOM balances will be shown here after bridging bNOM.
             </div>
             <div
               class="c23"
@@ -1930,7 +1930,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
               class=""
             >
               <strong>
-                wNOM Balance
+                bNOM Balance
               </strong>
               <div
                 class="c14"
@@ -1969,7 +1969,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                 <p
                   class="c12"
                 >
-                  This shows your total wNOM balance and the amount approved for selling. You must approve wNOM for selling before it can be sold.
+                  This shows your total bNOM balance and the amount approved for selling. You must approve bNOM for selling before it can be sold.
                 </p>
               </div>
               <button
@@ -1989,7 +1989,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
                 class="c20"
                 style="width: 100%;"
               >
-                Bridge wNOM to NOM
+                Bridge bNOM to NOM
               </button>
             </a>
           </div>
@@ -2003,7 +2003,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
             <div
               class="c22"
             >
-              Your NOM balances will be shown here after bridging wNOM.
+              Your NOM balances will be shown here after bridging bNOM.
             </div>
             <div
               class="c23"

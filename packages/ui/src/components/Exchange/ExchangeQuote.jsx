@@ -162,7 +162,7 @@ export default function ExchangeQuote({ strength }) {
 
             case 'weak':
               switch (weak) {
-                case 'wNOM':
+                case 'bNOM':
                   tx = await bondContract.sellNOM(
                     bidAmount.toFixed(0),
                     askAmount.toFixed(0),

@@ -119,12 +119,12 @@ export default function BondingCurve() {
                   <p>Purchase and access NOM, the native utility token of the Onomy Network.</p>
 
                   <p>
-                    The Bonding Curve supplies wNOM and ETH, providing liquidity for both purchases
+                    The Bonding Curve supplies bNOM and ETH, providing liquidity for both purchases
                     and sales.
                   </p>
 
                   <p>
-                    Bridge wNOM to NOM to access staking rewards, governance, and{' '}
+                    Bridge bNOM to NOM to access staking rewards, governance, and{' '}
                     <a
                       href="https://docs.onomy.io/nom-distribution/what-is-nom"
                       target="_blank"
@@ -184,10 +184,10 @@ export default function BondingCurve() {
                 <div class="img-wrapper"><img src=${panel} alt=""/></div>
                 <div class="content">
                   <h4>Account Panel</h4>
-                  <p>Here you can view your ETH and wNOM balances.
+                  <p>Here you can view your ETH and bNOM balances.
                   <br>
                   <br>
-                  After bridging wNOM to NOM, your NOM balance will appear and you may begin staking!
+                  After bridging bNOM to NOM, your NOM balance will appear and you may begin staking!
                   </p>
                 </div>`,
                 element: '#tour-sidebar',
@@ -197,15 +197,15 @@ export default function BondingCurve() {
                 <div class="img-wrapper"><img src=${prices} alt=""/></div>
                 <div class="content">
                   <h4>Prices / Stats</h4>
-                  <p>The current price of wNOM and the amount of wNOM that has been issued can be viewed here.</p>
+                  <p>The current price of bNOM and the amount of bNOM that has been issued can be viewed here.</p>
                 </div>`,
                 element: '#tour-prices',
               },
               {
                 intro: `
                 <div class="content">
-                  <h4>Buy wNOM</h4>
-                  <p>Enter the amount of ETH you would like to use to purchase wNOM here. A 1% fee will be applied per trade.</p>
+                  <h4>Buy bNOM</h4>
+                  <p>Enter the amount of ETH you would like to use to purchase bNOM here. A 1% fee will be applied per trade.</p>
                 </div>
               `,
                 element: '#tour-buy',
@@ -213,8 +213,8 @@ export default function BondingCurve() {
               {
                 intro: `
                 <div class="content">
-                  <h4>Sell wNOM</h4>
-                  Enter the amount of wNOM you would like to sell here. A 1% fee will be applied per trade.
+                  <h4>Sell bNOM</h4>
+                  Enter the amount of bNOM you would like to sell here. A 1% fee will be applied per trade.
                 </div>`,
                 element: '#tour-sell',
               },
@@ -223,7 +223,7 @@ export default function BondingCurve() {
                 <div class="img-wrapper"><img src=${bondingCurve} alt=""/></div>
                 <div class="content">
                   <h4>Bonding Curve Chart</h4>
-                  <p>Choose between the Bonding Curve and TradingView charts to monitor issuance and price of wNOM.</p>
+                  <p>Choose between the Bonding Curve and TradingView charts to monitor issuance and price of bNOM.</p>
                 </div>`,
                 element: '#tour-chart',
               },
