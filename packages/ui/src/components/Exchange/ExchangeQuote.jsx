@@ -138,7 +138,7 @@ export default function ExchangeQuote({ strength }) {
                   const bidAmountUpdate = bidAmount.minus(gasFee.times(gasPrice));
                   // eslint-disable-next-line no-case-declarations
                   const askAmountUpdateRaw = await bondContract.buyQuoteETH(
-                    bidAmountUpdate.toFixed()
+                    bidAmountUpdate.toFixed(0)
                   );
                   // eslint-disable-next-line no-case-declarations
                   const askAmountUpdate = new BigNumber(askAmountUpdateRaw.toString());
