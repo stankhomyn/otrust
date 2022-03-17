@@ -20,12 +20,11 @@ const DelegateWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const DelegateItem = styled.div<{
-  reward?: boolean;
-}>`
+const DelegateItem = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
 
   width: 50%;
 
@@ -34,6 +33,14 @@ const DelegateItem = styled.div<{
 
     border-left: 1px solid ${props => props.theme.colors.bgHighlightBorder};
   }
+`;
+
+const DelegateItemContent = styled.div<{
+  reward?: boolean;
+}>`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 
   > span {
     font-size: 14px;
@@ -49,10 +56,12 @@ const DelegateItem = styled.div<{
     font-weight: 600;
     color: ${props =>
       props.reward ? props.theme.colors.highlightBlue : props.theme.colors.textPrimary};
+    word-break: break-word;
 
     > sup {
       margin-left: 6px;
       font-size: 18px;
+      word-break: normal;
     }
   }
 `;
@@ -116,26 +125,37 @@ export default function ValidatorDetail({ data }: { data: ValidatorData }) {
 
         <DelegateWrapper>
           <DelegateItem>
-            <span>Delegated</span>
-            <strong>
-              <FormattedNumber value={format18(delegation).toNumber()} />
-              <sup>NOM</sup>
-            </strong>
-            <span>
-              <EquivalentValue asset="NOM" prefix="$" amount={format18(delegation).toNumber()} />
-            </span>
+            <DelegateItemContent reward>
+              <span>Delegated</span>
+              <strong>
+                <FormattedNumber value={format18(delegation).toNumber()} />
+                <sup>NOM</sup>
+              </strong>
+              <span>
+                <EquivalentValue asset="NOM" prefix="$" amount={format18(delegation).toNumber()} />
+              </span>
+            </DelegateItemContent>
           </DelegateItem>
-          <DelegateItem reward>
-            <span>Reward</span>
-            <strong>
-              <FormattedNumber value={format18(new BigNumber(rewards?.amount ?? '0')).toNumber()} />
-              <sup>NOM</sup>
-            </strong>
-            <EquivalentValue
-              asset="NOM"
-              prefix="$"
-              amount={format18(new BigNumber(rewards?.amount ?? '0')).toNumber()}
-            />
+          <DelegateItem>
+            <DelegateItemContent reward>
+              <span>Reward</span>
+              <strong>
+                <FormattedNumber
+                  value={format18(new BigNumber(rewards?.amount ?? '0')).toNumber()}
+                />
+                <sup>NOM</sup>
+              </strong>
+              <EquivalentValue
+                asset="NOM"
+                prefix="$"
+                amount={format18(new BigNumber(rewards?.amount ?? '0')).toNumber()}
+              />
+            </DelegateItemContent>
+            <Link to="/open-keplr-claim">
+              <Modal.PrimaryButton type="button" style={{ width: '110px' }}>
+                Claim
+              </Modal.PrimaryButton>
+            </Link>
           </DelegateItem>
         </DelegateWrapper>
 
