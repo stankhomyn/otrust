@@ -207,7 +207,7 @@ export class OnomyClient {
     if (!validatorData) return { validator: null, delegation: delegationData };
     const selfStakeRate = selfDelegation.div(validatorData.tokens);
     const rewardItems = rewardsData?.rewards.find(v => v.validatorAddress === validator);
-    const rewardItem = rewardItems?.reward.find(r => r.denom === 'nom'); // TODO: don't hardcode?
+    const rewardItem = rewardItems?.reward.find(r => r.denom === OnomyConstants.DENOM);
     return {
       validator: validatorData,
       votingPower,
