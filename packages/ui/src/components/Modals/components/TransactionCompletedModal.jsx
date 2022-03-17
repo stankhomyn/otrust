@@ -81,7 +81,7 @@ export default function TransactionCompletedModal({ isApproving, tx }) {
             <Modal.ExchangeResult data-testid="completed-modal-exchange-result">
               {isApproving ? (
                 <>
-                  {approve} {weak} approved.
+                  {approve} {weak} <br /> approved for selling
                 </>
               ) : (
                 <>

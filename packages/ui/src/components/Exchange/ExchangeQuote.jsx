@@ -462,7 +462,7 @@ export default function ExchangeQuote({ strength }) {
             </ExchangeButton>
           )
         ) : (
-          <ExchangeButton>Low {strong} Balance</ExchangeButton>
+          <ExchangeButton>Exceeds Available {strong}</ExchangeButton>
         )
       ) : (
         <NOMButton onBid={onBid} onApprove={onApprove} />

@@ -15,5 +15,5 @@ export default function NOMButton({ onBid, onApprove }) {
     if (NOMallowance.gte(bidAmount)) return <SellBtn onClick={onBid}>Sell {weak}</SellBtn>;
     return <SellBtn onClick={onApprove}>Approve</SellBtn>;
   }
-  return <SellBtn> Low {weak} Balance </SellBtn>;
+  return <SellBtn> Exceeds Available {weak} </SellBtn>;
 }
