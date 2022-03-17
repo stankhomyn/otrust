@@ -145,7 +145,7 @@ export default function SidebarHeader({ account, onLogout }) {
   return (
     <Header>
       <AccountNumber>
-        <p>My Account</p>
+        <p>My Ethereum Address</p>
         <span>
           {/* eslint-disable-next-line no-nested-ternary */}
           {account === null

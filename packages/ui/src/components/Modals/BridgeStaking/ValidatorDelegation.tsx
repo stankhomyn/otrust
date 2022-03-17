@@ -161,12 +161,12 @@ export default function ValidatorDelegation({
         <div>
           <Caption style={{ textTransform: 'capitalize' }}>{verb} NOMs</Caption>
           <Desc>
-            Now you can {verb} part of your NOMs to the desired validator. After that this part will
-            be locked inside validator node, and you will start to receive yield
+            Enter the amount of NOM you would like to {verb}. Remember, unstaking your NOM will take
+            21 days before your NOM is available for other uses.
           </Desc>
           <FieldWrapper>
             <InputWrapper>
-              <span style={{ textTransform: 'capitalize' }}>{verb} NOMs</span>
+              <span style={{ textTransform: 'capitalize' }}>{verb} NOM</span>
               <BigNumberInput value={amount} onChange={setAmount} />
             </InputWrapper>
             <MaxButton onClick={() => setMax()}>MAX</MaxButton>

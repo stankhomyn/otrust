@@ -79,10 +79,6 @@ export default function BridgeSuccess({ amountValue = '0' }) {
               <strong>1 NOM = 1 bNOM</strong>
             </Modal.ExchangeRateWrapper>
             <Modal.ExchangeRateWrapper>
-              <span>Transaction Fee</span>
-              <strong>No</strong>
-            </Modal.ExchangeRateWrapper>
-            <Modal.ExchangeRateWrapper>
               <span>New NOM balance</span>
               <strong>
                 <MyBridgedNomBalanceDisplay /> NOM
@@ -111,8 +107,8 @@ export default function BridgeSuccess({ amountValue = '0' }) {
 
             <Section>
               <Desc>
-                Once NOM is in your wallet, you can start earning rewards by staking! You may manage
-                staking at any point in the future, as well.
+                NOM is now in your wallet! You can start earning rewards by staking and manage
+                staking at any point in the future.
               </Desc>
             </Section>
 

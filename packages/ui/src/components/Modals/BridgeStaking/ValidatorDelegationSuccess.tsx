@@ -82,9 +82,9 @@ export default function ValidatorDelegationSuccess({
               ? `Your NOM has been successfully delegated to ${
                   validator.description?.moniker ?? 'unknown'
                 } and is now earning staking rewards!`
-              : `Your NOM has been successfully undelegated from ${
+              : `You have undelegated from ${
                   validator.description?.moniker ?? 'unknown'
-                } and is now available for other uses.`}
+                } and your NOM is now unstaking. It will be available for other uses in 21 days.`}
           </Desc>
           <DeligatedWrapper>
             <strong style={{ textTransform: 'capitalize' }}>{verb}</strong>

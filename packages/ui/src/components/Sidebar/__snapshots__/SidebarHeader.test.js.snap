@@ -198,7 +198,7 @@ exports[`Given the SidebarHeader component when the component is rendered and ac
       class="c1"
     >
       <p>
-        My Account
+        My Ethereum Address
       </p>
       <span>
         123456...9012
@@ -420,7 +420,7 @@ exports[`Given the SidebarHeader component when the component is rendered and ac
       class="c1"
     >
       <p>
-        My Account
+        My Ethereum Address
       </p>
       <span>
         -

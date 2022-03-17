@@ -790,7 +790,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
             class="c4"
           >
             <p>
-              My Account
+              My Ethereum Address
             </p>
             <span />
           </div>
@@ -932,7 +932,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
             <div
               class="c22"
             >
-              Your NOM balances will be shown here after bridging bNOM.
+              View your NOM balance and manage staking after bridging.
             </div>
             <div
               class="c23"
@@ -1859,7 +1859,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
             class="c4"
           >
             <p>
-              My Account
+              My Ethereum Address
             </p>
             <span />
           </div>
@@ -2003,7 +2003,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
             <div
               class="c22"
             >
-              Your NOM balances will be shown here after bridging bNOM.
+              View your NOM balance and manage staking after bridging.
             </div>
             <div
               class="c23"
