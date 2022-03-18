@@ -1,20 +1,16 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useWeb3React } from '@web3-react/core';
+import React, { useState, useEffect, useCallback } from 'react';
 import { BigNumber } from 'bignumber.js';
 import cosmos from 'cosmos-lib';
-import { ethers } from 'ethers';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import { useOnomy } from '@onomy/react-client';
 import { useOnomyEth } from '@onomy/react-eth';
 
-import { GravityCont, NOMCont } from 'context/chain/contracts';
 import BridgeSwapMobile from './BridgeSwapMobile';
 import BridgeSwapModal from './BridgeSwapModal';
 import { NOTIFICATION_MESSAGES } from '../../../constants/NotificationMessages';
 import { responsive } from 'theme/constants';
 import { useGasPriceSelection } from 'hooks/useGasPriceSelection';
-import { REACT_APP_GRAVITY_CONTRACT_ADDRESS, REACT_APP_WNOM_CONTRACT_ADDRESS } from 'constants/env';
 import { ConnectKeplr } from 'components/ConnectKeplr';
 
 export const initialErrorsState = { amountError: '', onomyWalletError: '', transactionError: '' };
@@ -46,7 +42,7 @@ export default function BridgeSwapMain() {
   const [formattedWeakBalance, setFormattedWeakBalance] = useState(0);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isTransactionPending, setIsTransactionPending] = useState(false);
-  const [allowanceAmountGravity, setAllowanceAmountGravity] = useState(0);
+  const [allowanceAmountGravity, setAllowanceAmountGravity] = useState(new BigNumber(0));
   const [showBridgeExchangeModal, setShowBridgeExchangeModal] = useState(true);
   const [showApproveModal, setShowApproveModal] = useState(false);
   const [showTransactionCompleted, setShowTransactionCompleted] = useState(false);
@@ -55,30 +51,24 @@ export default function BridgeSwapMain() {
 
   const standardBrigdeBreakpoint = useMediaQuery({ minWidth: responsive.smartphoneLarge });
 
-  const { account, library } = useWeb3React();
-  const { weakBalance } = useOnomyEth();
-
-  const GravityContract = useMemo(() => GravityCont(library), [library]);
-  const NOMContract = useMemo(() => NOMCont(library), [library]);
+  const { weakBalance, bondingCurve, web3Context } = useOnomyEth();
+  const { account } = web3Context;
 
   useEffect(() => {
     setFormattedWeakBalance(weakBalance.shiftedBy(-18));
   }, [weakBalance]);
 
   const updateAllowanceAmount = useCallback(async () => {
-    const allowanceGravity = await NOMContract.allowance(
-      account,
-      REACT_APP_GRAVITY_CONTRACT_ADDRESS
-    );
+    const allowanceGravity = await bondingCurve.bNomBridgeAllowance(account);
     setAllowanceAmountGravity(allowanceGravity);
     return allowanceGravity;
-  }, [NOMContract, account]);
+  }, [bondingCurve, account, setAllowanceAmountGravity]);
 
   useEffect(() => {
-    if (NOMContract && account && !allowanceAmountGravity) {
+    if (bondingCurve && account && allowanceAmountGravity.eq(0)) {
       updateAllowanceAmount();
     }
-  }, [NOMContract, account, allowanceAmountGravity, updateAllowanceAmount]);
+  }, [bondingCurve, account, allowanceAmountGravity, updateAllowanceAmount]);
 
   const walletChangeHandler = event => {
     setOnomyWalletValue(event.target.value);
@@ -141,9 +131,7 @@ export default function BridgeSwapMain() {
         });
         return;
       }
-
-      const string18FromAmount = BigNumber(amountValue).shiftedBy(18).toString(10);
-
+      const amountValueAtoms = new BigNumber(amountValue).shiftedBy(18);
       try {
         setIsDisabled(true);
         cosmos.address.getBytes(onomyWalletValue);
@@ -158,29 +146,19 @@ export default function BridgeSwapMain() {
         return;
       }
 
-      let tx;
-      if (allowanceAmountGravity.gte(ethers.BigNumber.from(string18FromAmount))) {
+      if (allowanceAmountGravity.gte(amountValueAtoms)) {
         try {
           setShowLoader(true);
           setIsTransactionPending(true);
-          tx = await GravityContract.sendToCosmos(
-            REACT_APP_WNOM_CONTRACT_ADDRESS,
-            onomyWalletValue,
-            string18FromAmount,
-            {
-              gasPrice: gasPrice.toFixed(0),
-            }
-          );
 
           addPendingBridgeTransaction(new BigNumber(amountValue));
+          await bondingCurve.bridgeBNOMSendToCosmos(onomyWalletValue, amountValueAtoms, gasPrice);
 
-          tx.wait().then(() => {
-            setIsDisabled(false);
-            setShowBridgeExchangeModal(false);
-            setShowTransactionCompleted(true);
-            setShowLoader(false);
-            setIsTransactionPending(false);
-          });
+          setIsDisabled(false);
+          setShowBridgeExchangeModal(false);
+          setShowTransactionCompleted(true);
+          setShowLoader(false);
+          setIsTransactionPending(false);
         } catch (error) {
           if (error.code === 4001) {
             setErrors(prevState => {
@@ -208,7 +186,7 @@ export default function BridgeSwapMain() {
       amountValue,
       allowanceAmountGravity,
       onomyWalletValue,
-      GravityContract,
+      bondingCurve,
       gasPrice,
       addPendingBridgeTransaction,
     ]
