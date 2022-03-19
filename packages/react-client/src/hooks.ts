@@ -27,6 +27,19 @@ export function useDelegationTotalValue() {
   return useAsyncPoll(useDelegationTotalFetchCb(), new BigNumber(0));
 }
 
+function useUnbondingTotalFetchCb() {
+  const { onomyClient, address } = useOnomy();
+
+  return useCallback(async () => {
+    if (!address) return new BigNumber(0);
+    return onomyClient.getTotalUnbondingForDelegator(address);
+  }, [onomyClient, address]);
+}
+
+export function useUnbondingTotalValue() {
+  return useAsyncPoll(useUnbondingTotalFetchCb(), new BigNumber(0));
+}
+
 function useAnomSupplyFetchCb() {
   const { onomyClient } = useOnomy();
   return useCallback(() => onomyClient.getAnomSupply(), [onomyClient]);

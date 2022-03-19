@@ -49,7 +49,7 @@ const DarkWrapper = styled.div`
 
 export default function Sidebar() {
   const { strongBalance, weakBalance, NOMallowance, web3Context } = useOnomyEth();
-  const { account, deactivate } = web3Context;
+  const { account, deactivate } = web3Context || {};
   const { strong, weak } = useExchange();
 
   const handleLogout = () => {

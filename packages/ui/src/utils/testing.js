@@ -47,6 +47,7 @@ export const ChainContextWrapper = (children, contextProps) => {
         strongBalance: BigNumber(0),
         supplyNOM: BigNumber(0),
         weakBalance: BigNumber(0),
+        web3Context: { account: null },
         ...contextProps,
       }}
     >
@@ -115,6 +116,7 @@ export const renderWithContext = (Component, props, contextValues) => {
           NOMallowance: BigNumber(0),
           strongBalance: BigNumber(0),
           weakBalance: BigNumber(0),
+          web3Context: { account: null },
           ...contextValues,
         }}
       >

@@ -151,6 +151,50 @@ export class OnomyClient {
     return coin.amount; // TODO: BigNumber rather than string return?
   }
 
+  async getUnbondingDelegationsForDelegator(delegatorAddress: string) {
+    const stargate = await this.getStargate();
+    return stargate.getUnbondingDelegations(delegatorAddress);
+  }
+
+  async getTotalUnbondingForDelegator(delegatorAddress: string) {
+    /*
+    [
+        {
+            "delegatorAddress": "onomy1599nj49jvvg3rlq9dpgrsn6vwwauzw5mchuhwd",
+            "validatorAddress": "onomyvaloper18hskl5e779xymx5r7m8huheznpe0wqfkme9x94",
+            "entries": [
+                {
+                    "creationHeight": {
+                        "low": 370925,
+                        "high": 0,
+                        "unsigned": false
+                    },
+                    "initialBalance": "1000000000000000000000",
+                    "balance": "1000000000000000000000",
+                    "completionTime": {
+                        "seconds": {
+                            "low": 1649459970,
+                            "high": 0,
+                            "unsigned": false
+                        },
+                        "nanos": 378065251
+                    }
+                }
+            ]
+        }
+    ]
+    */
+    const unbondings = await this.getUnbondingDelegationsForDelegator(delegatorAddress);
+    return unbondings.reduce(
+      (sum, validator) =>
+        validator.entries.reduce(
+          (sumInner, entry) => sumInner.plus(new BigNumber(entry.balance)),
+          sum
+        ),
+      new BigNumber(0)
+    );
+  }
+
   async getValidatorsForDelegator(delegator: string) {
     const [validators, bridgedSupply, delegationData] = await Promise.all([
       this.getValidators(),

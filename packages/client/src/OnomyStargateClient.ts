@@ -68,4 +68,10 @@ export class OnomyStargateClient extends StargateClient {
     const res = await qc?.distribution.delegationTotalRewards(delegatorAddress);
     return res;
   }
+
+  public async getUnbondingDelegations(delegatorAddress: string) {
+    const qc = this.getQueryClient();
+    const res = await qc.staking.delegatorUnbondingDelegations(delegatorAddress);
+    return res.unbondingResponses;
+  }
 }

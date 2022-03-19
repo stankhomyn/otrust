@@ -1,7 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useOnomy, useBridgedBalanceValue, useDelegationTotalValue } from '@onomy/react-client';
+import {
+  useOnomy,
+  useBridgedBalanceValue,
+  useDelegationTotalValue,
+  useUnbondingTotalValue,
+} from '@onomy/react-client';
 
 import {
   Balances,
@@ -37,6 +42,7 @@ const Message = styled.div`
 export default function NOMBalances() {
   const { address } = useOnomy();
   const bridged = useBridgedBalanceValue();
+  const [locked] = useUnbondingTotalValue();
   const [delegated] = useDelegationTotalValue();
 
   return (
@@ -72,6 +78,24 @@ export default function NOMBalances() {
             <Hint>
               <TooltipCaption>NOM Staked</TooltipCaption>
               <TooltipDesc>NOM delegated to earn staking rewards</TooltipDesc>
+            </Hint>
+          </Balance>
+
+          <Balance>
+            <BalancePrice>
+              <strong>NOM Locked</strong>
+              <BalanceNumber strong>
+                <NomBalanceDisplay value={locked.toString()} />
+                <small>
+                  <EquivalentValue amount={format18(locked).toNumber()} asset="NOM" />
+                </small>
+              </BalanceNumber>
+            </BalancePrice>
+            <Hint>
+              <TooltipCaption>NOM Locked</TooltipCaption>
+              <TooltipDesc>
+                Your NOM will become available for use 3 weeks after successful un-delegation.
+              </TooltipDesc>
             </Hint>
           </Balance>
         </>
