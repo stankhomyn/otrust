@@ -28,6 +28,10 @@ const DelegateItem = styled.div`
 
   width: 50%;
 
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    flex-direction: column;
+  }
+
   & + & {
     padding-left: 55px;
 
