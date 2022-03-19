@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import {
@@ -45,6 +45,8 @@ export default function NOMBalances() {
   const [locked] = useUnbondingTotalValue();
   const [delegated] = useDelegationTotalValue();
 
+  const total = useMemo(() => bridged.plus(locked).plus(delegated), [bridged, locked, delegated]);
+
   return (
     <Balances>
       {address ? (
@@ -53,9 +55,9 @@ export default function NOMBalances() {
             <BalancePrice>
               <strong>NOM Balance (Bridged)</strong>
               <BalanceNumber strong>
-                <NomBalanceDisplay value={bridged.toString()} />
+                <NomBalanceDisplay value={total.toString()} />
                 <small>
-                  <EquivalentValue amount={format18(bridged).toNumber()} asset="NOM" />
+                  <EquivalentValue amount={format18(total).toNumber()} asset="NOM" />
                 </small>
               </BalanceNumber>
             </BalancePrice>

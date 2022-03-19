@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
-import { useBridgedBalanceValue } from '@onomy/react-client';
+import {
+  useBridgedBalanceValue,
+  useDelegationTotalValue,
+  useUnbondingTotalValue,
+} from '@onomy/react-client';
 
 import { NomBalanceDisplay } from 'components/NomBalanceDisplay';
 import { EquivalentValue } from 'components/EquivalentValue';
@@ -54,7 +58,11 @@ const Controls = styled.div`
 `;
 
 export default function ValidatorFooter({ children }: { children: React.ReactNode }) {
-  const nomBalance = useBridgedBalanceValue();
+  const bridged = useBridgedBalanceValue();
+  const [locked] = useUnbondingTotalValue();
+  const [delegated] = useDelegationTotalValue();
+
+  const total = useMemo(() => bridged.plus(locked).plus(delegated), [bridged, locked, delegated]);
 
   return (
     <Footer>
@@ -62,10 +70,10 @@ export default function ValidatorFooter({ children }: { children: React.ReactNod
         <p>NOM Balance</p>
         <FooterBalanceValue>
           <strong>
-            <NomBalanceDisplay value={nomBalance.toString()} />
+            <NomBalanceDisplay value={total.toString()} />
           </strong>
           <span>
-            <EquivalentValue amount={format18(nomBalance).toNumber()} asset="NOM" />
+            <EquivalentValue amount={format18(total).toNumber()} asset="NOM" />
           </span>
         </FooterBalanceValue>
       </FooterBalance>
