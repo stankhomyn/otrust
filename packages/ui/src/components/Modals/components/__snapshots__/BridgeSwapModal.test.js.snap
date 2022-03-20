@@ -10,6 +10,7 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
   left: 0;
   background-color: rgba(0,0,0,0.7);
   z-index: 10;
+  cursor: pointer;
 }
 
 @media screen and (max-width:1440px) {
@@ -206,6 +207,15 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
 
 .c2:active svg {
   fill: #4d4b57;
+}
+
+.c2:disabled {
+  cursor: not-allowed;
+}
+
+.c2:disabled svg {
+  fill: #656273;
+  opacity: 0.5;
 }
 
 .c26 {

@@ -47,6 +47,15 @@ exports[`Given the BridgeSwapModalDisconnected component when the component is r
   fill: #4d4b57;
 }
 
+.c2:disabled {
+  cursor: not-allowed;
+}
+
+.c2:disabled svg {
+  fill: #656273;
+  opacity: 0.5;
+}
+
 .c13 {
   width: 170px;
   height: 50px;

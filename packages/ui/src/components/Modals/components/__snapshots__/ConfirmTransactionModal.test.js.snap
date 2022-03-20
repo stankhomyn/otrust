@@ -63,6 +63,15 @@ exports[`Given the ConfirmTransactionModal component and bidDenom is weak should
   fill: #4d4b57;
 }
 
+.c1:disabled {
+  cursor: not-allowed;
+}
+
+.c1:disabled svg {
+  fill: #656273;
+  opacity: 0.5;
+}
+
 .c15 {
   width: 170px;
   height: 50px;
@@ -672,6 +681,15 @@ exports[`Given the ConfirmTransactionModal component when the component is rende
 
 .c1:active svg {
   fill: #4d4b57;
+}
+
+.c1:disabled {
+  cursor: not-allowed;
+}
+
+.c1:disabled svg {
+  fill: #656273;
+  opacity: 0.5;
 }
 
 .c15 {

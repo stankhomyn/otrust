@@ -63,6 +63,15 @@ exports[`Given the ApproveTokensModal component when the component is rendered s
   fill: #4d4b57;
 }
 
+.c1:disabled {
+  cursor: not-allowed;
+}
+
+.c1:disabled svg {
+  fill: #656273;
+  opacity: 0.5;
+}
+
 .c8 {
   width: 170px;
   height: 50px;
