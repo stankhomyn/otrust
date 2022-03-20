@@ -165,16 +165,21 @@ export default function BridgeSwapModal({ ...props }) {
   const { values, flags, handlers } = { ...props };
   const { hasKeplr } = useOnomy();
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const { bridgeProgress } = useOnomy();
 
   const collapsedInfoBreakpoint = useMediaQuery({
     query: `(max-width: ${responsive.laptopSmall})`,
   });
 
+  const closeModal = () => {
+    if (!bridgeProgress) handlers.closeModal();
+  };
+
   return (
     <>
-      <Dimmer onClick={() => handlers.closeModal()} />
+      <Dimmer onClick={closeModal} disabled={!!bridgeProgress} />
       <Modal.BridgeModalWrapper>
-        <Modal.CloseIcon onClick={() => handlers.closeModal()}>
+        <Modal.CloseIcon onClick={closeModal} disabled={!!bridgeProgress}>
           <Close />
         </Modal.CloseIcon>
 

@@ -11,4 +11,5 @@ export const Dimmer = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
 
   z-index: 10;
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 `;

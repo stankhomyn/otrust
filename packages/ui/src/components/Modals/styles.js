@@ -110,16 +110,25 @@ export const CloseIcon = styled.button`
   svg {
     fill: ${props => props.theme.colors.textThirdly};
   }
-
+  
   &:hover {
     svg {
       fill: ${props => props.theme.colors.textSecondary};
     }
   }
-
+  
   &:active {
     svg {
       fill: ${props => props.theme.colors.textThirdly_darken};
+    }
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+    
+    svg { 
+      fill: ${props => props.theme.colors.textThirdly};
+      opacity: 0.5;
     }
   }
 `;
