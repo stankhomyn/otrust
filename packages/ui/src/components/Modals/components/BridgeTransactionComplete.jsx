@@ -12,7 +12,7 @@ export const ExplorerButton = styled(Modal.SecondaryButton)`
   margin-top: 32px;
 `;
 
-export default function BridgeTransactionComplete({ closeModalHandler, amountValue }) {
+export default function BridgeTransactionComplete({ amountValue }) {
   const { bridgeProgress } = useOnomy();
 
   if (bridgeProgress === null) {
@@ -37,7 +37,7 @@ export default function BridgeTransactionComplete({ closeModalHandler, amountVal
         </Modal.ExchangeRateWrapper>
         <BridgeProgress />
       </main>
-      <footer>
+      {/* <footer>
         <Modal.BridgeFooterControl>
           <Modal.PrimaryButton
             onClick={() => closeModalHandler()}
@@ -46,7 +46,7 @@ export default function BridgeTransactionComplete({ closeModalHandler, amountVal
             Done
           </Modal.PrimaryButton>
         </Modal.BridgeFooterControl>
-      </footer>
+      </footer> */}
     </Modal.BridgeSuccessWrapper>
   );
 }

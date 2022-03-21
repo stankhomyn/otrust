@@ -311,7 +311,7 @@ export default function BridgeSwapModal({ ...props }) {
           {flags.showTransactionCompleted && (
             <main>
               <BridgeTransactionComplete
-                closeModalHandler={handlers.closeModal}
+                // closeModalHandler={handlers.closeModal}
                 amountValue={values.amountValue}
               />
             </main>
