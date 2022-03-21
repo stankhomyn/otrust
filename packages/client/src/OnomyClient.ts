@@ -17,7 +17,7 @@ export class OnomyClient {
   private denom = OnomyConstants.DENOM;
 
   constructor(WS_URL: string, denom = OnomyConstants.DENOM) {
-    this.WS_URL = WS_URL;
+    this.WS_URL = WS_URL.replace('https://', 'wss://');
     this.denom = denom;
   }
 
@@ -65,6 +65,15 @@ export class OnomyClient {
       },
       'auto'
     );
+  }
+
+  async withdrawRewards(validatorAddress: string) {
+    const signer = this.getSigner();
+    const [account] = await signer.getAccounts();
+    const sg = await SigningStargateClient.connectWithSigner(this.WS_URL, signer, {
+      gasPrice: OnomyConstants.GAS_PRICE,
+    });
+    return sg.withdrawRewards(account.address, validatorAddress, 'auto');
   }
 
   async getAnomSupply() {

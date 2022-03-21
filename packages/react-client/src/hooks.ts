@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { useCallback, useMemo } from 'react';
-import { useAsyncPoll } from '@onomy/react-utils';
+import { AsyncStatus, useAsyncPoll, useAsyncProcess } from '@onomy/react-utils';
 import { OnomyConstants, OnomyFormulas } from '@onomy/client';
 
 import { useOnomy } from './context';
@@ -82,3 +82,17 @@ export function useValidatorDetail(id?: string) {
 }
 
 export type ValidatorData = ReturnType<typeof useValidatorDetail>[0];
+
+export function useWithdrawRewards(): [(validatorAddress: string) => Promise<void>, AsyncStatus] {
+  const [attempt, status] = useAsyncProcess();
+  const { onomyClient } = useOnomy();
+  const cb = useCallback(
+    (validatorAddress: string) =>
+      attempt(async () => {
+        await onomyClient.withdrawRewards(validatorAddress);
+      }),
+    [onomyClient, attempt]
+  );
+
+  return [cb, status];
+}

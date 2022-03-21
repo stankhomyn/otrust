@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { Link, useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js';
-import { ValidatorData } from '@onomy/react-client';
+import { useWithdrawRewards, ValidatorData } from '@onomy/react-client';
 
 import ValidatorFooter from './ValidatorFooter';
 import ValidatorNodeHeader from './ValidatorNodeHeader';
@@ -13,6 +13,8 @@ import { format18 } from 'utils/math';
 import { FormattedNumber } from 'components/FormattedNumber';
 import { EquivalentValue } from 'components/EquivalentValue';
 import { responsive } from 'theme/constants';
+import { ErrorDisplay } from 'components/ErrorDisplay';
+import LoadingSpinner from 'components/UI/LoadingSpinner';
 
 const DelegateWrapper = styled.div`
   display: flex;
@@ -114,8 +116,10 @@ const FooterInfo = styled.div`
 export default function ValidatorDetail({ data }: { data: ValidatorData }) {
   const { id } = useParams();
   const { validator, votingPower, delegation, rewards = null, selfStake = 0 } = data;
+  const [doClaim, { pending, error }] = useWithdrawRewards();
 
   if (!validator) return null;
+  if (error) return <ErrorDisplay error={error} />;
   return (
     <StakingModal>
       <Modal.StakingWrapper>
@@ -155,11 +159,17 @@ export default function ValidatorDetail({ data }: { data: ValidatorData }) {
                 amount={format18(new BigNumber(rewards?.amount ?? '0')).toNumber()}
               />
             </DelegateItemContent>
-            <Link to="/open-keplr-claim">
-              <Modal.PrimaryButton type="button" style={{ width: '110px' }}>
+            {pending ? (
+              <LoadingSpinner />
+            ) : (
+              <Modal.PrimaryButton
+                type="button"
+                style={{ width: '110px' }}
+                onClick={() => doClaim(id!)}
+              >
                 Claim
               </Modal.PrimaryButton>
-            </Link>
+            )}
           </DelegateItem>
         </DelegateWrapper>
 
