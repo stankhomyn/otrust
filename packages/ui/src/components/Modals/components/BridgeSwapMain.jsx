@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { BigNumber } from 'bignumber.js';
-import cosmos from 'cosmos-lib';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import { useOnomy } from '@onomy/react-client';
 import { useOnomyEth } from '@onomy/react-eth';
+import { OnomyAddress } from '@onomy/client';
 
 import BridgeSwapMobile from './BridgeSwapMobile';
 import BridgeSwapModal from './BridgeSwapModal';
@@ -134,7 +134,7 @@ export default function BridgeSwapMain() {
       const amountValueAtoms = new BigNumber(amountValue).shiftedBy(18);
       try {
         setIsDisabled(true);
-        cosmos.address.getBytes(onomyWalletValue);
+        OnomyAddress.validate(onomyWalletValue);
       } catch (error) {
         setErrors(prevState => {
           return {
