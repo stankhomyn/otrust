@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js';
 import { useCallback } from 'react';
 import { useAsyncValue } from '@onomy/react-utils';
-import { useOnomyEth } from '@onomy/react-eth';
+
+import { useOnomyEth } from './OnomyEthProvider';
 
 export function useGasPrices() {
   const { web3Context } = useOnomyEth();
