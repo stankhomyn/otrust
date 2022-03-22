@@ -149,14 +149,14 @@ export default function ValidatorDetail({ data }: { data: ValidatorData }) {
               <span>Reward</span>
               <strong>
                 <FormattedNumber
-                  value={format18(new BigNumber(rewards?.amount ?? '0')).toNumber()}
+                  value={new BigNumber(rewards?.amount ?? '0').shiftedBy(-36).toNumber()}
                 />
                 <sup>NOM</sup>
               </strong>
               <EquivalentValue
                 asset="NOM"
                 prefix="$"
-                amount={format18(new BigNumber(rewards?.amount ?? '0')).toNumber()}
+                amount={new BigNumber(rewards?.amount ?? '0').shiftedBy(-36).toNumber()}
               />
             </DelegateItemContent>
             {pending ? (
