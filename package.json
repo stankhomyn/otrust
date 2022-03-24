@@ -26,10 +26,11 @@
     "tsc": "concurrently \"yarn client:tsc\" \"yarn react-client:tsc\" \"yarn react-eth:tsc\" \"yarn react-utils:tsc\" \"yarn react-keplr:tsc\" \"yarn ui:tsc\"",
     "verify": "concurrently \"yarn client:tsc\" \"yarn react-client:verify\" \"yarn react-eth:verify\" \"yarn react-utils:verify\" \"yarn react-keplr:verify\" \"yarn ui:verify\"",
     "start": "yarn workspace otrust start",
+    "build-deps": "yarn workspace @onomy/react-utils build && yarn workspace @onomy/react-eth build",
     "build": "yarn workspace otrust build",
     "verified-build": "yarn workspace otrust verified-build",
     "test": "yarn workspace otrust test",
-    "prepare": "husky install"
+    "prepare": "husky install && yarn build-deps"
   },
   "husky": {
     "hooks": {

@@ -1,10 +1,16 @@
 {
   "name": "@onomy/react-eth",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Onomy ethereum functionality for react",
-  "main": "./src/index.ts",
   "license": "MIT",
+  "main": "build/index.js",
+  "module": "build/index.es.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
   "scripts": {
+    "build": "siroc build",
     "dep-audit": "yarn improved-yarn-audit --fail-on-missing-exclusions --ignore-dev-deps",
     "lint": "eslint src --ext js,jsx,ts,tsx --quiet --fix",
     "tsc": "tsc",
@@ -45,7 +51,8 @@
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-testing-library": "^4.12.2",
-    "prettier": "^2.4.0"
+    "prettier": "^2.4.0",
+    "siroc": "^0.16.0"
   },
   "peerDependencies": {
     "@onomy/react-utils": "^0.0.1",
@@ -55,7 +62,9 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "paths": ["src"]
+        "paths": [
+          "src"
+        ]
       }
     }
   }

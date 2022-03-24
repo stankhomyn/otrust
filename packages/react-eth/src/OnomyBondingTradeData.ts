@@ -90,7 +90,7 @@ type BarSubscription = {
 export class OnomyBondingTradeData implements IDatafeedChartApi {
   private apolloClient: ApolloClient<object>;
 
-  private web3Library: EventEmitter;
+  private web3Library?: EventEmitter;
 
   private barSubs: Record<string, BarSubscription>;
 
@@ -98,13 +98,13 @@ export class OnomyBondingTradeData implements IDatafeedChartApi {
 
   private lastTick: Record<string, number>;
 
-  constructor(apolloClient: ApolloClient<object>, web3Library: EventEmitter) {
+  constructor(apolloClient: ApolloClient<object>, web3Library?: EventEmitter) {
     this.apolloClient = apolloClient;
     this.web3Library = web3Library;
     this.barSubs = {};
     this.lastTick = {};
     this.onBlockMined = this.onBlockMined.bind(this);
-    this.web3Library.on('block', this.onBlockMined);
+    if (this.web3Library) this.web3Library.on('block', this.onBlockMined);
   }
 
   private async onBlockMined(bnum: number) {
@@ -133,7 +133,7 @@ export class OnomyBondingTradeData implements IDatafeedChartApi {
   }
 
   public destroy() {
-    this.web3Library.removeListener('block', this.onBlockMined);
+    if (this.web3Library) this.web3Library.removeListener('block', this.onBlockMined);
   }
 
   public onReady(cb: OnReadyCallback) {

@@ -20,13 +20,14 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "./src",
-    "outDir": "./lib",
+    "rootDir": "./src",
+    "outDir": "./build",
     "typeRoots": [
       "./src/types"
     ]
   },
   "include": [
-    "./src"
-, "../react-keplr/src/useKeplr.ts"  ],
+    "./src/**/*"
+  ],
   "exclude": []
 }

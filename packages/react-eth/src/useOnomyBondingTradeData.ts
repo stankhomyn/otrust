@@ -11,7 +11,7 @@ export function useOnomyBondingTradeData() {
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     return useMemo(() => {
-      if (!library || !apolloClient) return null;
+      if (!apolloClient) return null;
       return new OnomyBondingTradeData(apolloClient, library);
     }, [library, apolloClient]);
   } catch {

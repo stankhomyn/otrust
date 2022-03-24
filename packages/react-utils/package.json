@@ -2,11 +2,18 @@
   "name": "@onomy/react-utils",
   "version": "0.0.1",
   "description": "Misc. react hooks and utilities",
-  "main": "./src/index.ts",
   "license": "MIT",
+  "main": "build/index.js",
+  "module": "build/index.es.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
   "scripts": {
+    "build": "siroc build",
     "dep-audit": "yarn improved-yarn-audit --fail-on-missing-exclusions --ignore-dev-deps",
     "lint": "eslint src --ext js,jsx,ts,tsx --quiet --fix",
+    "prepublishOnly": "yarn build",
     "tsc": "tsc",
     "verify": "yarn tsc && yarn lint"
   },
@@ -14,6 +21,8 @@
     "typescript": "^4.4.3"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^21.0.2",
+    "@rollup/plugin-node-resolve": "^13.1.3",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "eslint": "^7.32.0",
@@ -28,7 +37,8 @@
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-testing-library": "^4.12.2",
-    "prettier": "^2.4.0"
+    "prettier": "^2.4.0",
+    "siroc": "^0.16.0"
   },
   "peerDependencies": {
     "react": "^17.0.2",
@@ -37,7 +47,9 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "paths": ["src"]
+        "paths": [
+          "src"
+        ]
       }
     }
   }

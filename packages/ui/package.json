@@ -32,7 +32,7 @@
     "@fortawesome/react-fontawesome": "^0.1.15",
     "@onomy/client": "^0.0.1",
     "@onomy/react-client": "^0.0.1",
-    "@onomy/react-eth": "^0.0.1",
+    "@onomy/react-eth": "^0.0.2",
     "@onomy/react-keplr": "^0.0.1",
     "@onomy/react-utils": "^0.0.1",
     "@use-it/interval": "^1.0.0",
