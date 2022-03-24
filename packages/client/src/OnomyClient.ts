@@ -83,7 +83,8 @@ export class OnomyClient {
   }
 
   async getMintInflation() {
-    throw new Error('Not implemented');
+    const sg = await this.getStargate();
+    return sg.getMintInflation();
   }
 
   async getMintParams() {
@@ -205,16 +206,22 @@ export class OnomyClient {
   }
 
   async getValidatorsForDelegator(delegator: string) {
-    const [validators, bridgedSupply, delegationData] = await Promise.all([
+    const [validators, bridgedSupplyNom, delegationData, inflationRate] = await Promise.all([
       this.getValidators(),
       this.getAnomSupply(),
       delegator ? this.getDelegationsForDelegator(delegator) : Promise.resolve([]),
+      this.getMintInflation(),
     ]);
-    const stakingAPR = OnomyFormulas.stakingRewardAPR(bridgedSupply.toNumber());
 
-    const totalStaked = validators.reduce(
+    const totalStakedAtoms = validators.reduce(
       (sum, v) => new BigNumber(v.tokens).plus(sum),
       new BigNumber(0)
+    );
+
+    const APR = OnomyFormulas.getEstYearlyStakingRewardPercentage(
+      bridgedSupplyNom.shiftedBy(18),
+      totalStakedAtoms,
+      inflationRate.toFloatApproximation()
     );
 
     return validators.map(validator => {
@@ -226,10 +233,10 @@ export class OnomyClient {
         id: validator.operatorAddress,
         validator: {
           name: validator.description?.moniker ?? validator.operatorAddress,
-          votingPower: staked.multipliedBy(100).div(totalStaked).toNumber(),
+          votingPower: staked.multipliedBy(100).div(totalStakedAtoms).toNumber(),
         },
         rewards: {
-          APR: stakingAPR,
+          APR,
           commissionRate:
             this.denomNumberFromFixed(
               new BigNumber(validator.commission?.commissionRates?.rate ?? '0')
@@ -269,6 +276,25 @@ export class OnomyClient {
       delegation: delegationData,
       rewards: rewardItem,
     };
+  }
+
+  async getEstYearlyStakingReward() {
+    const [validators, bridgedSupplyNom, inflationRate] = await Promise.all([
+      this.getValidators(),
+      this.getAnomSupply(),
+      this.getMintInflation(),
+    ]);
+
+    const totalStakedAtoms = validators.reduce(
+      (sum, v) => new BigNumber(v.tokens).plus(sum),
+      new BigNumber(0)
+    );
+
+    return OnomyFormulas.getEstYearlyStakingRewardPercentage(
+      bridgedSupplyNom.shiftedBy(18),
+      totalStakedAtoms,
+      inflationRate.toFloatApproximation()
+    );
   }
 
   private getStargate() {

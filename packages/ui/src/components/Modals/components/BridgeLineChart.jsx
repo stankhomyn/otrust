@@ -146,7 +146,7 @@ export default function BridgeLineChart({ coinsInCirculation }) {
     // Line
     const APYline = line()
       .x(d => xScale(d))
-      .y(d => yScale(OnomyFormulas.stakingRewardAPR(d)))
+      .y(d => yScale(OnomyFormulas.getInflationRateForSupply(d)))
       .curve(curveCardinal);
 
     svg
@@ -162,7 +162,7 @@ export default function BridgeLineChart({ coinsInCirculation }) {
       .data([data[activePointIndex]])
       .style('transform', d => {
         const x = `${xScale(d)}px`;
-        const y = `${yScale(OnomyFormulas.stakingRewardAPR(d)) + 50}px`;
+        const y = `${yScale(OnomyFormulas.getInflationRateForSupply(d)) + 50}px`;
 
         return `translate(${x}, ${y})`;
       })
@@ -170,14 +170,14 @@ export default function BridgeLineChart({ coinsInCirculation }) {
       .delay(100)
       .style('transform', d => {
         const x = `${xScale(d)}px`;
-        const y = `${yScale(OnomyFormulas.stakingRewardAPR(d))}px`;
+        const y = `${yScale(OnomyFormulas.getInflationRateForSupply(d))}px`;
 
         return `translate(${x}, ${y})`;
       })
       .style('opacity', 1)
       .call(g =>
         g.select('text').text(d => {
-          const calculatedPointValue = d && OnomyFormulas.stakingRewardAPR(d).toFixed(0);
+          const calculatedPointValue = d && OnomyFormulas.getInflationRateForSupply(d).toFixed(0);
           setActivePoint(calculatedPointValue);
           return `${calculatedPointValue}%`;
         })

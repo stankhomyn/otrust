@@ -2,10 +2,12 @@ import {
   AuthExtension,
   BankExtension,
   DistributionExtension,
+  MintExtension,
   QueryClient,
   setupAuthExtension,
   setupBankExtension,
   setupDistributionExtension,
+  setupMintExtension,
   setupStakingExtension,
   setupTxExtension,
   StakingExtension,
@@ -21,7 +23,8 @@ export class OnomyStargateClient extends StargateClient {
     BankExtension &
     StakingExtension &
     TxExtension &
-    DistributionExtension;
+    DistributionExtension &
+    MintExtension;
 
   public static async connect(endpoint: string): Promise<OnomyStargateClient> {
     const tmClient = await Tendermint34Client.connect(endpoint);
@@ -36,7 +39,8 @@ export class OnomyStargateClient extends StargateClient {
       setupBankExtension,
       setupStakingExtension,
       setupTxExtension,
-      setupDistributionExtension
+      setupDistributionExtension,
+      setupMintExtension
     );
   }
 
@@ -73,5 +77,10 @@ export class OnomyStargateClient extends StargateClient {
     const qc = this.getQueryClient();
     const res = await qc.staking.delegatorUnbondingDelegations(delegatorAddress);
     return res.unbondingResponses;
+  }
+
+  public async getMintInflation() {
+    const qc = this.getQueryClient();
+    return qc.mint.inflation();
   }
 }

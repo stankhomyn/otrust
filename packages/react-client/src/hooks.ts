@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { useCallback, useMemo } from 'react';
 import { AsyncStatus, useAsyncPoll, useAsyncProcess } from '@onomy/react-utils';
-import { OnomyConstants, OnomyFormulas } from '@onomy/client';
+import { OnomyConstants } from '@onomy/client';
 
 import { useOnomy } from './context';
 
@@ -49,9 +49,13 @@ export function useAnomSupply() {
   return useAsyncPoll(useAnomSupplyFetchCb(), new BigNumber(0));
 }
 
+function useStakingRewardEstFetchCb() {
+  const { onomyClient } = useOnomy();
+  return useCallback(() => onomyClient.getEstYearlyStakingReward(), [onomyClient]);
+}
+
 export function useStakingRewardAPR() {
-  const [bridgedSupply] = useAnomSupply();
-  return useMemo(() => OnomyFormulas.stakingRewardAPR(bridgedSupply.toNumber()), [bridgedSupply]);
+  return useAsyncPoll(useStakingRewardEstFetchCb(), new BigNumber(1), 10000);
 }
 
 function useValidatorListFetchCb() {

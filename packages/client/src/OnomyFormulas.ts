@@ -1,6 +1,8 @@
+import BigNumber from 'bignumber.js';
+
 import { OnomyConstants } from './OnomyConstants';
 
-function stakingRewardAPR(supply: number) {
+function getInflationRateForSupply(supply: number) {
   return (
     OnomyConstants.STAKE_REWARD_PEAK_HEIGHT *
     Math.exp(
@@ -10,6 +12,16 @@ function stakingRewardAPR(supply: number) {
   );
 }
 
+function getEstYearlyStakingRewardPercentage(
+  totalBridgedAtoms: BigNumber,
+  totalStakedAtoms: BigNumber,
+  inflationRate: number
+) {
+  const stakingRatio = totalStakedAtoms.div(totalBridgedAtoms).toNumber();
+  return (inflationRate / stakingRatio) * 100;
+}
+
 export const OnomyFormulas = {
-  stakingRewardAPR,
+  getInflationRateForSupply,
+  getEstYearlyStakingRewardPercentage,
 };

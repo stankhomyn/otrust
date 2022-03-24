@@ -107,7 +107,7 @@ export default function ValidatorNodeHeader({
   name: string;
   url?: string;
 }) {
-  const estimatedAPR = useStakingRewardAPR();
+  const [estimatedAPR] = useStakingRewardAPR();
 
   return (
     <Header>
