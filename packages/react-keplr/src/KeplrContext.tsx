@@ -1,9 +1,9 @@
-import { useRef, useCallback, useState, useMemo } from 'react';
+import React, { useRef, useCallback, useState, useMemo, createContext, useContext } from 'react';
 import { ChainInfo, Keplr, Window as KeplrWindow } from '@keplr-wallet/types';
 
 type OfflineSigner = ReturnType<Keplr['getOfflineSigner']>;
 
-export function useKeplr(chainInfo: ChainInfo) {
+export function useKeplrState(chainInfo: ChainInfo) {
   const [address, setAddress] = useState('');
   const [signer, setSigner] = useState<OfflineSigner | null>(null);
   const keplrConnected = useRef(false);
@@ -64,4 +64,31 @@ export function useKeplr(chainInfo: ChainInfo) {
     hasKeplr,
     connect,
   };
+}
+
+export type KeplrState = ReturnType<typeof useKeplrState>;
+
+const DEFAULT_STATE: KeplrState = {
+  keplr: undefined,
+  signer: null,
+  address: '',
+  hasKeplr: false,
+  connect: () => Promise.resolve(),
+};
+
+export const KeplrContext = createContext(DEFAULT_STATE);
+
+export function useKeplr() {
+  return useContext(KeplrContext);
+}
+
+export function KeplrProvider({
+  chainInfo,
+  children,
+}: {
+  chainInfo: ChainInfo;
+  children: JSX.Element | JSX.Element[];
+}) {
+  const state = useKeplrState(chainInfo);
+  return <KeplrContext.Provider value={state}>{children}</KeplrContext.Provider>;
 }

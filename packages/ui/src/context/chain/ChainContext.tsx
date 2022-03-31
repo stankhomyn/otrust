@@ -1,6 +1,7 @@
 import React from 'react';
 import { OnomyEthProvider, useOnomyEth } from '@onomy/react-eth';
 import { OnomyProvider } from '@onomy/react-client';
+import { KeplrProvider, useKeplr } from '@onomy/react-keplr';
 
 import {
   KEPLR_CONFIG,
@@ -12,9 +13,10 @@ import {
 
 function OnomyChildProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
   const { blockNumber } = useOnomyEth();
+  const { signer } = useKeplr();
 
   return (
-    <OnomyProvider chainInfo={KEPLR_CONFIG} ethBlockNumber={blockNumber}>
+    <OnomyProvider signer={signer} rpcUrl={KEPLR_CONFIG.rpc} ethBlockNumber={blockNumber}>
       {children}
     </OnomyProvider>
   );
@@ -28,7 +30,9 @@ export function AppProvider({ children }: { children: JSX.Element | JSX.Element[
       bondContractAddress={REACT_APP_BONDING_NOM_CONTRACT_ADDRESS}
       gravityContractAddress={REACT_APP_GRAVITY_CONTRACT_ADDRESS}
     >
-      <OnomyChildProvider>{children}</OnomyChildProvider>
+      <KeplrProvider chainInfo={KEPLR_CONFIG}>
+        <OnomyChildProvider>{children}</OnomyChildProvider>
+      </KeplrProvider>
     </OnomyEthProvider>
   );
 }

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { useOnomy } from '@onomy/react-client';
+import { useKeplr } from '@onomy/react-keplr';
 
 export function ConnectKeplr() {
-  const { connectKeplr } = useOnomy();
+  const { connect } = useKeplr();
 
   useEffect(() => {
-    connectKeplr();
-  }, [connectKeplr]);
+    connect();
+  }, [connect]);
 
   return <></>;
 }

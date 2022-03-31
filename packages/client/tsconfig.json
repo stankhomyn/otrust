@@ -26,7 +26,7 @@
     ]
   },
   "include": [
-    "./src"
-, "../react-keplr/src/useKeplr.ts"  ],
+    "./src" 
+  ],
   "exclude": []
 }

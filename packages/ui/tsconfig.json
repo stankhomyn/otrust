@@ -26,7 +26,7 @@
   },
   "include": [
     "./src"
-, "../react-keplr/src/useKeplr.ts", "../react-utils/src/types"  ],
+  ],
   "exclude": [
     "public",
     "src/charting_library"

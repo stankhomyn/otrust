@@ -7,6 +7,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useAnomSupply, useOnomy } from '@onomy/react-client';
 import { useOnomyEth } from '@onomy/react-eth';
+import { useKeplr } from '@onomy/react-keplr';
 
 import { Dimmer } from 'components/UI/Dimmer';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
@@ -212,7 +213,7 @@ export default function BridgeSwapModal({ ...props }: BridgeSwapModalProps) {
   const { web3Context } = useOnomyEth();
   const { active, account } = web3Context;
   const { values, flags, handlers } = { ...props };
-  const { hasKeplr } = useOnomy();
+  const { hasKeplr } = useKeplr();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const { bridgeProgress } = useOnomy();
 

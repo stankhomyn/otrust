@@ -9,7 +9,6 @@ import React, {
 } from 'react';
 import { BigNumber } from 'bignumber.js';
 import { useAsyncPoll } from '@onomy/react-utils';
-import { useKeplr } from '@onomy/react-keplr';
 import { OnomyClient, OnomyConstants } from '@onomy/client';
 
 type BridgeTransactionInProgress = {
@@ -18,17 +17,19 @@ type BridgeTransactionInProgress = {
   expectedIncrease: BigNumber;
 };
 
-type ChainInfo = Parameters<typeof useKeplr>[0];
+type SignerType = Parameters<InstanceType<typeof OnomyClient>['setSigner']>[0];
 
 function useOnomyState({
-  chainInfo,
+  signer,
+  rpcUrl,
   ethBlockNumber = new BigNumber(0),
 }: {
-  chainInfo: ChainInfo;
+  signer: SignerType;
+  rpcUrl: string;
   ethBlockNumber?: BigNumber;
 }) {
   const blockNumRef = useRef(ethBlockNumber);
-  const onomyClient = useMemo(() => new OnomyClient(chainInfo.rpc), [chainInfo.rpc]);
+  const onomyClient = useMemo(() => new OnomyClient(rpcUrl), [rpcUrl]);
 
   blockNumRef.current = ethBlockNumber;
   const [address, setAddress] = useState('');
@@ -40,11 +41,15 @@ function useOnomyState({
     '0'
   );
   const [bridgeTransactions, setBridgeTransactions] = useState<BridgeTransactionInProgress[]>([]);
-  const { address: keplrAddress, hasKeplr, connect: connectKeplr, signer } = useKeplr(chainInfo);
 
   useEffect(() => {
-    if (keplrAddress) setAddress(keplrAddress);
-  }, [keplrAddress, setAddress]);
+    if (!signer) return;
+    (async () => {
+      const accounts = await signer.getAccounts();
+      const [{ address: addr }] = accounts;
+      if (addr) setAddress(addr);
+    })();
+  }, [signer]);
 
   useEffect(() => {
     onomyClient.setSigner(signer);
@@ -87,10 +92,8 @@ function useOnomyState({
     onomyClient,
     amount,
     bridgeProgress,
-    hasKeplr,
     setAddress,
     addPendingBridgeTransaction,
-    connectKeplr,
   };
 }
 
@@ -101,8 +104,6 @@ const DEFAULT_STATE: OnomyState = {
   address: '',
   amount: '0',
   bridgeProgress: null,
-  hasKeplr: false,
-  connectKeplr: () => Promise.resolve(),
   setAddress: () => {},
   addPendingBridgeTransaction: () => {},
 };
@@ -110,21 +111,21 @@ const DEFAULT_STATE: OnomyState = {
 const OnomyContext = createContext(DEFAULT_STATE);
 
 export function useOnomy() {
-  const context = useContext(OnomyContext);
-  // context.connectKeplr();
-  return context;
+  return useContext(OnomyContext);
 }
 
 export function OnomyProvider({
-  chainInfo,
+  signer,
+  rpcUrl,
   children,
   ethBlockNumber = new BigNumber(0),
 }: {
-  chainInfo: ChainInfo;
+  signer: SignerType;
+  rpcUrl: string;
   children: JSX.Element | JSX.Element[];
   ethBlockNumber?: BigNumber;
 }) {
-  const state = useOnomyState({ chainInfo, ethBlockNumber });
+  const state = useOnomyState({ rpcUrl, ethBlockNumber, signer });
 
   return <OnomyContext.Provider value={state}>{children}</OnomyContext.Provider>;
 }
