@@ -9,7 +9,9 @@ const StyledContainer = styled.div`
   box-sizing: border-box;
 `;
 
-const FullBackgroundStyledContainer = styled.div`
+const FullBackgroundStyledContainer = styled.div<{
+  img?: string;
+}>`
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,10 +24,16 @@ const FullBackgroundStyledContainer = styled.div`
   background-size: cover;
 `;
 
-export function Container({ children }) {
+export function Container({ children }: { children: React.ReactNode }) {
   return <StyledContainer>{children}</StyledContainer>;
 }
 
-export function FullBackgroundContainer({ img, children }) {
+export function FullBackgroundContainer({
+  img,
+  children,
+}: {
+  img?: string;
+  children: React.ReactNode;
+}) {
   return <FullBackgroundStyledContainer img={img}>{children}</FullBackgroundStyledContainer>;
 }

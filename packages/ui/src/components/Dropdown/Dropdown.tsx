@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
-const DropdownWrapper = styled.div`
+const DropdownWrapper = styled.div<{
+  isOpened?: boolean;
+}>`
   background-color: ${props =>
     props.isOpened ? props.theme.colors.bgHighlightBorder : 'transparent'};
   border-radius: 6px;
@@ -11,7 +14,9 @@ const DropdownWrapper = styled.div`
   color: ${props => props.theme.colors.textPrimary};
 `;
 
-const DropdownText = styled.div`
+const DropdownText = styled.div<{
+  isOpened?: boolean;
+}>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -39,7 +44,9 @@ const DropdownText = styled.div`
   }
 `;
 
-const DropdownItem = styled.div`
+const DropdownItem = styled.div<{
+  isOpened?: boolean;
+}>`
   padding: ${props => (props.isOpened ? '6px 18px 10px' : 0)};
   height: ${props => (props.isOpened ? 'auto' : 0)};
 
@@ -62,7 +69,13 @@ const DropdownItem = styled.div`
   }
 `;
 
-export default function Dropdown({ selectItems, selectHandler }) {
+export default function Dropdown({
+  selectItems,
+  selectHandler,
+}: {
+  selectItems: { key: string; value: string }[];
+  selectHandler: (key: string) => void;
+}) {
   const [isOpened, setIsOpened] = useState(false);
   const [selectedText, setSelectedText] = useState(selectItems[0].value);
 
@@ -70,12 +83,14 @@ export default function Dropdown({ selectItems, selectHandler }) {
     setIsOpened(!isOpened);
   };
 
-  const selectActiveItem = (event, key) => {
+  const selectActiveItem = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, key: string) => {
     if (isOpened) {
-      const textValue = event.currentTarget.textContent;
-      setSelectedText(textValue);
-      setIsOpened(!isOpened);
-      selectHandler(key);
+      const textValue = (event.currentTarget as HTMLDivElement).textContent;
+      if (textValue) {
+        setSelectedText(textValue);
+        setIsOpened(!isOpened);
+        selectHandler(key);
+      }
     }
   };
 
@@ -83,7 +98,7 @@ export default function Dropdown({ selectItems, selectHandler }) {
     <DropdownWrapper isOpened={isOpened}>
       <DropdownText isOpened={isOpened} onClick={toggleDropdown}>
         <span>{selectedText}</span>
-        <FontAwesomeIcon icon={faChevronDown} />
+        <FontAwesomeIcon icon={faChevronDown as IconProp} />
       </DropdownText>
       {selectItems.map(item => (
         <DropdownItem

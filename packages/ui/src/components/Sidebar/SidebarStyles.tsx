@@ -262,7 +262,7 @@ export const TooltipDesc = styled.p`
     props.theme.colors.textSecondary};
 `;
 
-export const TrimmedApproved = withTrimmedWrapper(({ value }: { value: string | number }) => (
+export const TrimmedApproved = withTrimmedWrapper(({ value }: { value?: string | null }) => (
   <Approved>
     <span>{value} approved for sale</span>
   </Approved>

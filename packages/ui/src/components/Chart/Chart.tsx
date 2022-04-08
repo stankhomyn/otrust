@@ -24,7 +24,9 @@ const ChartHeader = styled.header`
   min-height: 35px;
 `;
 
-const ChartTypeBtn = styled.button`
+const ChartTypeBtn = styled.button<{
+  active?: boolean;
+}>`
   height: 50px;
   padding: 16px 24px;
 
@@ -87,7 +89,7 @@ const chartTypes = [
 
 export default function Chart() {
   const datafeed = useOnomyBondingTradeData();
-  const [chartType, setChartType] = useState('bondingCurve');
+  const [chartType, setChartType] = useState<keyof typeof axisLabels>('bondingCurve');
 
   const isBigScreen = useMediaQuery({ minWidth: responsive.smartphoneLarge });
 
@@ -99,11 +101,13 @@ export default function Chart() {
     }
   }, [isBigScreen]);
 
-  const selectChartTypeHandler = selectKeyValue => {
-    setChartType(selectKeyValue);
+  const selectChartTypeHandler = (selectKeyValue: string) => {
+    if (Object.keys(axisLabels).includes(selectKeyValue)) {
+      setChartType(selectKeyValue as keyof typeof axisLabels);
+    }
   };
 
-  const renderChart = type => {
+  const renderChart = (type: string) => {
     switch (type) {
       case 'tradingView':
         return datafeed ? <TVChartContainer datafeed={datafeed} /> : null;

@@ -6,3 +6,4 @@ export { useOnomyBondingTradeData } from './useOnomyBondingTradeData';
 export { useGasPrices } from './useGasPrices';
 
 export type { ContractTransaction } from 'ethers';
+export type { AbstractConnector } from '@web3-react/abstract-connector';

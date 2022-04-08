@@ -21,6 +21,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { borderRadius } from 'context/responsive/cssSizes';
+import { boolean } from 'fp-ts';
 
 const adjustedRadius = `${parseFloat(borderRadius.slice(0, -3)) / 2}rem`;
 
@@ -32,7 +33,9 @@ const MenuWrapper = styled.div`
   margin: 0.25rem;
 `;
 
-const MenuHeader = styled.header`
+const MenuHeader = styled.header<{
+  isClicked?: boolean;
+}>`
   font-size: 0.7rem;
   color: ${props =>
     props.isClicked ? props.theme.colors.textPrimary : props.theme.colors.textSecondary};
@@ -44,10 +47,16 @@ const MenuHeader = styled.header`
   padding: 0.7rem 0.9rem;
 `;
 
-export default function MenuButtons({ onButtonChange, menuButtons }) {
-  const handleChartClicked = e => {
+export default function MenuButtons({
+  onButtonChange,
+  menuButtons,
+}: {
+  onButtonChange: (menuButtons: { status: boolean; text: string }[], clickId: string) => {};
+  menuButtons: { status: boolean; text: string }[];
+}) {
+  const handleChartClicked: React.MouseEventHandler<HTMLDivElement> = e => {
     e.preventDefault();
-    const clickedId = e.target.id;
+    const clickedId = (e.target as HTMLDivElement).id;
     menuButtons.forEach((button, i) => {
       if (i === parseInt(clickedId, 10) - 1) {
         button.status = true;
@@ -61,7 +70,7 @@ export default function MenuButtons({ onButtonChange, menuButtons }) {
   return (
     <MenuWrapper onClick={handleChartClicked}>
       {menuButtons.map((button, i) => (
-        <MenuHeader key={button.text} id={i + 1} isClicked={button.status}>
+        <MenuHeader key={button.text} id={(i + 1).toString()} isClicked={button.status}>
           {button.text}
         </MenuHeader>
       ))}
