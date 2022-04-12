@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { isMobile } from 'react-device-detect';
-import { SUPPORTED_WALLETS } from '@onomy/react-eth';
+import { SUPPORTED_WALLETS, AbstractConnector } from '@onomy/react-eth';
 
 import { AccentButton } from 'components/UI/Button';
 import { responsive } from 'theme/constants';
@@ -154,10 +154,15 @@ const RightIcon = styled.img`
   width: 24px;
 `;
 
-export default function Landing({ connectWallet }) {
-  const onWalletClick = wallet => {
+export default function Landing({
+  connectWallet,
+}: {
+  connectWallet: (con: AbstractConnector) => void;
+}) {
+  const onWalletClick = (wallet: typeof wallets[number]) => {
     Object.values(SUPPORTED_WALLETS).forEach(sWallet => {
       if (sWallet.name === wallet.title) {
+        // @ts-ignore
         if (isMobile && wallet.title === 'Metamask' && window.ethereum === undefined) {
           const url = window.location.href;
           const arr = url.split('/');
@@ -168,6 +173,7 @@ export default function Landing({ connectWallet }) {
           window.localStorage.setItem('connectorId', sWallet.name);
           // This part of code never can be executed with SUPPORTED_WALLETS constants. Can it be deleted?
           if (sWallet.name === 'Injected') {
+            // @ts-ignore
             if (typeof web3 !== 'undefined') {
               connectWallet(sWallet.connector);
             } else {

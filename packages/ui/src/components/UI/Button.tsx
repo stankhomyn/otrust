@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{
+  width?: number;
+}>`
   height: 2.25rem;
   width: ${p => (p.width ? `${p.width}px` : 'auto')};
 
@@ -23,7 +25,9 @@ const StyledButton = styled.button`
   }
 `;
 
-export const AccentButton = styled.button`
+export const AccentButton = styled.button<{
+  width?: number;
+}>`
   height: 2.25rem;
   width: ${p => (p.width ? `${p.width}px` : 'auto')};
   padding: 0 1.25rem;
@@ -66,7 +70,14 @@ export const StyledInvisibleButton = styled.button`
   cursor: pointer;
 `;
 
-export function Button({ width, children, ...rest }) {
+export function Button({
+  width,
+  children,
+  ...rest
+}: {
+  width?: number;
+  children: React.ReactNode;
+}) {
   return (
     <StyledButton width={width} {...rest}>
       {children}
@@ -74,6 +85,6 @@ export function Button({ width, children, ...rest }) {
   );
 }
 
-export function InvisibleButton({ children, ...rest }) {
+export function InvisibleButton({ children, ...rest }: { children: React.ReactNode }) {
   return <StyledInvisibleButton {...rest}>{children}</StyledInvisibleButton>;
 }

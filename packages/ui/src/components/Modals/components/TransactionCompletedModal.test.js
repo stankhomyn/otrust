@@ -137,17 +137,17 @@ describe('Given the TransactionCompletedModal component', () => {
 
     describe('and user clicks on CloseIcon', () => {
       it('should call objDispatch from useUpdateExchange context with correct parameters', () => {
-        const objUpdate = new Map([
-          ['askAmount', BigNumber(0)],
-          ['bidAmount', BigNumber(0)],
-          ['approveAmount', BigNumber(0)],
-        ]);
+        const objUpdate = {
+          askAmount: BigNumber(0),
+          bidAmount: BigNumber(0),
+          approveAmount: BigNumber(0),
+        };
 
-        const strUpdate = new Map([
-          ['input', ''],
-          ['output', ''],
-          ['approve', ''],
-        ]);
+        const strUpdate = {
+          input: '',
+          output: '',
+          approve: '',
+        };
 
         const { queryByTestId } = render(
           UpdateExchangeContextWrapper(
@@ -181,17 +181,17 @@ describe('Given the TransactionCompletedModal component', () => {
 
     describe('and user clicks on PrimaryButton', () => {
       it('should call objDispatch from useUpdateExchange context with correct parameters', () => {
-        const objUpdate = new Map([
-          ['askAmount', BigNumber(0)],
-          ['bidAmount', BigNumber(0)],
-          ['approveAmount', BigNumber(0)],
-        ]);
+        const objUpdate = {
+          askAmount: BigNumber(0),
+          bidAmount: BigNumber(0),
+          approveAmount: BigNumber(0),
+        };
 
-        const strUpdate = new Map([
-          ['input', ''],
-          ['output', ''],
-          ['approve', ''],
-        ]);
+        const strUpdate = {
+          input: '',
+          output: '',
+          approve: '',
+        };
 
         const { queryByTestId } = render(
           UpdateExchangeContextWrapper(

@@ -19,7 +19,9 @@ const Tooltip = styled.div`
   z-index: 1;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{
+  hasValue?: boolean;
+}>`
   position: relative;
 
   &:hover ${Tooltip} {
@@ -27,7 +29,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const formatDecimals = value => {
+const formatDecimals = (value?: string | null) => {
   if (value === null || value === undefined || value === '') return '';
 
   let str = `${value}`;
@@ -37,15 +39,17 @@ const formatDecimals = value => {
     if (str.length - index > 6) {
       str = `${parseFloat(value).toFixed(6)}...`;
     } else if (index + 1 !== str.length) {
-      str = parseFloat(parseFloat(str).toFixed(6));
+      str = parseFloat(parseFloat(str).toFixed(6)).toString();
     }
   }
 
   return str;
 };
 
-export const withTrimmedWrapper = WrappedComponent => {
-  return function WithTrimmedWrapper(props) {
+export const withTrimmedWrapper = (
+  WrappedComponent: React.ComponentType<{ value?: string | null }>
+) => {
+  return function WithTrimmedWrapper(props: { value?: string | null }) {
     const { value } = props;
     const formattedValue = formatDecimals(value);
 

@@ -151,7 +151,9 @@ const HeaderInfoItemValue = styled.div`
   }
 `;
 
-const Details = styled.span`
+const Details = styled.span<{
+  type?: 'increase' | 'decrease';
+}>`
   color: ${props => {
     switch (props.type) {
       case 'increase':
