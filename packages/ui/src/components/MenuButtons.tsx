@@ -21,7 +21,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { borderRadius } from 'context/responsive/cssSizes';
-import { boolean } from 'fp-ts';
 
 const adjustedRadius = `${parseFloat(borderRadius.slice(0, -3)) / 2}rem`;
 
