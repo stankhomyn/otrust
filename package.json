@@ -34,7 +34,7 @@
     "start": "yarn dev && yarn workspace otrust start",
     "build-modules": "concurrently \"yarn wallet:build\" \"yarn wallet-web:build\"",
     "dev": "concurrently \"yarn wallet:dev\" \"yarn wallet-web:dev\"",
-    "build": "yarn workspace otrust build",
+    "build": "yarn build-modules && yarn workspace otrust build",
     "verified-build": "yarn workspace otrust verified-build",
     "test": "yarn build-modules && yarn workspace otrust test",
     "prepare": "husky install"
