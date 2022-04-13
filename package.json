@@ -21,7 +21,9 @@
     "react-keplr:tsc": "yarn workspace @onomy/react-keplr tsc",
 
     "wallet:dev": "yarn workspace @onomy/wallet dev",
+    "wallet:build": "yarn workspace @onomy/wallet build",
     "wallet-web:dev": "yarn workspace @onomy/wallet-backend-web dev",
+    "wallet-web:build": "yarn workspace @onomy/wallet-backend-web build",
 
     "ui:verify": "yarn workspace otrust verify-old",
     "ui:lint": "yarn workspace otrust lint",
@@ -30,10 +32,11 @@
     "tsc": "concurrently \"yarn client:tsc\" \"yarn react-client:tsc\" \"yarn react-eth:tsc\" \"yarn react-utils:tsc\" \"yarn react-keplr:tsc\" \"yarn ui:tsc\"",
     "verify": "concurrently \"yarn client:tsc\" \"yarn react-client:verify\" \"yarn react-eth:verify\" \"yarn react-utils:verify\" \"yarn react-keplr:verify\" \"yarn ui:verify\"",
     "start": "yarn dev && yarn workspace otrust start",
+    "build-modules": "concurrently \"yarn wallet:build\" \"yarn wallet-web:build\"",
     "dev": "concurrently \"yarn wallet:dev\" \"yarn wallet-web:dev\"",
     "build": "yarn workspace otrust build",
     "verified-build": "yarn workspace otrust verified-build",
-    "test": "yarn workspace otrust test",
+    "test": "yarn build-modules && yarn workspace otrust test",
     "prepare": "husky install"
   },
   "husky": {

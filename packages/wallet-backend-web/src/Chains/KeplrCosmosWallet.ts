@@ -12,10 +12,14 @@ export class KeplrCosmosWallet extends CosmosWallet {
   }
 
   async getAccounts() {
-    const keplr = this.getKeplr();
-    const signer = await keplr.getOfflineSigner(this.chainId);
-    const accounts = await signer.getAccounts();
-    return accounts;
+    try {
+      const keplr = this.getKeplr();
+      const signer = await keplr.getOfflineSigner(this.chainId);
+      const accounts = await signer.getAccounts();
+      return accounts;
+    } catch { // TODO specifically catch keplr missing
+      return [];
+    }
   }
 
   async signDirect(
@@ -43,9 +47,9 @@ export class KeplrCosmosWallet extends CosmosWallet {
 
   protected async connectActual() {
     if (this.keplrConnected) return;
-    const keplr = this.getKeplr();
 
     try {
+      const keplr = this.getKeplr();
       if (this.chainInfo) await keplr.experimentalSuggestChain(this.chainInfo);
       await keplr.enable(this.chainId);
       this.keplrConnected = true;

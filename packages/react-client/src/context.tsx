@@ -46,7 +46,7 @@ function useOnomyState({
     if (!signer) return;
     (async () => {
       const accounts = await signer.getAccounts();
-      const [{ address: addr }] = accounts;
+      const [{ address: addr = '' } = {}] = accounts;
       if (addr) setAddress(addr);
     })();
   }, [signer]);
