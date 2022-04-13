@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@cosmjs/launchpad": "^0.27.1",
+    "@cosmjs/proto-signing": "^0.27.1",
     "@cosmjs/stargate": "^0.27.1",
     "@cosmjs/tendermint-rpc": "^0.27.1",
     "bech32": "^2.0.0",

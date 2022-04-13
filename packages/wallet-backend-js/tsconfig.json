@@ -21,15 +21,13 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "./src",
+    "outDir": "./lib",
     "typeRoots": [
-      "../react-utils/src/types"
+      "./src/types"
     ]
   },
   "include": [
     "./src"
   ],
-  "exclude": [
-    "public",
-    "src/charting_library"
-  ]
+  "exclude": []
 }

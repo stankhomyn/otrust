@@ -63,6 +63,7 @@ export function useKeplrState(chainInfo: ChainInfo) {
     address,
     hasKeplr,
     connect,
+    chainId,
   };
 }
 
@@ -71,6 +72,7 @@ export type KeplrState = ReturnType<typeof useKeplrState>;
 const DEFAULT_STATE: KeplrState = {
   keplr: undefined,
   signer: null,
+  chainId: '',
   address: '',
   hasKeplr: false,
   connect: () => Promise.resolve(),

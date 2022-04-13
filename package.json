@@ -19,13 +19,18 @@
     "react-keplr:verify": "yarn workspace @onomy/react-keplr verify",
     "react-keplr:lint": "yarn workspace @onomy/react-keplr lint",
     "react-keplr:tsc": "yarn workspace @onomy/react-keplr tsc",
+
+    "wallet:dev": "yarn workspace @onomy/wallet dev",
+    "wallet-web:dev": "yarn workspace @onomy/wallet-backend-web dev",
+
     "ui:verify": "yarn workspace otrust verify-old",
     "ui:lint": "yarn workspace otrust lint",
     "ui:tsc": "yarn workspace otrust tsc",
     "lint": "concurrently \"yarn client:lint\" \"yarn react-client:lint\" \"yarn react-eth:lint\" \"yarn react-utils:lint\" \"yarn react-keplr:lint\" \"yarn ui:lint\"",
     "tsc": "concurrently \"yarn client:tsc\" \"yarn react-client:tsc\" \"yarn react-eth:tsc\" \"yarn react-utils:tsc\" \"yarn react-keplr:tsc\" \"yarn ui:tsc\"",
     "verify": "concurrently \"yarn client:tsc\" \"yarn react-client:verify\" \"yarn react-eth:verify\" \"yarn react-utils:verify\" \"yarn react-keplr:verify\" \"yarn ui:verify\"",
-    "start": "yarn workspace otrust start",
+    "start": "yarn dev && yarn workspace otrust start",
+    "dev": "concurrently \"yarn wallet:dev\" \"yarn wallet-web:dev\"",
     "build": "yarn workspace otrust build",
     "verified-build": "yarn workspace otrust verified-build",
     "test": "yarn workspace otrust test",
@@ -38,15 +43,15 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*",
-      "submodules/*"
+      "packages/*"
     ]
   },
   "dependencies": {
     "lerna": "^4.0.0"
   },
   "devDependencies": {
-    "concurrently": "^6.2.1"
+    "concurrently": "^6.2.1",
+    "siroc": "^0.16.0"
   },
   "resolutions": {
     "**/ganache-core/lodash": "^4.17.21",

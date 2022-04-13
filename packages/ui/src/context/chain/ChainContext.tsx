@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { OnomyEthProvider, useOnomyEth } from '@onomy/react-eth';
-import { OnomyProvider } from '@onomy/react-client';
-import { KeplrProvider, useKeplr } from '@onomy/react-keplr';
+import { OnomyProvider, useWallet, WalletProvider } from '@onomy/react-client';
+import { WebWalletBackend } from '@onomy/wallet-backend-web';
 
 import {
   KEPLR_CONFIG,
@@ -13,16 +13,29 @@ import {
 
 function OnomyChildProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
   const { blockNumber } = useOnomyEth();
-  const { signer } = useKeplr();
+  const { onomy } = useWallet();
+  const walletSigner = useMemo(() => onomy.getSigner(), [onomy]);
 
   return (
-    <OnomyProvider signer={signer} rpcUrl={KEPLR_CONFIG.rpc} ethBlockNumber={blockNumber}>
+    <OnomyProvider signer={walletSigner} rpcUrl={KEPLR_CONFIG.rpc} ethBlockNumber={blockNumber}>
       {children}
     </OnomyProvider>
   );
 }
 
 export function AppProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
+  /*
+  const [backend] = useAsyncValue(
+    useCallback(async () => {
+      const be = new WebWalletBackend();
+      return be;
+    }, []),
+    null
+  );
+  if (!backend) return null;
+  */
+  const backend = useMemo(() => new WebWalletBackend(), []);
+
   return (
     <OnomyEthProvider
       graphQlEndpoint={REACT_APP_GRAPHQL_ENDPOINT}
@@ -30,9 +43,9 @@ export function AppProvider({ children }: { children: JSX.Element | JSX.Element[
       bondContractAddress={REACT_APP_BONDING_NOM_CONTRACT_ADDRESS}
       gravityContractAddress={REACT_APP_GRAVITY_CONTRACT_ADDRESS}
     >
-      <KeplrProvider chainInfo={KEPLR_CONFIG}>
+      <WalletProvider backend={backend} onomyChainInfo={KEPLR_CONFIG}>
         <OnomyChildProvider>{children}</OnomyChildProvider>
-      </KeplrProvider>
+      </WalletProvider>
     </OnomyEthProvider>
   );
 }

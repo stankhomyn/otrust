@@ -5,6 +5,9 @@ const reactEthPath = path.join(__dirname, "../react-eth");
 const reactUtilsPath = path.join(__dirname, "../react-utils");
 const reactKeplrPath = path.join(__dirname, "../react-keplr");
 const clientPath = path.join(__dirname, "../client");
+const walletPath = path.join(__dirname, "../wallet");
+const jsWalletPath = path.join(__dirname, "../wallet-backend-js");
+const webWalletPath = path.join(__dirname, "../wallet-backend-web");
 
 module.exports = {
   webpack: {
@@ -19,7 +22,7 @@ module.exports = {
         const include = Array.isArray(match.loader.include)
           ? match.loader.include
           : [match.loader.include];
-        match.loader.include = include.concat([reactClientPath, reactEthPath, reactUtilsPath, reactKeplrPath, clientPath]);
+        match.loader.include = include.concat([reactClientPath, reactEthPath, reactUtilsPath, reactKeplrPath, clientPath, walletPath, jsWalletPath, webWalletPath]);
       }
       return webpackConfig;
     }
