@@ -2,10 +2,12 @@
   "name": "@onomy/react-keplr",
   "version": "0.0.1",
   "description": "React utils for interacting with keplr",
-  "main": "./src/index.ts",
   "license": "MIT",
+  "main": "src/index.ts",
   "scripts": {
+    "build": "echo 'no react-keplr build for now'",
     "dep-audit": "yarn improved-yarn-audit --fail-on-missing-exclusions --ignore-dev-deps",
+    "dev": "echo 'no react-keplr build for now'",
     "lint": "eslint src --ext js,jsx,ts,tsx --quiet --fix",
     "tsc": "tsc",
     "verify": "yarn tsc && yarn lint"
@@ -38,7 +40,9 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "paths": ["src"]
+        "paths": [
+          "src"
+        ]
       }
     }
   }

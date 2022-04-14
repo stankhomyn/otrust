@@ -2,10 +2,17 @@
   "name": "@onomy/client",
   "version": "0.0.1",
   "description": "Client for Onomy Blockchain",
-  "main": "./src/index.ts",
   "license": "MIT",
+  "main": "build/index.js",
+  "module": "build/index.es.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
   "scripts": {
+    "build": "siroc build",
     "dep-audit": "yarn improved-yarn-audit --fail-on-missing-exclusions --ignore-dev-deps",
+    "dev": "siroc dev",
     "lint": "eslint src --ext js,jsx,ts,tsx --quiet --fix",
     "tsc": "tsc",
     "verify": "yarn tsc && yarn lint"
@@ -33,12 +40,13 @@
     "eslint-plugin-prettier": "^3.4.1",
     "prettier": "^2.4.0"
   },
-  "peerDependencies": {
-  },
+  "peerDependencies": {},
   "settings": {
     "import/resolver": {
       "node": {
-        "paths": ["src"]
+        "paths": [
+          "src"
+        ]
       }
     }
   }

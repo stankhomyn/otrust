@@ -2,17 +2,24 @@
   "name": "@onomy/react-client",
   "version": "0.0.1",
   "description": "Onomy Client react utils",
-  "main": "./src/index.ts",
   "license": "MIT",
+  "main": "build/index.js",
+  "module": "build/index.es.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
   "scripts": {
+    "build": "siroc build",
     "dep-audit": "yarn improved-yarn-audit --fail-on-missing-exclusions --ignore-dev-deps",
+    "dev": "siroc dev",
     "lint": "eslint src --ext js,jsx,ts,tsx --quiet --fix",
     "tsc": "tsc",
     "verify": "yarn tsc && yarn lint"
   },
   "dependencies": {
-    "typescript": "^4.4.3",
-    "bignumber.js": "^9.0.1"
+    "bignumber.js": "^9.0.1",
+    "typescript": "^4.4.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.31.1",
@@ -41,7 +48,9 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "paths": ["src"]
+        "paths": [
+          "src"
+        ]
       }
     }
   }

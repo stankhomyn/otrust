@@ -80,7 +80,7 @@ const DEFAULT_STATE: KeplrState = {
 
 export const KeplrContext = createContext(DEFAULT_STATE);
 
-export function useKeplr() {
+export function useKeplr(): KeplrState {
   return useContext(KeplrContext);
 }
 
