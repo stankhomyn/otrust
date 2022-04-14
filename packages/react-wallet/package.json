@@ -1,22 +1,27 @@
 {
-  "name": "@onomy/react-keplr",
+  "name": "@onomy/react-wallet",
   "version": "0.0.1",
-  "description": "React utils for interacting with keplr",
+  "description": "Onomy Wallet react utils",
   "license": "MIT",
-  "main": "src/index.ts",
+  "main": "build/index.js",
+  "module": "build/index.es.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
   "scripts": {
-    "build": "echo 'no react-keplr build for now'",
+    "build": "siroc build",
     "dep-audit": "yarn improved-yarn-audit --fail-on-missing-exclusions --ignore-dev-deps",
-    "dev": "echo 'no react-keplr build for now'",
+    "dev": "siroc dev",
     "lint": "eslint src --ext js,jsx,ts,tsx --quiet --fix",
     "tsc": "tsc",
     "verify": "yarn tsc && yarn lint"
   },
   "dependencies": {
+    "bignumber.js": "^9.0.1",
     "typescript": "^4.4.3"
   },
   "devDependencies": {
-    "@keplr-wallet/types": "^0.9.4-rc.0",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "eslint": "^7.32.0",
@@ -34,6 +39,8 @@
     "prettier": "^2.4.0"
   },
   "peerDependencies": {
+    "@onomy/wallet": "^0.0.1",
+    "@onomy/react-utils": "^0.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },

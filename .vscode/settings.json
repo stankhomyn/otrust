@@ -10,7 +10,11 @@
     { "directory": "packages/client", "changeProcessCWD": true },
     { "directory": "packages/react-client", "changeProcessCWD": true },
     { "directory": "packages/react-eth", "changeProcessCWD": true },
-    { "directory": "packages/react-keplr", "changeProcessCWD": true },
-    { "directory": "packages/react-utils", "changeProcessCWD": true }
+    { "directory": "packages/react-wallet", "changeProcessCWD": true },
+    { "directory": "packages/react-utils", "changeProcessCWD": true },
+    { "directory": "packages/wallet", "changeProcessCWD": true },
+    { "directory": "packages/wallet-backend-js", "changeProcessCWD": true },
+    { "directory": "packages/wallet-backend-jsi-rn", "changeProcessCWD": true },
+    { "directory": "packages/wallet-backend-web", "changeProcessCWD": true }
   ]
 }

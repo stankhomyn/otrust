@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { OnomyEthProvider, useOnomyEth } from '@onomy/react-eth';
-import { OnomyProvider, useWallet, WalletProvider } from '@onomy/react-client';
+import { OnomyProvider } from '@onomy/react-client';
 import { WebWalletBackend } from '@onomy/wallet-backend-web';
+import { useWallet, WalletProvider } from '@onomy/react-wallet';
 
 import {
   KEPLR_CONFIG,

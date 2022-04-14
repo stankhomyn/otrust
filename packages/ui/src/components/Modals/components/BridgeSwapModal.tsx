@@ -5,7 +5,8 @@ import { useMediaQuery } from 'react-responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useAnomSupply, useOnomy, useWallet } from '@onomy/react-client';
+import { useAnomSupply, useOnomy } from '@onomy/react-client';
+import { useWallet } from '@onomy/react-wallet';
 import { useOnomyEth } from '@onomy/react-eth';
 
 import { Dimmer } from 'components/UI/Dimmer';
