@@ -1,11 +1,16 @@
 /* eslint-disable class-methods-use-this */
 import { CosmosWallet, WalletErrors } from "@onomy/wallet";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
-import { DirectSignResponse } from "@cosmjs/proto-signing";
+import { DirectSignResponse, OfflineDirectSigner } from "@cosmjs/proto-signing";
 import { SignDoc } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 export class KeplrCosmosWallet extends CosmosWallet {
   private keplrConnected = false;
+
+  public isAvailable(): boolean {
+    const keplrWindow = window as KeplrWindow;
+    return !!keplrWindow.keplr;
+  }
 
   public isConnected(): boolean {
     return this.keplrConnected;
@@ -13,6 +18,7 @@ export class KeplrCosmosWallet extends CosmosWallet {
 
   async getAccounts() {
     try {
+      if (!this.isConnected()) return [];
       const keplr = this.getKeplr();
       const signer = await keplr.getOfflineSigner(this.chainId);
       const accounts = await signer.getAccounts();

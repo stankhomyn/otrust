@@ -33,7 +33,6 @@
     "@onomy/client": "^0.0.1",
     "@onomy/react-client": "^0.0.1",
     "@onomy/react-eth": "^0.0.1",
-    "@onomy/react-keplr": "^0.0.1",
     "@onomy/react-utils": "^0.0.1",
     "@onomy/wallet": "^0.0.1",
     "@onomy/wallet-backend-js": "^0.0.1",

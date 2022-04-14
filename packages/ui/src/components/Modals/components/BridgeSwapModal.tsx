@@ -5,9 +5,8 @@ import { useMediaQuery } from 'react-responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useAnomSupply, useOnomy } from '@onomy/react-client';
+import { useAnomSupply, useOnomy, useWallet } from '@onomy/react-client';
 import { useOnomyEth } from '@onomy/react-eth';
-import { useKeplr } from '@onomy/react-keplr';
 
 import { Dimmer } from 'components/UI/Dimmer';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
@@ -213,7 +212,7 @@ export default function BridgeSwapModal({ ...props }: BridgeSwapModalProps) {
   const { web3Context } = useOnomyEth();
   const { active, account } = web3Context;
   const { values, flags, handlers } = { ...props };
-  const { hasKeplr } = useKeplr();
+  const wallet = useWallet();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const { bridgeProgress } = useOnomy();
 
@@ -274,7 +273,7 @@ export default function BridgeSwapModal({ ...props }: BridgeSwapModalProps) {
                       />
                     </Modal.CosmosInputSection>
                   </Modal.ConnectionItem>
-                  {!hasKeplr && (
+                  {!wallet?.onomy.isAvailable() && (
                     <KeplrLink href="https://www.keplr.app/" target="_new">
                       Get Keplr Cosmos Wallet
                     </KeplrLink>

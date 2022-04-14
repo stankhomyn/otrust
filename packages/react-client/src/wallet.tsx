@@ -1,10 +1,11 @@
-import React, { createContext, useContext, useMemo } from 'react';
+import React, { createContext, useCallback, useContext, useMemo } from 'react';
 import { Wallet, WalletBackend } from '@onomy/wallet';
+import { useAsyncPoll } from '@onomy/react-utils';
 
 export type ChainInfo = Parameters<InstanceType<typeof Wallet>['cosmos']>[1];
 
 function useWalletState(backend: WalletBackend, onomyChainInfo: ChainInfo) {
-  return useMemo(() => {
+  const wallet = useMemo(() => {
     const core = new Wallet(backend);
 
     // TODO: This logic probably shouldn't stay here, keplr specific?
@@ -16,6 +17,18 @@ function useWalletState(backend: WalletBackend, onomyChainInfo: ChainInfo) {
     return { core, onomy };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [backend, JSON.stringify(onomyChainInfo)]);
+
+  // TODO: this is kind of dirty could be improved
+  const [onomySigner] = useAsyncPoll(
+    useCallback(async () => wallet.onomy.getSigner(), [wallet]),
+    null,
+    1000
+  );
+
+  return {
+    ...wallet,
+    onomySigner,
+  };
 }
 
 export type WalletState = ReturnType<typeof useWalletState>;

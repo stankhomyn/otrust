@@ -24,7 +24,7 @@ function useOnomyState({
   rpcUrl,
   ethBlockNumber = new BigNumber(0),
 }: {
-  signer: SignerType;
+  signer: SignerType | null;
   rpcUrl: string;
   ethBlockNumber?: BigNumber;
 }) {
@@ -120,7 +120,7 @@ export function OnomyProvider({
   children,
   ethBlockNumber = new BigNumber(0),
 }: {
-  signer: SignerType;
+  signer: SignerType | null;
   rpcUrl: string;
   children: JSX.Element | JSX.Element[];
   ethBlockNumber?: BigNumber;

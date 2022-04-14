@@ -13,11 +13,10 @@ import {
 
 function OnomyChildProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
   const { blockNumber } = useOnomyEth();
-  const { onomy } = useWallet();
-  const walletSigner = useMemo(() => onomy.getSigner(), [onomy]);
+  const { onomySigner } = useWallet();
 
   return (
-    <OnomyProvider signer={walletSigner} rpcUrl={KEPLR_CONFIG.rpc} ethBlockNumber={blockNumber}>
+    <OnomyProvider signer={onomySigner} rpcUrl={KEPLR_CONFIG.rpc} ethBlockNumber={blockNumber}>
       {children}
     </OnomyProvider>
   );

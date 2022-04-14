@@ -8,24 +8,18 @@ import {
 } from "@cosmjs/proto-signing";
 import { ChainInfo } from "@keplr-wallet/types";
 import { WalletErrors } from "../WalletErrors";
+import { AbstractWallet } from "./AbstractWallet";
 
 type SignDoc = ReturnType<typeof makeSignDoc>;
 
-export abstract class CosmosWallet {
+export abstract class CosmosWallet extends AbstractWallet {
   protected chainId: string;
   protected chainInfo?: ChainInfo;
 
   constructor(chainId: string, chainInfo?: ChainInfo) {
+    super();
     this.chainId = chainId;
     this.chainInfo = chainInfo;
-  }
-
-  public async connect() {
-    // optional
-  }
-
-  public isConnected() {
-    return false;
   }
 
   public getAccounts(): Promise<readonly AccountData[]> {
@@ -59,7 +53,8 @@ export abstract class CosmosWallet {
     };
   }
 
-  getSigner(): OfflineDirectSigner {
+  getSigner(): OfflineDirectSigner | null {
+    if (!this.isConnected()) return null;
     return this;
   }
 
