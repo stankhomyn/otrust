@@ -1,19 +1,12 @@
 import React, { useState, useEffect, createContext, useContext, useMemo, useCallback } from 'react';
-import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
+import { useWeb3React } from '@web3-react/core';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { BigNumber } from 'bignumber.js';
-import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
 import { Signer } from 'ethers';
 import { useAsyncValue } from '@onomy/react-utils';
 
 import { BondingCont, GravityCont, NOMCont } from './contracts';
 import { NomBondingCurve } from './NomBondingCurve';
-
-function getWeb3Library(provider: ExternalProvider) {
-  const library = new Web3Provider(provider);
-  library.pollingInterval = 12000;
-  return library;
-}
 
 const DEFAULT_STATE = {
   blockNumber: new BigNumber(0),
@@ -183,9 +176,7 @@ export function OnomyEthProvider({
 
   return (
     <ApolloProvider client={client}>
-      <Web3ReactProvider getLibrary={getWeb3Library}>
-        <OnomyEthProviderInner {...props}>{children}</OnomyEthProviderInner>
-      </Web3ReactProvider>
+      <OnomyEthProviderInner {...props}>{children}</OnomyEthProviderInner>
     </ApolloProvider>
   );
 }
