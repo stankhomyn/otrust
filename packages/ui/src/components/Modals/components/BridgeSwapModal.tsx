@@ -210,8 +210,7 @@ export interface BridgeSwapModalProps {
 }
 
 export default function BridgeSwapModal({ ...props }: BridgeSwapModalProps) {
-  const { web3Context } = useOnomyEth();
-  const { active, account } = web3Context;
+  const { active, address: account } = useOnomyEth();
   const { values, flags, handlers } = { ...props };
   const wallet = useWallet();
   const [showInfoModal, setShowInfoModal] = useState(false);

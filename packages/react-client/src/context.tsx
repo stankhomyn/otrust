@@ -10,6 +10,7 @@ import React, {
 import { BigNumber } from 'bignumber.js';
 import { useAsyncPoll } from '@onomy/react-utils';
 import { OnomyClient, OnomyConstants } from '@onomy/client';
+import { useWallet } from '@onomy/react-wallet';
 
 type BridgeTransactionInProgress = {
   startBalance: BigNumber;
@@ -17,20 +18,16 @@ type BridgeTransactionInProgress = {
   expectedIncrease: BigNumber;
 };
 
-type SignerType = Parameters<InstanceType<typeof OnomyClient>['setSigner']>[0];
-
 function useOnomyState({
-  signer,
   rpcUrl,
   ethBlockNumber = new BigNumber(0),
 }: {
-  signer: SignerType | null;
   rpcUrl: string;
   ethBlockNumber?: BigNumber;
 }) {
   const blockNumRef = useRef(ethBlockNumber);
   const onomyClient = useMemo(() => new OnomyClient(rpcUrl), [rpcUrl]);
-
+  const { onomySigner } = useWallet();
   blockNumRef.current = ethBlockNumber;
   const [address, setAddress] = useState('');
   const [amount, , amountRef] = useAsyncPoll(
@@ -43,17 +40,17 @@ function useOnomyState({
   const [bridgeTransactions, setBridgeTransactions] = useState<BridgeTransactionInProgress[]>([]);
 
   useEffect(() => {
-    if (!signer) return;
+    if (!onomySigner) return;
     (async () => {
-      const accounts = await signer.getAccounts();
+      const accounts = await onomySigner.getAccounts();
       const [{ address: addr = '' } = {}] = accounts;
       if (addr) setAddress(addr);
     })();
-  }, [signer]);
+  }, [onomySigner]);
 
   useEffect(() => {
-    onomyClient.setSigner(signer);
-  }, [signer, onomyClient]);
+    onomyClient.setSigner(onomySigner);
+  }, [onomySigner, onomyClient]);
 
   const addPendingBridgeTransaction = useCallback((expectedIncrease: BigNumber) => {
     const transaction = {
@@ -115,17 +112,15 @@ export function useOnomy() {
 }
 
 export function OnomyProvider({
-  signer,
   rpcUrl,
   children,
   ethBlockNumber = new BigNumber(0),
 }: {
-  signer: SignerType | null;
   rpcUrl: string;
   children: JSX.Element | JSX.Element[];
   ethBlockNumber?: BigNumber;
 }) {
-  const state = useOnomyState({ rpcUrl, ethBlockNumber, signer });
+  const state = useOnomyState({ rpcUrl, ethBlockNumber });
 
   return <OnomyContext.Provider value={state}>{children}</OnomyContext.Provider>;
 }

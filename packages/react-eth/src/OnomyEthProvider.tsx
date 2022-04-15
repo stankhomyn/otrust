@@ -1,9 +1,10 @@
-import React, { useState, useEffect, createContext, useContext, useMemo } from 'react';
+import React, { useState, useEffect, createContext, useContext, useMemo, useCallback } from 'react';
 import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
-import { Web3ReactContextInterface } from '@web3-react/core/dist/types';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { BigNumber } from 'bignumber.js';
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
+import { Signer } from 'ethers';
+import { useAsyncValue } from '@onomy/react-utils';
 
 import { BondingCont, GravityCont, NOMCont } from './contracts';
 import { NomBondingCurve } from './NomBondingCurve';
@@ -14,17 +15,7 @@ function getWeb3Library(provider: ExternalProvider) {
   return library;
 }
 
-const WEB3_CONTEXT_DEFAULT = {
-  connector: undefined,
-  library: undefined,
-  chainId: undefined,
-  account: null,
-  active: false,
-  error: undefined,
-} as Web3ReactContextInterface<any>;
-
 const DEFAULT_STATE = {
-  web3Context: WEB3_CONTEXT_DEFAULT,
   blockNumber: new BigNumber(0),
   currentETHPrice: new BigNumber(0),
   currentNOMPrice: new BigNumber(0),
@@ -49,22 +40,32 @@ function useOnomyEthState({
   gravityContractAddress: string;
 }) {
   const web3Context = useWeb3React();
-  const { library } = web3Context;
+  const { library, active } = web3Context;
   const [state, setState] = useState(DEFAULT_STATE);
+  const signer = useMemo(() => {
+    const s: Signer | undefined = library?.getSigner() ?? undefined;
+    return s;
+  }, [library]);
+  const [address] = useAsyncValue(
+    useCallback(async () => signer?.getAddress() ?? '', [signer]),
+    ''
+  );
+
+  const logout: () => void = library?.deactivate;
 
   const bondContract = useMemo(
-    () => BondingCont(library, bondContractAddress),
-    [bondContractAddress, library]
+    () => BondingCont(bondContractAddress, signer),
+    [bondContractAddress, signer]
   );
 
   const NOMContract = useMemo(
-    () => NOMCont(library, nomContractAddress),
-    [library, nomContractAddress]
+    () => NOMCont(nomContractAddress, signer),
+    [nomContractAddress, signer]
   );
 
   const gravityContract = useMemo(
-    () => GravityCont(library, gravityContractAddress),
-    [gravityContractAddress, library]
+    () => GravityCont(gravityContractAddress, signer),
+    [gravityContractAddress, signer]
   );
 
   const bondingCurve = useMemo(
@@ -75,7 +76,6 @@ function useOnomyEthState({
   useEffect(() => {
     // listen for changes on an Ethereum address
     async function onBlock(bNumber: number) {
-      const { account } = web3Context;
       const blockNumber = new BigNumber(bNumber);
       if (state.blockNumber === blockNumber) return;
       try {
@@ -84,20 +84,19 @@ function useOnomyEthState({
             // Current ETH Price & Current NOM Price
             bondContract.buyQuoteETH((10 ** 18).toString()).then(convertBigNum),
             // NOM Allowance
-            NOMContract.allowance(account, bondContractAddress).then(convertBigNum),
+            NOMContract.allowance(address, bondContractAddress).then(convertBigNum),
             // Strong Balance
-            library.getBalance(account).then(convertBigNum),
+            library.getBalance(address).then(convertBigNum),
             // Supply NOM
             bondContract.getSupplyNOM().then(convertBigNum),
             // Weak Balance (May need to move these to Exchange)
-            NOMContract.balanceOf(account).then(convertBigNum),
+            NOMContract.balanceOf(address).then(convertBigNum),
             // UniSwap Pricing
             // UniSwapCont.getReserves(),
           ]);
         const currentNOMPrice = new BigNumber(1).div(currentETHPrice);
 
         setState({
-          web3Context,
           blockNumber,
           currentETHPrice,
           currentNOMPrice,
@@ -117,14 +116,17 @@ function useOnomyEthState({
     return () => {
       if (library) library.removeListener('block', onBlock);
     };
-  }, [NOMContract, web3Context, bondContract, bondContractAddress, library, state.blockNumber]);
+  }, [NOMContract, address, bondContract, bondContractAddress, library, state.blockNumber]);
 
   return {
     ...state,
+    active,
+    address,
     bondingCurve,
     bondContract,
     NOMContract,
     gravityContract,
+    logout,
   };
 }
 

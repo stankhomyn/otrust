@@ -4,7 +4,6 @@ import { rawSecp256k1PubkeyToRawAddress } from "@cosmjs/amino";
 import { Secp256k1, sha256 } from "@cosmjs/crypto";
 import { Bech32 } from "@cosmjs/encoding";
 import { AccountData } from "@cosmjs/proto-signing";
-import { WalletCore } from '@onomy/jsi-rn-wallet-core';
 
 export class JsiRnCosmosWallet extends CosmosWallet {
   private _pubkey?: Uint8Array;

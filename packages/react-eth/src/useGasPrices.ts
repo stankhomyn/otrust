@@ -1,12 +1,10 @@
 import BigNumber from 'bignumber.js';
 import { useCallback } from 'react';
 import { useAsyncValue } from '@onomy/react-utils';
-
-import { useOnomyEth } from './OnomyEthProvider';
+import { useWeb3React } from '@web3-react/core';
 
 export function useGasPrices() {
-  const { web3Context } = useOnomyEth();
-  const { library } = web3Context;
+  const { library } = useWeb3React();
   const query = useCallback(async () => {
     const base = await library.getGasPrice();
     const safe = new BigNumber(base.toString());

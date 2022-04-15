@@ -48,13 +48,12 @@ const DarkWrapper = styled.div`
 `;
 
 export default function Sidebar() {
-  const { strongBalance, weakBalance, NOMallowance, web3Context } = useOnomyEth();
-  const { account, deactivate } = web3Context || {};
+  const { strongBalance, weakBalance, NOMallowance, logout, address: account } = useOnomyEth();
   const { strong, weak } = useExchange();
 
   const handleLogout = () => {
     window.localStorage.removeItem('connectorId');
-    deactivate();
+    if (logout) logout();
   };
 
   return (

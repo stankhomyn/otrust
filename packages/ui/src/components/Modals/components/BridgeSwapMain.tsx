@@ -51,8 +51,7 @@ export default function BridgeSwapMain() {
 
   const standardBrigdeBreakpoint = useMediaQuery({ minWidth: responsive.smartphoneLarge });
 
-  const { weakBalance, bondingCurve, web3Context } = useOnomyEth();
-  const { account } = web3Context;
+  const { weakBalance, bondingCurve, address: account } = useOnomyEth();
 
   useEffect(() => {
     setFormattedWeakBalance(weakBalance.shiftedBy(-18));

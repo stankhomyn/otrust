@@ -1,7 +1,6 @@
 import { CosmosWallet, WalletBackend } from "@onomy/wallet";
 import { ChainInfo } from "@keplr-wallet/types";
 import { JsiRnCosmosWallet } from "./Chains/JsiRnCosmosWallet";
-import { WalletCore } from '@onomy/jsi-rn-wallet-core';
 
 export class JsiRnWalletBackend extends WalletBackend {
   async generate(password?: string) {
