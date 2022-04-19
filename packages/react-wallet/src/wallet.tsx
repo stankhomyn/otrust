@@ -14,13 +14,26 @@ function useWalletState(backend: WalletBackend, onomyChainInfo: ChainInfo) {
     const chainId = chainIdParts.join('-');
 
     const onomy = core.cosmos(chainId, onomyChainInfo);
-    return { core, onomy };
+    const ethereum = core.ethereum();
+    return { core, onomy, ethereum };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [backend, JSON.stringify(onomyChainInfo)]);
 
-  // TODO: this is kind of dirty could be improved
+  // TODO: this useAsyncPoll approach is kind of dirty could be improved
   const [onomySigner] = useAsyncPoll(
     useCallback(async () => wallet.onomy.getSigner(), [wallet]),
+    null,
+    1000
+  );
+
+  const [ethereumSigner] = useAsyncPoll(
+    useCallback(async () => wallet.ethereum.getSigner().catch(() => null), [wallet]),
+    null,
+    1000
+  );
+
+  const [ethereumProvider] = useAsyncPoll(
+    useCallback(async () => wallet.ethereum.getProvider().catch(() => null), [wallet]),
     null,
     1000
   );
@@ -28,6 +41,8 @@ function useWalletState(backend: WalletBackend, onomyChainInfo: ChainInfo) {
   return {
     ...wallet,
     onomySigner,
+    ethereumSigner,
+    ethereumProvider,
   };
 }
 

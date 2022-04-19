@@ -1,8 +1,6 @@
-import React, { useMemo } from 'react';
-import { OnomyEthProvider, useOnomyEth, EthWeb3Provider } from '@onomy/react-eth';
+import React from 'react';
+import { OnomyEthProvider, useOnomyEth } from '@onomy/react-eth';
 import { OnomyProvider } from '@onomy/react-client';
-import { WebWalletBackend } from '@onomy/wallet-backend-web';
-import { WalletProvider } from '@onomy/react-wallet';
 
 import {
   KEPLR_CONFIG,
@@ -11,6 +9,7 @@ import {
   REACT_APP_GRAVITY_CONTRACT_ADDRESS,
   REACT_APP_WNOM_CONTRACT_ADDRESS,
 } from 'constants/env';
+import { Web3WalletProvider } from './Web3WalletProvider';
 
 function OnomyChildProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
   const { blockNumber } = useOnomyEth();
@@ -23,21 +22,17 @@ function OnomyChildProvider({ children }: { children: JSX.Element | JSX.Element[
 }
 
 export function AppProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
-  const backend = useMemo(() => new WebWalletBackend(), []);
-
   return (
-    <EthWeb3Provider>
-      <WalletProvider backend={backend} onomyChainInfo={KEPLR_CONFIG}>
-        <OnomyEthProvider
-          graphQlEndpoint={REACT_APP_GRAPHQL_ENDPOINT}
-          nomContractAddress={REACT_APP_WNOM_CONTRACT_ADDRESS}
-          bondContractAddress={REACT_APP_BONDING_NOM_CONTRACT_ADDRESS}
-          gravityContractAddress={REACT_APP_GRAVITY_CONTRACT_ADDRESS}
-        >
-          <OnomyChildProvider>{children}</OnomyChildProvider>
-        </OnomyEthProvider>
-      </WalletProvider>
-    </EthWeb3Provider>
+    <Web3WalletProvider>
+      <OnomyEthProvider
+        graphQlEndpoint={REACT_APP_GRAPHQL_ENDPOINT}
+        nomContractAddress={REACT_APP_WNOM_CONTRACT_ADDRESS}
+        bondContractAddress={REACT_APP_BONDING_NOM_CONTRACT_ADDRESS}
+        gravityContractAddress={REACT_APP_GRAVITY_CONTRACT_ADDRESS}
+      >
+        <OnomyChildProvider>{children}</OnomyChildProvider>
+      </OnomyEthProvider>
+    </Web3WalletProvider>
   );
 }
 

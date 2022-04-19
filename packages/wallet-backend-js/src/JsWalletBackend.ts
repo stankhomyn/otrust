@@ -1,19 +1,14 @@
-import { CosmosWallet, WalletBackend } from "@onomy/wallet";
+import { CosmosWallet, EthereumWallet, WalletBackend } from "@onomy/wallet";
 import { ChainInfo } from "@keplr-wallet/types";
 import {
   Bip39,
   EnglishMnemonic,
   HdPath,
-  pathToString,
-  Random,
-  Secp256k1,
-  Secp256k1Keypair,
-  sha256,
   Slip10,
   Slip10Curve,
-  stringToPath,
 } from "@cosmjs/crypto";
 import { JsCosmosWallet } from "./Chains/JsCosmosWallet";
+import { JsEthereumWallet } from "Chains/JsEthereumWallet";
 
 export class JsWalletBackend extends WalletBackend {
   private seed?: Uint8Array;
@@ -32,5 +27,9 @@ export class JsWalletBackend extends WalletBackend {
 
   cosmos(chainId: string, chainInfo?: ChainInfo): CosmosWallet {
     return new JsCosmosWallet(this, chainId, chainInfo);
+  }
+
+  ethereum(): EthereumWallet {
+    return new JsEthereumWallet(this);
   }
 }

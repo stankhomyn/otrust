@@ -1,9 +1,10 @@
+/* eslint-disable react/require-default-props */
 import React, { useState, useEffect, createContext, useContext, useMemo, useCallback } from 'react';
-import { useWeb3React } from '@web3-react/core';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { BigNumber } from 'bignumber.js';
-import { Signer } from 'ethers';
 import { useAsyncValue } from '@onomy/react-utils';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useWallet } from '@onomy/react-wallet';
 
 import { BondingCont, GravityCont, NOMCont } from './contracts';
 import { NomBondingCurve } from './NomBondingCurve';
@@ -18,7 +19,7 @@ const DEFAULT_STATE = {
   weakBalance: new BigNumber(0),
 };
 
-function convertBigNum(bigNum: BigNumber) {
+function convertBigNum(bigNum: { toString: () => BigNumber.Value }) {
   // Needed due to mixed BigNumber versions
   return new BigNumber(bigNum.toString());
 }
@@ -32,32 +33,31 @@ function useOnomyEthState({
   bondContractAddress: string;
   gravityContractAddress: string;
 }) {
-  const web3Context = useWeb3React();
-  const { library, active } = web3Context;
+  const { ethereumSigner: signer, ethereumProvider: provider } = useWallet();
+
   const [state, setState] = useState(DEFAULT_STATE);
-  const signer = useMemo(() => {
-    const s: Signer | undefined = library?.getSigner() ?? undefined;
-    return s;
-  }, [library]);
+  const active = !!signer; // TODO: this may not be right?
+
   const [address] = useAsyncValue(
     useCallback(async () => signer?.getAddress() ?? '', [signer]),
     ''
   );
 
-  const logout: () => void = library?.deactivate;
+  // @ts-ignore
+  const logout: () => void = provider?.deactivate; // TODO: figure out deactivate
 
   const bondContract = useMemo(
-    () => BondingCont(bondContractAddress, signer),
+    () => BondingCont(bondContractAddress, signer ?? undefined),
     [bondContractAddress, signer]
   );
 
   const NOMContract = useMemo(
-    () => NOMCont(nomContractAddress, signer),
+    () => NOMCont(nomContractAddress, signer ?? undefined),
     [nomContractAddress, signer]
   );
 
   const gravityContract = useMemo(
-    () => GravityCont(gravityContractAddress, signer),
+    () => GravityCont(gravityContractAddress, signer ?? undefined),
     [gravityContractAddress, signer]
   );
 
@@ -79,7 +79,7 @@ function useOnomyEthState({
             // NOM Allowance
             NOMContract.allowance(address, bondContractAddress).then(convertBigNum),
             // Strong Balance
-            library.getBalance(address).then(convertBigNum),
+            provider?.getBalance(address).then(convertBigNum) ?? Promise.resolve(new BigNumber(0)),
             // Supply NOM
             bondContract.getSupplyNOM().then(convertBigNum),
             // Weak Balance (May need to move these to Exchange)
@@ -104,15 +104,16 @@ function useOnomyEthState({
       }
     }
 
-    if (library) library.on('block', onBlock);
+    if (provider) provider.on('block', onBlock);
     // remove listener when the component is unmounted
     return () => {
-      if (library) library.removeListener('block', onBlock);
+      if (provider) provider.removeListener('block', onBlock);
     };
-  }, [NOMContract, address, bondContract, bondContractAddress, library, state.blockNumber]);
+  }, [NOMContract, address, bondContract, bondContractAddress, provider, state.blockNumber]);
 
   return {
     ...state,
+    provider,
     active,
     address,
     bondingCurve,
