@@ -17,7 +17,7 @@ export class WrappedEthereumWallet extends EthereumWallet {
   }
 
   async getProvider() {
-    if (!this.provider) throw new Error("No Ethereum Provider Available");
+    if (!this.provider) return super.getProvider();
     return this.provider;
   }
 }

@@ -8,7 +8,7 @@ import {
   Slip10Curve,
 } from "@cosmjs/crypto";
 import { JsCosmosWallet } from "./Chains/JsCosmosWallet";
-import { JsEthereumWallet } from "Chains/JsEthereumWallet";
+import { JsEthereumWallet } from "./Chains/JsEthereumWallet";
 
 export class JsWalletBackend extends WalletBackend {
   private seed?: Uint8Array;

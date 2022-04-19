@@ -1,7 +1,7 @@
 import { EthereumWallet } from "@onomy/wallet";
 import { HdPath, Slip10RawIndex } from "@cosmjs/crypto";
 import { Wallet } from "ethers";
-import { JsWalletBackend } from "JsWalletBackend";
+import { JsWalletBackend } from "../JsWalletBackend";
 
 export class JsEthereumWallet extends EthereumWallet {
   private backend: JsWalletBackend;
@@ -10,7 +10,6 @@ export class JsEthereumWallet extends EthereumWallet {
     super();
     this.backend = backend;
   }
-
 
   protected getPath(accountNumber = 0): HdPath {
     return [
