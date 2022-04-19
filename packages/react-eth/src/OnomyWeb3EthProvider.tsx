@@ -1,9 +1,9 @@
 import React from 'react';
 import { Web3ReactProvider } from '@web3-react/core';
-import * as ethers from 'ethers';
+import { providers } from 'ethers';
 
-function getWeb3Library(provider: ethers.providers.ExternalProvider) {
-  const library = new ethers.providers.Web3Provider(provider);
+function getWeb3Library(provider: providers.ExternalProvider) {
+  const library = new providers.Web3Provider(provider);
   library.pollingInterval = 12000;
   return library;
 }
