@@ -4,6 +4,7 @@ export { SUPPORTED_WALLETS } from './connectors';
 export { OnomyBondingTradeData } from './OnomyBondingTradeData';
 export { useOnomyBondingTradeData } from './useOnomyBondingTradeData';
 export { useGasPrices } from './useGasPrices';
+export { EthWeb3Provider, useWeb3React } from './OnomyWeb3EthProvider';
 
 export type { ContractTransaction } from 'ethers';
 // eslint-disable-next-line import/no-extraneous-dependencies

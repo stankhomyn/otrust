@@ -456,9 +456,7 @@ exports[`Given the ConfirmTransactionModal component and bidDenom is weak should
             Wallet
           </span>
           <div>
-            <strong>
-              -
-            </strong>
+            <strong />
           </div>
         </div>
         <div
@@ -1076,9 +1074,7 @@ exports[`Given the ConfirmTransactionModal component when the component is rende
             Wallet
           </span>
           <div>
-            <strong>
-              -
-            </strong>
+            <strong />
           </div>
         </div>
         <div

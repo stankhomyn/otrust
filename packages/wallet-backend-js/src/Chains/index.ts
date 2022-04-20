@@ -1,0 +1,1 @@
+export { JsCosmosWallet } from './JsCosmosWallet';

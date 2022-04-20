@@ -1,0 +1,1 @@
+export { JsiRnCosmosWallet } from './JsiRnCosmosWallet';

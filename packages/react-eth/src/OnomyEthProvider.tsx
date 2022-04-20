@@ -1,30 +1,15 @@
-import React, { useState, useEffect, createContext, useContext, useMemo } from 'react';
-import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
-import { Web3ReactContextInterface } from '@web3-react/core/dist/types';
+/* eslint-disable react/require-default-props */
+import React, { useState, useEffect, createContext, useContext, useMemo, useCallback } from 'react';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { BigNumber } from 'bignumber.js';
-import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
+import { useAsyncValue } from '@onomy/react-utils';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useWallet } from '@onomy/react-wallet';
 
 import { BondingCont, GravityCont, NOMCont } from './contracts';
 import { NomBondingCurve } from './NomBondingCurve';
 
-function getWeb3Library(provider: ExternalProvider) {
-  const library = new Web3Provider(provider);
-  library.pollingInterval = 12000;
-  return library;
-}
-
-const WEB3_CONTEXT_DEFAULT = {
-  connector: undefined,
-  library: undefined,
-  chainId: undefined,
-  account: null,
-  active: false,
-  error: undefined,
-} as Web3ReactContextInterface<any>;
-
 const DEFAULT_STATE = {
-  web3Context: WEB3_CONTEXT_DEFAULT,
   blockNumber: new BigNumber(0),
   currentETHPrice: new BigNumber(0),
   currentNOMPrice: new BigNumber(0),
@@ -34,7 +19,7 @@ const DEFAULT_STATE = {
   weakBalance: new BigNumber(0),
 };
 
-function convertBigNum(bigNum: BigNumber) {
+function convertBigNum(bigNum: { toString: () => BigNumber.Value }) {
   // Needed due to mixed BigNumber versions
   return new BigNumber(bigNum.toString());
 }
@@ -48,23 +33,32 @@ function useOnomyEthState({
   bondContractAddress: string;
   gravityContractAddress: string;
 }) {
-  const web3Context = useWeb3React();
-  const { library } = web3Context;
+  const { ethereumSigner: signer, ethereumProvider: provider } = useWallet();
+
   const [state, setState] = useState(DEFAULT_STATE);
+  const active = !!signer; // TODO: this may not be right?
+
+  const [address] = useAsyncValue(
+    useCallback(async () => signer?.getAddress() ?? '', [signer]),
+    ''
+  );
+
+  // @ts-ignore
+  const logout: () => void = provider?.deactivate; // TODO: figure out deactivate
 
   const bondContract = useMemo(
-    () => BondingCont(library, bondContractAddress),
-    [bondContractAddress, library]
+    () => BondingCont(bondContractAddress, signer ?? undefined),
+    [bondContractAddress, signer]
   );
 
   const NOMContract = useMemo(
-    () => NOMCont(library, nomContractAddress),
-    [library, nomContractAddress]
+    () => NOMCont(nomContractAddress, signer ?? undefined),
+    [nomContractAddress, signer]
   );
 
   const gravityContract = useMemo(
-    () => GravityCont(library, gravityContractAddress),
-    [gravityContractAddress, library]
+    () => GravityCont(gravityContractAddress, signer ?? undefined),
+    [gravityContractAddress, signer]
   );
 
   const bondingCurve = useMemo(
@@ -75,7 +69,6 @@ function useOnomyEthState({
   useEffect(() => {
     // listen for changes on an Ethereum address
     async function onBlock(bNumber: number) {
-      const { account } = web3Context;
       const blockNumber = new BigNumber(bNumber);
       if (state.blockNumber === blockNumber) return;
       try {
@@ -84,20 +77,19 @@ function useOnomyEthState({
             // Current ETH Price & Current NOM Price
             bondContract.buyQuoteETH((10 ** 18).toString()).then(convertBigNum),
             // NOM Allowance
-            NOMContract.allowance(account, bondContractAddress).then(convertBigNum),
+            NOMContract.allowance(address, bondContractAddress).then(convertBigNum),
             // Strong Balance
-            library.getBalance(account).then(convertBigNum),
+            provider?.getBalance(address).then(convertBigNum) ?? Promise.resolve(new BigNumber(0)),
             // Supply NOM
             bondContract.getSupplyNOM().then(convertBigNum),
             // Weak Balance (May need to move these to Exchange)
-            NOMContract.balanceOf(account).then(convertBigNum),
+            NOMContract.balanceOf(address).then(convertBigNum),
             // UniSwap Pricing
             // UniSwapCont.getReserves(),
           ]);
         const currentNOMPrice = new BigNumber(1).div(currentETHPrice);
 
         setState({
-          web3Context,
           blockNumber,
           currentETHPrice,
           currentNOMPrice,
@@ -112,19 +104,23 @@ function useOnomyEthState({
       }
     }
 
-    if (library) library.on('block', onBlock);
+    if (provider) provider.on('block', onBlock);
     // remove listener when the component is unmounted
     return () => {
-      if (library) library.removeListener('block', onBlock);
+      if (provider) provider.removeListener('block', onBlock);
     };
-  }, [NOMContract, web3Context, bondContract, bondContractAddress, library, state.blockNumber]);
+  }, [NOMContract, address, bondContract, bondContractAddress, provider, state.blockNumber]);
 
   return {
     ...state,
+    provider,
+    active,
+    address,
     bondingCurve,
     bondContract,
     NOMContract,
     gravityContract,
+    logout,
   };
 }
 
@@ -181,9 +177,7 @@ export function OnomyEthProvider({
 
   return (
     <ApolloProvider client={client}>
-      <Web3ReactProvider getLibrary={getWeb3Library}>
-        <OnomyEthProviderInner {...props}>{children}</OnomyEthProviderInner>
-      </Web3ReactProvider>
+      <OnomyEthProviderInner {...props}>{children}</OnomyEthProviderInner>
     </ApolloProvider>
   );
 }

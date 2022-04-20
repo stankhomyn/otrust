@@ -9,12 +9,14 @@ import {
   REACT_APP_GRAVITY_CONTRACT_ADDRESS,
   REACT_APP_WNOM_CONTRACT_ADDRESS,
 } from 'constants/env';
+import { Web3WalletProvider } from './Web3WalletProvider';
+// import { JsWalletProvider } from './JsWalletProvider';
 
 function OnomyChildProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
   const { blockNumber } = useOnomyEth();
 
   return (
-    <OnomyProvider chainInfo={KEPLR_CONFIG} ethBlockNumber={blockNumber}>
+    <OnomyProvider rpcUrl={KEPLR_CONFIG.rpc} ethBlockNumber={blockNumber}>
       {children}
     </OnomyProvider>
   );
@@ -22,14 +24,16 @@ function OnomyChildProvider({ children }: { children: JSX.Element | JSX.Element[
 
 export function AppProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
   return (
-    <OnomyEthProvider
-      graphQlEndpoint={REACT_APP_GRAPHQL_ENDPOINT}
-      nomContractAddress={REACT_APP_WNOM_CONTRACT_ADDRESS}
-      bondContractAddress={REACT_APP_BONDING_NOM_CONTRACT_ADDRESS}
-      gravityContractAddress={REACT_APP_GRAVITY_CONTRACT_ADDRESS}
-    >
-      <OnomyChildProvider>{children}</OnomyChildProvider>
-    </OnomyEthProvider>
+    <Web3WalletProvider>
+      <OnomyEthProvider
+        graphQlEndpoint={REACT_APP_GRAPHQL_ENDPOINT}
+        nomContractAddress={REACT_APP_WNOM_CONTRACT_ADDRESS}
+        bondContractAddress={REACT_APP_BONDING_NOM_CONTRACT_ADDRESS}
+        gravityContractAddress={REACT_APP_GRAVITY_CONTRACT_ADDRESS}
+      >
+        <OnomyChildProvider>{children}</OnomyChildProvider>
+      </OnomyEthProvider>
+    </Web3WalletProvider>
   );
 }
 

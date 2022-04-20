@@ -1,6 +1,6 @@
 import { SigningStargateClient } from '@cosmjs/stargate';
 import BigNumber from 'bignumber.js';
-import { OfflineSigner } from '@cosmjs/launchpad';
+import { OfflineDirectSigner } from '@cosmjs/proto-signing';
 
 import { OnomyAddress } from './OnomyAddress';
 import { OnomyStargateClient } from './OnomyStargateClient';
@@ -12,7 +12,7 @@ export class OnomyClient {
 
   private stargate?: Promise<OnomyStargateClient>;
 
-  private signer: OfflineSigner | null = null;
+  private signer: OfflineDirectSigner | null = null;
 
   private denom = OnomyConstants.DENOM;
 
@@ -21,7 +21,7 @@ export class OnomyClient {
     this.denom = denom;
   }
 
-  setSigner(signer: OfflineSigner | null) {
+  setSigner(signer: OfflineDirectSigner | null) {
     this.signer = signer;
   }
 

@@ -2,9 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { CookiesProvider } from 'react-cookie';
-import { AutoLogin } from '@onomy/react-eth';
 
-import Landing from 'pages/Landing';
 import BondingCurve from 'pages/BondingCurve';
 import { darkNew } from 'theme/theme';
 import { GlobalStyle } from 'theme/GlobalStyle';
@@ -22,21 +20,19 @@ function App() {
     <CookiesProvider>
       <ThemeProvider theme={darkNew}>
         <ChainProvider>
-          <AutoLogin Landing={Landing}>
-            <ExchangeProvider>
-              <ModalProvider>
-                <GlobalStyle />
-                <MainHeader />
-                <BondingCurve />
-                <Routes>
-                  <Route path="/" element={<></>} />
-                  <Route path="/validators/" element={<SelectValidator />} />
-                  <Route path="/validators/:id/*" element={<ValidatorNode />} />
-                  <Route path="/bridge" element={<BridgeSwapMain />} />
-                </Routes>
-              </ModalProvider>
-            </ExchangeProvider>
-          </AutoLogin>
+          <ExchangeProvider>
+            <ModalProvider>
+              <GlobalStyle />
+              <MainHeader />
+              <BondingCurve />
+              <Routes>
+                <Route path="/" element={<></>} />
+                <Route path="/validators/" element={<SelectValidator />} />
+                <Route path="/validators/:id/*" element={<ValidatorNode />} />
+                <Route path="/bridge" element={<BridgeSwapMain />} />
+              </Routes>
+            </ModalProvider>
+          </ExchangeProvider>
         </ChainProvider>
       </ThemeProvider>
     </CookiesProvider>

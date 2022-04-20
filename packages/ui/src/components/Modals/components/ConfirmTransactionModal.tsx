@@ -132,8 +132,7 @@ export default function ConfirmTransactionModal({
   const [activeSlippageId, setActiveSlippageId] = useState(0);
   const [showSlippageDetails, setShowSlippageDetails] = useState(false);
   const { handleModal } = useModal();
-  const { web3Context } = useOnomyEth();
-  const { account } = web3Context;
+  const { address: account } = useOnomyEth();
 
   const { askAmount, bidAmount, bidDenom, strong, weak, approve } = useExchange();
 

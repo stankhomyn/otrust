@@ -7,28 +7,46 @@
     "client:verify": "yarn workspace @onomy/client verify",
     "client:lint": "yarn workspace @onomy/client lint",
     "client:tsc": "yarn workspace @onomy/client tsc",
+    "client:dev": "yarn workspace @onomy/client dev",
+    "client:build": "yarn workspace @onomy/client build",
     "react-client:verify": "yarn workspace @onomy/react-client verify",
     "react-client:lint": "yarn workspace @onomy/react-client lint",
     "react-client:tsc": "yarn workspace @onomy/react-client tsc",
+    "react-client:dev": "yarn workspace @onomy/react-client dev",
+    "react-client:build": "yarn workspace @onomy/react-client build",
     "react-eth:verify": "yarn workspace @onomy/react-eth verify",
     "react-eth:lint": "yarn workspace @onomy/react-eth lint",
     "react-eth:tsc": "yarn workspace @onomy/react-eth tsc",
+    "react-eth:dev": "yarn workspace @onomy/react-eth dev",
+    "react-eth:build": "yarn workspace @onomy/react-eth build",
     "react-utils:verify": "yarn workspace @onomy/react-utils verify",
     "react-utils:lint": "yarn workspace @onomy/react-utils lint",
     "react-utils:tsc": "yarn workspace @onomy/react-utils tsc",
-    "react-keplr:verify": "yarn workspace @onomy/react-keplr verify",
-    "react-keplr:lint": "yarn workspace @onomy/react-keplr lint",
-    "react-keplr:tsc": "yarn workspace @onomy/react-keplr tsc",
-    "ui:verify": "yarn workspace otrust verify-old",
+    "react-utils:dev": "yarn workspace @onomy/react-utils dev",
+    "react-utils:build": "yarn workspace @onomy/react-utils build",
+    "react-wallet:verify": "yarn workspace @onomy/react-wallet verify",
+    "react-wallet:lint": "yarn workspace @onomy/react-wallet lint",
+    "react-wallet:tsc": "yarn workspace @onomy/react-wallet tsc",
+    "react-wallet:dev": "yarn workspace @onomy/react-wallet dev",
+    "react-wallet:build": "yarn workspace @onomy/react-wallet build",
+
+    "wallet:dev": "yarn workspace @onomy/wallet dev",
+    "wallet:build": "yarn workspace @onomy/wallet build",
+    "wallet-web:dev": "yarn workspace @onomy/wallet-backend-web dev",
+    "wallet-web:build": "yarn workspace @onomy/wallet-backend-web build",
+
+    "ui:verify": "yarn build-modules && yarn workspace otrust verify-old",
     "ui:lint": "yarn workspace otrust lint",
     "ui:tsc": "yarn workspace otrust tsc",
-    "lint": "concurrently \"yarn client:lint\" \"yarn react-client:lint\" \"yarn react-eth:lint\" \"yarn react-utils:lint\" \"yarn react-keplr:lint\" \"yarn ui:lint\"",
-    "tsc": "concurrently \"yarn client:tsc\" \"yarn react-client:tsc\" \"yarn react-eth:tsc\" \"yarn react-utils:tsc\" \"yarn react-keplr:tsc\" \"yarn ui:tsc\"",
-    "verify": "concurrently \"yarn client:tsc\" \"yarn react-client:verify\" \"yarn react-eth:verify\" \"yarn react-utils:verify\" \"yarn react-keplr:verify\" \"yarn ui:verify\"",
-    "start": "yarn workspace otrust start",
-    "build": "yarn workspace otrust build",
-    "verified-build": "yarn workspace otrust verified-build",
-    "test": "yarn workspace otrust test",
+    "lint": "concurrently \"yarn client:lint\" \"yarn react-client:lint\" \"yarn react-eth:lint\" \"yarn react-utils:lint\" \"yarn react-wallet:lint\" \"yarn ui:lint\"",
+    "tsc": "concurrently \"yarn client:tsc\" \"yarn react-client:tsc\" \"yarn react-eth:tsc\" \"yarn react-utils:tsc\" \"yarn react-wallet:tsc\" \"yarn ui:tsc\"",
+    "verify": "concurrently \"yarn client:tsc\" \"yarn react-client:verify\" \"yarn react-eth:verify\" \"yarn react-utils:verify\" \"yarn react-wallet:verify\" \"yarn ui:verify\"",
+    "start": "yarn dev && yarn workspace otrust start",
+    "build-modules": "yarn react-utils:build && concurrently \"yarn client:build\" \"yarn react-client:build\" \"yarn react-eth:build\" \"yarn react-wallet:build\" \"yarn wallet:build\" \"yarn wallet-web:build\"",
+    "dev": "concurrently \"yarn client:dev\" \"yarn react-client:dev\" \"yarn react-eth:dev\" \"yarn react-wallet:dev\" \"yarn react-utils:dev\" \"yarn wallet:dev\" \"yarn wallet-web:dev\"",
+    "build": "yarn build-modules && yarn workspace otrust build",
+    "verified-build": "yarn build-modules && yarn workspace otrust verified-build",
+    "test": "yarn build-modules && yarn workspace otrust test",
     "prepare": "husky install"
   },
   "husky": {
@@ -38,15 +56,15 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*",
-      "submodules/*"
+      "packages/*"
     ]
   },
   "dependencies": {
     "lerna": "^4.0.0"
   },
   "devDependencies": {
-    "concurrently": "^6.2.1"
+    "concurrently": "^6.2.1",
+    "siroc": "^0.16.0"
   },
   "resolutions": {
     "**/ganache-core/lodash": "^4.17.21",
@@ -59,6 +77,7 @@
     "@web3-react/**/json-schema": "^0.4.0",
     "**/follow-redirects": "^1.14.7",
     "**/simple-get": "^4.0.1",
-    "**/react-error-overlay": "6.0.9"
+    "**/react-error-overlay": "6.0.9",
+    "**/ethers": "^5.4.6"
   }
 }

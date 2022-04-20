@@ -187,8 +187,7 @@ const modalOverride = {
 };
 
 export default function BridgeSwapMobile({ ...props }: BridgeSwapModalProps) {
-  const { web3Context } = useOnomyEth();
-  const { active } = web3Context;
+  const { active } = useOnomyEth();
   const { values, flags, handlers } = { ...props };
 
   const [infoModal, setInfoModal] = useState(false);

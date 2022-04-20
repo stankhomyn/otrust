@@ -5,10 +5,16 @@ import { useAsyncValue } from '@onomy/react-utils';
 import { useOnomyEth } from './OnomyEthProvider';
 
 export function useGasPrices() {
-  const { web3Context } = useOnomyEth();
-  const { library } = web3Context;
+  const { provider } = useOnomyEth();
   const query = useCallback(async () => {
-    const base = await library.getGasPrice();
+    if (!provider) {
+      return {
+        safe: new BigNumber('0'),
+        propose: new BigNumber('0'),
+        fast: new BigNumber('0'),
+      };
+    }
+    const base = await provider.getGasPrice();
     const safe = new BigNumber(base.toString());
     const propose = safe.multipliedBy(1.1);
     const fast = safe.multipliedBy(1.2);
@@ -17,7 +23,7 @@ export function useGasPrices() {
       propose,
       fast,
     };
-  }, [library]);
+  }, [provider]);
 
   return useAsyncValue(query, {
     safe: new BigNumber('0'),
