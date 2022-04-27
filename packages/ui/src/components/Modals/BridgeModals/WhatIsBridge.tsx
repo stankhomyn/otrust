@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import type { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useMediaQuery } from 'react-responsive';
 
 import { Dimmer } from 'components';
+import { responsive } from 'theme/constants';
 import { Close } from '../Icons';
 import * as Modal from '../styles';
 import BridgeBackgroundImage from '../assets/bridge-top-bg.svg';
@@ -24,6 +29,44 @@ const ModalBody = styled.div`
   ${Modal.CloseIcon} {
     z-index: 1;
   }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    width: 700px;
+
+    top: 30px;
+
+    transform: translateX(-50%);
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    width: 100%;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    padding: 0;
+
+    top: 0;
+
+    border-radius: 0;
+  }
+`;
+
+const ModalBtn = styled.button`
+  width: 44px;
+  height: 44px;
+
+  position: absolute;
+  top: 10px;
+  left: 20px;
+
+  border-radius: 8px;
+  border: none;
+  background-color: ${props => props.theme.colors.bgHighlightBorder};
+
+  color: #84809a;
+
+  cursor: pointer;
+  z-index: 1;
 `;
 
 const BridgeWrapper = styled.div`
@@ -33,6 +76,17 @@ const BridgeWrapper = styled.div`
 
   background-color: ${props => props.theme.colors.bgDarken};
   border-radius: 4px;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    padding: 50px 40px 25px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    padding: 80px 20px 0;
+
+    background-color: #0a090e;
+    border-radius: 0;
+  }
 `;
 
 const BridgeBackground = styled.div`
@@ -41,6 +95,18 @@ const BridgeBackground = styled.div`
   left: 50%;
 
   transform: translateX(-50%);
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    width: 627px;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    display: none;
+  }
 `;
 
 const BridgeContentWrapper = styled.div`
@@ -53,6 +119,14 @@ const BridgeTitle = styled.div`
   font-size: 28px;
   font-weight: 500;
   color: ${props => props.theme.colors.txtPrimary};
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 24px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    text-align: left;
+  }
 `;
 
 const BridgeText = styled.p`
@@ -61,6 +135,16 @@ const BridgeText = styled.p`
   font-size: 16px;
   text-align: center;
   color: ${props => props.theme.colors.txtSecondary};
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    margin-top: 16px;
+
+    font-size: 12px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    text-align: left;
+  }
 `;
 
 const BridgeNote = styled.div`
@@ -77,11 +161,31 @@ const BridgeNote = styled.div`
 
   font-size: 14px;
   color: rgba(136, 209, 255, 0.8);
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    padding: 8px 16px;
+    margin: 24px 0;
+
+    font-size: 12px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    align-items: start;
+
+    padding: 8px 10px;
+  }
 `;
 
 const BridgeNoteIconeWrapper = styled.div`
   width: 32px;
   height: 32px;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    display: flex;
+
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 const BridgeList = styled.ul`
@@ -93,6 +197,9 @@ const BridgeList = styled.ul`
   color: ${props => props.theme.colors.textSecondary};
 
   li {
+    display: flex;
+    align-items: center;
+
     padding: 24px 0;
     margin: 0;
 
@@ -100,6 +207,26 @@ const BridgeList = styled.ul`
 
     &:last-child {
       border: none;
+    }
+  }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 14px;
+
+    li {
+      padding: 19px;
+    }
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    margin: 0;
+
+    font-size: 12px;
+
+    li {
+      align-items: start;
+
+      padding: 19px 0;
     }
   }
 `;
@@ -119,6 +246,10 @@ const DashedText = styled.span`
   color: ${props => props.theme.colors.textPrimary};
 
   border-bottom-style: dashed;
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    padding-bottom: 0;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -126,10 +257,17 @@ const ButtonWrapper = styled.div`
   justify-content: center;
 
   margin: 25px 0;
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    ${Modal.PrimaryButton} {
+      width: 90%;
+    }
+  }
 `;
 
 export default function WhatIsBridge() {
   const [isOpen, setIsOpen] = useState(true);
+  const BreakpointSmartphoneLarge = useMediaQuery({ minWidth: responsive.smartphoneLarge });
 
   const closeModal = () => {
     setIsOpen(false);
@@ -141,9 +279,15 @@ export default function WhatIsBridge() {
         <>
           <Dimmer />
           <ModalBody>
-            <Modal.CloseIcon onClick={closeModal}>
-              <Close />
-            </Modal.CloseIcon>
+            {BreakpointSmartphoneLarge ? (
+              <Modal.CloseIcon onClick={closeModal}>
+                <Close />
+              </Modal.CloseIcon>
+            ) : (
+              <ModalBtn onClick={closeModal}>
+                <FontAwesomeIcon icon={faChevronLeft as IconProp} />
+              </ModalBtn>
+            )}
             <BridgeWrapper>
               <BridgeBackground>
                 <img src={BridgeBackgroundImage} alt="" />
@@ -167,24 +311,31 @@ export default function WhatIsBridge() {
                 <BridgeTitle>Why should I bridge?</BridgeTitle>
                 <BridgeList>
                   <li>
-                    <ListCount>1</ListCount>You must hold NOM to participate in the Onomy Network
+                    <ListCount>1</ListCount>
+                    <span>You must hold NOM to participate in the Onomy Network</span>
                   </li>
                   <li>
                     <ListCount>2</ListCount>
-                    Early stakers of NOM take advantage of{' '}
-                    <DashedText>larger staking yield</DashedText>
+                    <span>
+                      Early stakers of NOM take advantage of{' '}
+                      <DashedText>larger staking yield</DashedText>
+                    </span>
                   </li>
                   <li>
                     <ListCount>3</ListCount>
-                    NOM is used for <DashedText>governance, staking, and collateral</DashedText> to
-                    mint stablecoins
+                    <span>
+                      NOM is used for <DashedText>governance, staking, and collateral</DashedText>{' '}
+                      to mint stablecoins
+                    </span>
                   </li>
                   <li>
                     <ListCount>4</ListCount>All bridged wNOM is burned from the bonding curve supply
                   </li>
                   <li>
                     <ListCount>5</ListCount>
-                    NOM would be <DashedText>listed on exchanges</DashedText> rather than wNOM
+                    <span>
+                      NOM would be <DashedText>listed on exchanges</DashedText> rather than wNOM
+                    </span>
                   </li>
                 </BridgeList>
               </BridgeContentWrapper>

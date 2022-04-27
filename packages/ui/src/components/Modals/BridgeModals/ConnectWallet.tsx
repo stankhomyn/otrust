@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import type { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useMediaQuery } from 'react-responsive';
 
 import { Dimmer } from 'components';
+import { responsive } from 'theme/constants';
 import { Close } from '../Icons';
 import * as Modal from '../styles';
 import BridgeBackgroundImage from '../assets/bridge-top-bg.svg';
@@ -28,6 +33,44 @@ const ModalBody = styled.div`
   ${Modal.CloseIcon} {
     z-index: 1;
   }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    width: 700px;
+
+    top: 30px;
+
+    transform: translateX(-50%);
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    width: 100%;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    padding: 0;
+
+    top: 0;
+
+    border-radius: 0;
+  }
+`;
+
+const ModalBtn = styled.button`
+  width: 44px;
+  height: 44px;
+
+  position: absolute;
+  top: 10px;
+  left: 20px;
+
+  border-radius: 8px;
+  border: none;
+  background-color: ${props => props.theme.colors.bgHighlightBorder};
+
+  color: #84809a;
+
+  cursor: pointer;
+  z-index: 1;
 `;
 
 const BridgeWrapper = styled.div`
@@ -37,6 +80,17 @@ const BridgeWrapper = styled.div`
 
   background-color: ${props => props.theme.colors.bgDarken};
   border-radius: 4px;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    padding: 50px 20px 25px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    padding: 80px 20px 32px;
+
+    background-color: #0a090e;
+    border-radius: 0;
+  }
 `;
 
 const BridgeBackground = styled.div`
@@ -45,6 +99,18 @@ const BridgeBackground = styled.div`
   left: 50%;
 
   transform: translateX(-50%);
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    width: 627px;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    display: none;
+  }
 `;
 
 const BridgeContentWrapper = styled.div`
@@ -57,6 +123,14 @@ const BridgeTitle = styled.div`
   font-size: 28px;
   font-weight: 500;
   color: ${props => props.theme.colors.txtPrimary};
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 24px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    text-align: left;
+  }
 `;
 
 const BridgeText = styled.p`
@@ -65,6 +139,16 @@ const BridgeText = styled.p`
   font-size: 16px;
   text-align: center;
   color: ${props => props.theme.colors.txtSecondary};
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    margin-top: 16px;
+
+    font-size: 12px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    text-align: left;
+  }
 `;
 
 const DirectoryQR = styled.div`
@@ -78,6 +162,10 @@ const DirectoryQR = styled.div`
 
   background-color: ${props => props.theme.colors.bgNormal};
   border-radius: 4px;
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    gap: 8px;
+  }
 `;
 
 const Slash = styled.div`
@@ -132,28 +220,66 @@ const Reflection = styled.div`
 
     transform: scaleY(-1);
   }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    width: 240px;
+    height: 323px;
+    margin: 0 auto 16px;
+
+    background-size: 240px;
+
+    &:after {
+      background-size: inherit;
+    }
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    &:before {
+      background-image: linear-gradient(to bottom, rgba(10, 9, 14, 0), #0a090e);
+    }
+  }
 `;
 
 const BridgeFooter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 
   padding: 40px 0 0;
 
   border-top: 1px solid ${props => props.theme.colors.bgHighlight};
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    padding: 30px 0 0;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    flex-direction: column;
+  }
 `;
 
 const BridgeFooterText = styled.div`
   font-family: Poppins, sans-serif;
   font-size: 16px;
   color: ${props => props.theme.colors.textSecondary};
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 13px;
+    text-align: left;
+  }
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 17px;
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    justify-content: space-between;
+
+    width: 100%;
+  }
 `;
 
 const BridgeButtonSecondary = styled(Modal.SecondaryButton)`
@@ -163,7 +289,6 @@ const BridgeButtonSecondary = styled(Modal.SecondaryButton)`
   gap: 8px;
 
   width: auto;
-  height: 50px;
   padding: 0 24px;
 
   white-space: nowrap;
@@ -171,6 +296,7 @@ const BridgeButtonSecondary = styled(Modal.SecondaryButton)`
 
 export default function WhatIsBridge() {
   const [isOpen, setIsOpen] = useState(true);
+  const BreakpointSmartphoneLarge = useMediaQuery({ minWidth: responsive.smartphoneLarge });
 
   const closeModal = () => {
     setIsOpen(false);
@@ -182,9 +308,15 @@ export default function WhatIsBridge() {
         <>
           <Dimmer />
           <ModalBody>
-            <Modal.CloseIcon onClick={closeModal}>
-              <Close />
-            </Modal.CloseIcon>
+            {BreakpointSmartphoneLarge ? (
+              <Modal.CloseIcon onClick={closeModal}>
+                <Close />
+              </Modal.CloseIcon>
+            ) : (
+              <ModalBtn onClick={closeModal}>
+                <FontAwesomeIcon icon={faChevronLeft as IconProp} />
+              </ModalBtn>
+            )}
             <BridgeWrapper>
               <BridgeBackground>
                 <img src={BridgeBackgroundImage} alt="" />

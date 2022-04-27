@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components/macro';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import type { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useMediaQuery } from 'react-responsive';
 
 import { Dimmer } from 'components';
+import { responsive } from 'theme/constants';
 import { Close } from '../Icons';
 import * as Modal from '../styles';
 import BridgeBackgroundImage from '../assets/bridge-top-light-bg.svg';
@@ -24,6 +29,45 @@ const ModalBody = styled.div`
   ${Modal.CloseIcon} {
     z-index: 1;
   }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    width: 700px;
+
+    top: 30px;
+
+    transform: translateX(-50%);
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    width: 100%;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    padding: 0;
+
+    top: 0;
+
+    background-color: #0a090e;
+    border-radius: 0;
+  }
+`;
+
+const ModalBtn = styled.button`
+  width: 44px;
+  height: 44px;
+
+  position: absolute;
+  top: 10px;
+  left: 20px;
+
+  border-radius: 8px;
+  border: none;
+  background-color: ${props => props.theme.colors.bgHighlightBorder};
+
+  color: #84809a;
+
+  cursor: pointer;
+  z-index: 1;
 `;
 
 const BridgeWrapper = styled.div`
@@ -33,6 +77,19 @@ const BridgeWrapper = styled.div`
 
   background-color: ${props => props.theme.colors.bgDarken};
   border-radius: 4px;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    padding: 50px 20px 25px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    padding: 100px 20px 10px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    background-color: #0a090e;
+    border-radius: 0;
+  }
 `;
 
 const BridgeBackground = styled.div`
@@ -41,6 +98,36 @@ const BridgeBackground = styled.div`
   left: 50%;
 
   transform: translateX(-50%);
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    width: 627px;
+    height: 108px;
+    overflow: hidden;
+
+    &:before {
+      content: '';
+
+      width: inherit;
+      height: 90px;
+
+      position: absolute;
+      top: 20px;
+
+      background: linear-gradient(
+        to bottom,
+        rgba(26, 23, 35, 0) 0%,
+        ${props => props.theme.colors.bgDarken} 100%
+      );
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    display: none;
+  }
 `;
 
 const rotate = keyframes`
@@ -86,6 +173,11 @@ const Spinner = styled(CircleSpinner)`
 
     animation: ${dash} 2s ease-in-out infinite;
   }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    width: 110px;
+    height: 110px;
+  }
 `;
 
 const BridgeContentWrapper = styled.div`
@@ -100,6 +192,15 @@ const BridgeTitle = styled.div`
   font-weight: 500;
   text-align: center;
   color: ${props => props.theme.colors.txtPrimary};
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    margin: 35px 0 16px;
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    margin: 56px 0;
+  }
 `;
 
 const BridgeText = styled.p`
@@ -108,6 +209,12 @@ const BridgeText = styled.p`
   font-size: 16px;
   text-align: center;
   color: ${props => props.theme.colors.txtSecondary};
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    margin-top: 16px;
+
+    font-size: 14px;
+  }
 `;
 
 const Value = styled.div`
@@ -124,6 +231,15 @@ const Value = styled.div`
 
   border-radius: 6px;
   background-color: ${props => props.theme.colors.bgNormal};
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    padding: 20px 0 14px;
+    font-size: 40px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    font-size: 28px;
+  }
 `;
 
 const Modify = styled.span`
@@ -150,6 +266,14 @@ const Currency = styled.span`
 
   font-size: 24px;
   letter-spacing: 0.96px;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    font-size: 16px;
+  }
 `;
 
 const BridgeInfo = styled.div`
@@ -165,6 +289,16 @@ const BridgeInfo = styled.div`
   font-weight: 500;
 
   border-top: 1px solid ${props => props.theme.colors.bgHighlight};
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    margin-top: 30px;
+
+    font-size: 12px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    margin-top: 140px;
+  }
 `;
 
 const Row = styled.div`
@@ -188,6 +322,7 @@ const CrossData = styled.span`
 
 export default function BridgePanding() {
   const [isOpen, setIsOpen] = useState(true);
+  const BreakpointSmartphoneLarge = useMediaQuery({ minWidth: responsive.smartphoneLarge });
 
   const closeModal = () => {
     setIsOpen(false);
@@ -199,9 +334,15 @@ export default function BridgePanding() {
         <>
           <Dimmer />
           <ModalBody>
-            <Modal.CloseIcon onClick={closeModal}>
-              <Close />
-            </Modal.CloseIcon>
+            {BreakpointSmartphoneLarge ? (
+              <Modal.CloseIcon onClick={closeModal}>
+                <Close />
+              </Modal.CloseIcon>
+            ) : (
+              <ModalBtn onClick={closeModal}>
+                <FontAwesomeIcon icon={faChevronLeft as IconProp} />
+              </ModalBtn>
+            )}
             <BridgeWrapper>
               <BridgeBackground>
                 <img src={BridgeBackgroundImage} alt="" />

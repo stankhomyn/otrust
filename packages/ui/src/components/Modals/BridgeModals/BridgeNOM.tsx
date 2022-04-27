@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import type { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useMediaQuery } from 'react-responsive';
 
 import { Dimmer } from 'components';
+import { responsive } from 'theme/constants';
 import { Close } from '../Icons';
 import * as Modal from '../styles';
 import BridgeBackgroundImage from '../assets/bridge-top-light-bg.svg';
@@ -23,6 +28,44 @@ const ModalBody = styled.div`
   ${Modal.CloseIcon} {
     z-index: 1;
   }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    width: 700px;
+
+    top: 30px;
+
+    transform: translateX(-50%);
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    width: 100%;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    padding: 0;
+
+    top: 0;
+
+    border-radius: 0;
+  }
+`;
+
+const ModalBtn = styled.button`
+  width: 44px;
+  height: 44px;
+
+  position: absolute;
+  top: 10px;
+  left: 20px;
+
+  border-radius: 8px;
+  border: none;
+  background-color: ${props => props.theme.colors.bgHighlightBorder};
+
+  color: #84809a;
+
+  cursor: pointer;
+  z-index: 1;
 `;
 
 const BridgeWrapper = styled.div`
@@ -32,6 +75,21 @@ const BridgeWrapper = styled.div`
 
   background-color: ${props => props.theme.colors.bgDarken};
   border-radius: 4px;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    padding: 28px 20px 25px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    padding: 7px 20px 25px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    padding: 10px 20px 32px;
+
+    background-color: #0a090e;
+    border-radius: 0;
+  }
 `;
 
 const BridgeBackground = styled.div`
@@ -40,10 +98,59 @@ const BridgeBackground = styled.div`
   left: 50%;
 
   transform: translateX(-50%);
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    width: 627px;
+    height: 108px;
+    overflow: hidden;
+
+    &:before {
+      content: '';
+
+      width: inherit;
+      height: 90px;
+
+      position: absolute;
+      top: 20px;
+
+      background: linear-gradient(
+        to bottom,
+        rgba(26, 23, 35, 0) 0%,
+        ${props => props.theme.colors.bgDarken} 100%
+      );
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    display: none;
+  }
 `;
 
 const BridgeContentWrapper = styled.div`
   position: inherit;
+`;
+
+const HeaderWrapper = styled.div`
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 32px;
+
+    padding-bottom: 5px;
+  }
+`;
+
+const RewardWrapper = styled.div`
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    gap: 10px;
+  }
 `;
 
 const RewardRate = styled.div`
@@ -55,6 +162,12 @@ const RewardRate = styled.div`
   letter-spacing: 7.2px;
   text-align: center;
   color: #85c5f9;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    margin-bottom: 0;
+
+    font-size: 64px;
+  }
 `;
 
 const BridgeRewardTitle = styled.div`
@@ -71,6 +184,16 @@ const BridgeRewardTitle = styled.div`
   color: #ddd8e6;
 
   opacity: 0.5;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    letter-spacing: 1.44px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    margin: 0;
+
+    text-align: left;
+  }
 `;
 
 const BridgeButtonSecondary = styled(Modal.SecondaryButton)`
@@ -80,7 +203,6 @@ const BridgeButtonSecondary = styled(Modal.SecondaryButton)`
   gap: 8px;
 
   width: auto;
-  height: 44px;
   padding: 0 24px;
   margin: 24px auto;
 
@@ -89,6 +211,17 @@ const BridgeButtonSecondary = styled(Modal.SecondaryButton)`
 
   &:active {
     color: ${props => props.theme.colors.txtPrimary};
+  }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    margin: 8px auto 16px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    align-self: end;
+
+    height: 44px;
+    margin: 0;
   }
 `;
 
@@ -108,6 +241,14 @@ const BridgeTitle = styled.div`
   font-weight: 500;
   text-align: center;
   color: ${props => props.theme.colors.txtPrimary};
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    text-align: left;
+  }
 `;
 
 const WnomMaxWrapper = styled.div`
@@ -118,6 +259,10 @@ const WnomMaxWrapper = styled.div`
   padding: 0 0 40px 0;
 
   border-bottom: 4px solid #2f2f35;
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    padding-bottom: 18px;
+  }
 `;
 
 const Wnom = styled.div`
@@ -127,6 +272,14 @@ const Wnom = styled.div`
   letter-spacing: 2.4px;
   text-transform: uppercase;
   color: #fbfbfd;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 16px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    margin-right: 16px;
+  }
 `;
 
 const Value = styled.div`
@@ -144,6 +297,10 @@ const Value = styled.div`
   span {
     color: #6a6f83;
   }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 72px;
+  }
 `;
 
 const ValueDivider = styled.div`
@@ -153,7 +310,11 @@ const ValueDivider = styled.div`
   position: relative;
   bottom: 7px;
 
-  background-color: ${props => props.theme.colors.white};
+  background-color: #ffffff;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    height: 81px;
+  }
 `;
 
 const MaxButtom = styled.button`
@@ -169,6 +330,20 @@ const MaxButtom = styled.button`
   line-height: 0.8;
   letter-spacing: 2.4px;
   color: #85c5f9;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 16px;
+    letter-spacing: 1.92px;
+  }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 16px;
+    padding: 12px 13px 8px 14px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    margin-left: auto;
+  }
 `;
 
 const TotalApprovedWrapper = styled.div`
@@ -176,6 +351,12 @@ const TotalApprovedWrapper = styled.div`
   justify-content: space-between;
 
   margin-top: 16px;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    gap: 40px;
+
+    font-size: 12px;
+  }
 `;
 
 const Row = styled.div`
@@ -191,6 +372,11 @@ const Row = styled.div`
   span {
     font-weight: 500;
     color: #fbfbfd;
+    text-align: right;
+  }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    gap: 0;
   }
 `;
 
@@ -200,6 +386,10 @@ const CellDivider = styled.div`
   margin: 0 20px;
 
   background-color: ${props => props.theme.colors.bgHighlight};
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    display: none;
+  }
 `;
 
 const BridgeInfo = styled.div`
@@ -212,6 +402,12 @@ const BridgeInfo = styled.div`
   margin: 35px 0 0;
 
   border-top: 1px solid ${props => props.theme.colors.bgHighlight};
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    margin-top: 120px;
+
+    font-size: 12px;
+  }
 `;
 
 const CellStatus = styled.div`
@@ -222,6 +418,7 @@ const CellData = styled.div`
   color: ${props => props.theme.colors.textSecondary};
   text-align: right;
   font-weight: 500;
+  white-space: nowrap;
 `;
 
 const CellChange = styled.div`
@@ -236,10 +433,18 @@ const ButtonWrapper = styled.div`
   gap: 25px;
 
   margin: 30px 0;
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    ${Modal.PrimaryButton} {
+      width: 90%;
+    }
+  }
 `;
 
 export default function BridgeNOM() {
   const [isOpen, setIsOpen] = useState(true);
+  const BreakpointSmartphoneLarge = useMediaQuery({ minWidth: responsive.smartphoneLarge });
+  const BreakpointSmartphone = useMediaQuery({ minWidth: responsive.smartphone });
 
   const closeModal = () => {
     setIsOpen(false);
@@ -251,17 +456,27 @@ export default function BridgeNOM() {
         <>
           <Dimmer />
           <ModalBody>
-            <Modal.CloseIcon onClick={closeModal}>
-              <Close />
-            </Modal.CloseIcon>
+            {BreakpointSmartphoneLarge ? (
+              <Modal.CloseIcon onClick={closeModal}>
+                <Close />
+              </Modal.CloseIcon>
+            ) : (
+              <ModalBtn onClick={closeModal}>
+                <FontAwesomeIcon icon={faChevronLeft as IconProp} />
+              </ModalBtn>
+            )}
             <BridgeWrapper>
               <BridgeBackground>
                 <img src={BridgeBackgroundImage} alt="" />
               </BridgeBackground>
               <BridgeContentWrapper>
-                <RewardRate>440%</RewardRate>
-                <BridgeRewardTitle>Estimated Annual Staking Reward Rate</BridgeRewardTitle>
-                <BridgeButtonSecondary type="button">What is Onomy Bridge?</BridgeButtonSecondary>
+                <HeaderWrapper>
+                  <RewardWrapper>
+                    <RewardRate>440%</RewardRate>
+                    <BridgeRewardTitle>Estimated Annual Staking Reward Rate</BridgeRewardTitle>
+                  </RewardWrapper>
+                  <BridgeButtonSecondary type="button">What is Onomy Bridge?</BridgeButtonSecondary>
+                </HeaderWrapper>
                 <BridgeTitle>Bridge and stake NOM to earn staking rewards!</BridgeTitle>
                 <WnomMaxWrapper>
                   <Wnom>Wnom</Wnom>
@@ -274,12 +489,12 @@ export default function BridgeNOM() {
                 </WnomMaxWrapper>
                 <TotalApprovedWrapper>
                   <Row>
-                    Total wNOM Balance
+                    {BreakpointSmartphone ? 'Total wNOM Balance' : 'Balance'}
                     <span>30 329 wNOM</span>
                   </Row>
                   <CellDivider />
                   <Row>
-                    Approved wNOM
+                    {BreakpointSmartphone ? 'Approved  wNOM' : 'Approved'}
                     <span>30 329 wNOM</span>
                   </Row>
                 </TotalApprovedWrapper>
