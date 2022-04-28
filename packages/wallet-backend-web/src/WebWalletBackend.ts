@@ -1,9 +1,11 @@
 /* eslint-disable class-methods-use-this */
-import { WalletBackend } from "@onomy/wallet";
+import { Wallet, WalletBackend } from "@onomy/wallet";
 import * as ethers from 'ethers';
 import { WrappedEthereumWallet } from "./Chains/WrappedEthereumWallet";
 
 import { KeplrCosmosWallet } from "./Chains/KeplrCosmosWallet";
+
+export type ChainInfo = Parameters<InstanceType<typeof Wallet>['cosmos']>[1];
 
 type Options = {
   ethereumProvider?: ethers.providers.Provider;
@@ -18,11 +20,10 @@ export class WebWalletBackend extends WalletBackend {
     super();
     this.ethereumProvider = options.ethereumProvider;
     this.ethereumSigner = options.ethereumSigner;
-    console.log('opts', options);
   }
 
-  cosmos(chainId: string) {
-    return new KeplrCosmosWallet(chainId);
+  cosmos(chainId: string, chainInfo?: ChainInfo) {
+    return new KeplrCosmosWallet(chainId, chainInfo);
   }
 
   ethereum() {

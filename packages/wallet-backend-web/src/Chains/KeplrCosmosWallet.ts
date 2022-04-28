@@ -46,7 +46,7 @@ export class KeplrCosmosWallet extends CosmosWallet {
       await this.connectActual();
     } catch (e) {
       if ((e as Error)?.message.indexOf('no chain info')) {
-        setTimeout(this.connectActual, 1000);
+        setTimeout(this.connectActual.bind(this), 1000);
       }
     }
   }
