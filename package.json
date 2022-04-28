@@ -42,7 +42,7 @@
     "tsc": "concurrently \"yarn client:tsc\" \"yarn react-client:tsc\" \"yarn react-eth:tsc\" \"yarn react-utils:tsc\" \"yarn react-wallet:tsc\" \"yarn ui:tsc\"",
     "verify": "concurrently \"yarn client:tsc\" \"yarn react-client:verify\" \"yarn react-eth:verify\" \"yarn react-utils:verify\" \"yarn react-wallet:verify\" \"yarn ui:verify\"",
     "start": "yarn dev && yarn workspace otrust start",
-    "build-modules": "yarn react-utils:build && concurrently \"yarn client:build\" \"yarn react-client:build\" \"yarn react-eth:build\" \"yarn react-wallet:build\" \"yarn wallet:build\" \"yarn wallet-web:build\"",
+    "build-modules": "yarn react-utils:build && yarn wallet:build && yarn react-wallet:build && yarn wallet-web:build && yarn client:build && yarn react-client:build && yarn react-eth:build",
     "dev": "concurrently \"yarn client:dev\" \"yarn react-client:dev\" \"yarn react-eth:dev\" \"yarn react-wallet:dev\" \"yarn react-utils:dev\" \"yarn wallet:dev\" \"yarn wallet-web:dev\"",
     "build": "yarn build-modules && yarn workspace otrust build",
     "verified-build": "yarn build-modules && yarn workspace otrust verified-build",
