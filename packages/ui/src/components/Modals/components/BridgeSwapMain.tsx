@@ -70,7 +70,8 @@ export default function BridgeSwapMain() {
     if (bondingCurve && account && allowanceAmountGravity.eq(0)) {
       updateAllowanceAmount();
     }
-  }, [bondingCurve, account, allowanceAmountGravity, updateAllowanceAmount]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bondingCurve, account, updateAllowanceAmount]);
 
   const walletChangeHandler: React.ChangeEventHandler<HTMLInputElement> = event => {
     setOnomyWalletValue(event.target.value);

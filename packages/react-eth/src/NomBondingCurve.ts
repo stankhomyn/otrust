@@ -20,7 +20,15 @@ export class NomBondingCurve {
   }
 
   public async bNomAllowance(account: string, destinationAddress: string): Promise<BigNumber> {
-    return this.bNomContract.allowance(account, destinationAddress).then(convertBigNum);
+    try {
+      const allowance = await this.bNomContract
+        .allowance(account, destinationAddress)
+        .then(convertBigNum);
+      return allowance;
+    } catch (e) {
+      console.error('bNomAllowance error', e);
+      return new BigNumber(0);
+    }
   }
 
   public async bNomBridgeAllowance(account: string) {
