@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { BigNumber } from 'bignumber.js';
-import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import { useOnomy } from '@onomy/react-client';
 import { useOnomyEth } from '@onomy/react-eth';
 import { OnomyAddress } from '@onomy/client';
 
-import BridgeSwapMobile from './BridgeSwapMobile';
 import BridgeSwapModal from './BridgeSwapModal';
 import { NOTIFICATION_MESSAGES } from '../../../constants/NotificationMessages';
-import { responsive } from 'theme/constants';
 import { useGasPriceSelection } from 'hooks/useGasPriceSelection';
 import { ConnectKeplr } from 'components/ConnectKeplr';
 
@@ -48,8 +45,6 @@ export default function BridgeSwapMain() {
   const [showTransactionCompleted, setShowTransactionCompleted] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const { gasPriceChoice, setGasPriceChoice, gasOptions, gasPrice } = useGasPriceSelection();
-
-  const standardBrigdeBreakpoint = useMediaQuery({ minWidth: responsive.smartphoneLarge });
 
   const { weakBalance, bondingCurve, address: account } = useOnomyEth();
 
@@ -229,7 +224,7 @@ export default function BridgeSwapMain() {
   return (
     <>
       <ConnectKeplr />
-      {standardBrigdeBreakpoint ? <BridgeSwapModal {...Props} /> : <BridgeSwapMobile {...Props} />}
+      <BridgeSwapModal {...Props} />
     </>
   );
 }

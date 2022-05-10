@@ -10,7 +10,7 @@ export function BridgeProgress() {
     <>
       {nomAddress && bridgeProgress !== null && (
         <>
-          <ProgressCircle message="Bridging bNOM to NOM…" percent={bridgeProgress} />
+          <ProgressCircle message="Bridging assets…" percent={bridgeProgress} />
         </>
       )}
     </>

@@ -7,10 +7,17 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 40px;
+
+  position: relative;
+
+  z-index: 5;
 `;
 
 const Label = styled.span`
-  font-size: 16px;
+  margin-top: 35px;
+
+  font-family: Barlow Condensed, sans-serif;
+  font-size: 28px;
   font-weight: 500;
   color: ${props => props.theme.colors.txtPrimary};
 `;
@@ -38,8 +45,8 @@ export default function ProgressCircle({
     const svg = select(svgRef.current);
 
     const generatedArc = arc()
-      .innerRadius(46)
-      .outerRadius(49)
+      .innerRadius(56)
+      .outerRadius(59)
       .startAngle(0)
       .endAngle((2 * Math.PI * percent) / 100)
       .cornerRadius(4);
@@ -48,14 +55,14 @@ export default function ProgressCircle({
       .append('path')
       // @ts-ignore
       .attr('d', generatedArc())
-      .style('transform', 'translate(50px, 50px)')
-      .style('fill', '#fff');
+      .style('transform', 'translate(60px, 60px)')
+      .style('fill', '#85c5f9');
   }, [percent]);
 
   return (
     <Wrapper>
-      <svg width="100" height="100" ref={svgRef}>
-        <circle cx="50" cy="50" r="47" stroke="#302e3d" strokeWidth="3" fill="none" />
+      <svg width="120" height="120" ref={svgRef}>
+        <circle cx="60" cy="60" r="57" stroke="#222f3d" strokeWidth="4" fill="none" />
       </svg>
 
       <Label>

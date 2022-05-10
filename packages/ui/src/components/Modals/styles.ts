@@ -411,14 +411,15 @@ export const ApprovedModalLoadingWrapper = styled(LoadingWrapper)`
 /* Bridge Modal Styles */
 
 export const BridgeModalWrapper = styled(Wrapper)`
-  width: 1300px;
+  /* width: 1300px; */
+  width: auto;
 
   @media screen and (max-width: ${responsive.laptop}) {
-    width: 1010px;
+    /* width: 1010px; */
   }
 
   @media screen and (max-width: ${responsive.smartphoneLarge}) {
-    display: none;
+    /* display: none; */
   }
 
   @media screen and (max-width: ${responsive.laptopSmall}) {
@@ -656,15 +657,17 @@ export const ConnectionStatus = styled.div<{
 `;
 
 export const BridgeLayout = styled.div`
-  display: grid;
-  grid-template-columns: 520px 1fr;
+  /* display: grid;
+  grid-template-columns: 520px 1fr; */
+  display: flex;
+  justify-content: center;
 
   @media screen and (max-width: ${responsive.laptop}) {
-    grid-template-columns: 400px 1fr;
+    /* grid-template-columns: 400px 1fr; */
   }
 
   @media screen and (max-width: ${responsive.laptopSmall}) {
-    grid-template-columns: none;
+    /* grid-template-columns: none; */
   }
 
   & > main {

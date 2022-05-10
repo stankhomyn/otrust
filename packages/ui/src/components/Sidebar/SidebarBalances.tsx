@@ -72,7 +72,7 @@ export default function SidebarBalances({
         {REACT_APP_SHOW_BRIDGED_NOM && <SidebarBridgedBalance />}
 
         <WithdrawBtnWrapper>
-          <Link to="/bridge">
+          <Link to="/bridge-initial">
             <PrimaryButton style={{ width: '100%' }}>Bridge bNOM to NOM</PrimaryButton>
           </Link>
         </WithdrawBtnWrapper>

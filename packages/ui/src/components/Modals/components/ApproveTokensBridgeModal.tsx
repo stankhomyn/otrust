@@ -1,37 +1,74 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { useOnomyEth } from '@onomy/react-eth';
 import styled from 'styled-components';
-import useInterval from '@use-it/interval';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { BigNumber } from 'bignumber.js';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import type { IconProp } from '@fortawesome/fontawesome-svg-core';
+import useInterval from '@use-it/interval';
+import { BigNumber } from 'bignumber.js';
+import { useMediaQuery } from 'react-responsive';
 
 import { useGasPriceSelection } from 'hooks/useGasPriceSelection';
+import { Close } from '../Icons';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
 import * as Modal from '../styles';
 import { responsive } from 'theme/constants';
-import { MaxBtn } from 'components/Exchange/exchangeStyles';
 import { NOTIFICATION_MESSAGES } from '../../../constants/NotificationMessages';
+import BridgeBackgroundImage from '../assets/bridge-top-light-bg.svg';
+import WarningIcon from '../assets/warning.svg';
 
-const Message = styled.div`
-  margin: 32px 0 0;
+const ModalBody = styled.div`
+  width: 770px;
+  padding: 4px;
 
-  color: ${props => props.theme.colors.textSecondary};
+  position: absolute;
+  top: 50%;
+  left: 50%;
 
-  @media screen and (max-width: ${responsive.smartphone}) {
-    font-size: 14px;
+  background-color: ${props => props.theme.colors.bgNormal};
+  border-radius: 8px;
+
+  transform: translate(-50%, -50%);
+  z-index: 11;
+
+  a {
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    width: 700px;
+
+    top: 30px;
+
+    transform: translateX(-50%);
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    width: 100%;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    padding: 0;
+
+    top: 0;
+
+    border-radius: 0;
   }
 `;
 
-const Caption = styled(Modal.Caption)`
-  text-align: left;
+const CloseButton = styled(Modal.CloseIcon)`
+  top: 16px;
+  right: 16px;
 `;
 
 const ModalBtn = styled.button`
   width: 44px;
   height: 44px;
 
-  margin-bottom: 32px;
+  position: absolute;
+  top: 6px;
+  left: 16px;
 
   border-radius: 8px;
   border: none;
@@ -40,51 +77,371 @@ const ModalBtn = styled.button`
   color: #84809a;
 
   cursor: pointer;
+  z-index: 1;
 `;
 
-const ApproveTokensWrapper = styled.div`
-  display: flex;
+const BridgeButtonSecondary = styled(Modal.SecondaryButton)`
+  display: none;
   align-items: center;
-  justify-content: space-between;
 
-  padding: 12px;
-  margin-top: 24px;
+  width: auto;
+  padding: 12px 24px;
+  margin: 24px auto 30px;
 
-  background-color: ${props => props.theme.colors.bgHighlightBorder};
-  border-radius: 8px;
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: ${props => props.theme.colors.txtSecondary};
+  white-space: nowrap;
 
-  > div {
-    margin-left: 8px;
+  &:active {
+    color: ${props => props.theme.colors.txtPrimary};
+  }
 
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
     display: flex;
-    flex-direction: column;
+    align-self: end;
+
+    height: 44px;
+    margin: 0 0 0 auto;
+  }
+`;
+
+const BridgeWrapper = styled.div`
+  padding: 65px 40px 25px;
+
+  position: relative;
+
+  background-color: ${props => props.theme.colors.bgDarken};
+  border-radius: 4px;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    padding: 62px 20px 25px;
   }
 
-  label {
-    margin-bottom: 6px;
-
-    color: ${props => props.theme.colors.textThirdly};
-    font-size: 12px;
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    padding: 7px 20px 25px;
   }
 
-  input {
-    display: block;
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    background-color: #0a090e;
+    border-radius: 0;
+  }
+`;
 
-    background: none;
-    border: none;
+const BridgeBackground = styled.div`
+  position: absolute;
+  top: -22px;
+  left: 50%;
 
-    color: ${props => props.theme.colors.textPrimary};
-    font-size: 18px;
+  transform: translateX(-50%);
 
-    &:focus {
-      outline: none;
+  @media screen and (max-width: ${responsive.tablet}) {
+    width: 627px;
+    height: 108px;
+    overflow: hidden;
+
+    &:before {
+      content: '';
+
+      width: inherit;
+      height: 90px;
+
+      position: absolute;
+      top: 20px;
+
+      background: linear-gradient(
+        to bottom,
+        rgba(26, 23, 35, 0) 0%,
+        ${props => props.theme.colors.bgDarken} 100%
+      );
+    }
+
+    img {
+      width: 100%;
     }
   }
+
+  @media screen and (max-width: ${responsive.smartphoneLarge}) {
+    display: none;
+  }
 `;
 
-const OptionCaption = styled.p`
-  margin: 0 0 12px;
-  color: ${props => props.theme.colors.textThirdly};
+const Warning = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 110px;
+  height: 110px;
+  margin: 0 auto;
+
+  position: relative;
+
+  background-color: ${props => props.theme.colors.highlightYellow};
+  border-radius: 50%;
+  outline: 25px solid rgba(255, 221, 161, 0.2);
+  box-shadow: 0 0 80px 0 ${props => props.theme.colors.highlightYellow};
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    margin-top: 100px;
+    width: 83px;
+    height: 83px;
+  }
+`;
+
+const ImageWrapper = styled.div`
+  display: flex;
+
+  width: 55px;
+  height: 55px;
+
+  filter: brightness(0);
+`;
+
+const BridgeContentWrapper = styled.div`
+  position: inherit;
+`;
+
+const BridgeTitle = styled.div`
+  margin: 110px 0 50px;
+
+  font-family: Barlow Condensed, sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+  text-align: center;
+  color: #e1dfeb;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    margin: 66px 0 16px;
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    margin: 56px 0;
+  }
+`;
+
+const WnomMaxContainer = styled.div<{ error?: string }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 0 30px 0;
+
+  border-bottom: 4px solid ${props => (props.error ? props.theme.colors.highlightRed : '#2f2f35')};
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    padding-bottom: 18px;
+  }
+`;
+
+const MessageWrapper = styled.div`
+  margin-top: 10px;
+
+  font-size: 14px;
+`;
+
+const ErrorMessage = styled.div`
+  color: ${props => props.theme.colors.highlightRed};
+`;
+
+const SuccessMesage = styled.div`
+  color: ${props => props.theme.colors.highlightGreen};
+`;
+
+const Wnom = styled.div`
+  font-family: Bebas Neue, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: #fbfbfd;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 16px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    margin-right: 16px;
+  }
+`;
+
+const InputValue = styled.input`
+  width: 100%;
+  padding: 0 20px;
+
+  background-color: transparent;
+  border: none;
+
+  font-family: Bebas Neue, sans-serif;
+  text-align: center;
+  font-size: 80px;
+  color: #fbfbfd;
+  text-overflow: ellipsis;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    padding-left: 40px;
+  }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 72px;
+  }
+`;
+
+const ChangeButtom = styled.button`
+  padding: 14px 13px 8px 16px;
+
+  border-radius: 26px;
+  border: none;
+  background-color: ${props => props.theme.colors.bgHighlight};
+
+  font-family: Bebas Neue, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 0.8;
+  letter-spacing: 2.4px;
+  color: #85c5f9;
+
+  &:disabled {
+    color: #656273;
+
+    cursor: not-allowed;
+  }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 16px;
+    letter-spacing: 1.92px;
+  }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    font-size: 16px;
+    padding: 12px 13px 8px 14px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    margin-left: auto;
+  }
+`;
+
+const TotalApprovedWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 16px;
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    gap: 40px;
+
+    font-size: 12px;
+  }
+`;
+
+const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 15px;
+
+  width: 100%;
+
+  font-size: 14px;
+  color: #6a6f83;
+
+  span {
+    font-weight: 500;
+    color: #fbfbfd;
+    text-align: right;
+  }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    gap: 0;
+  }
+`;
+
+const CellDivider = styled.div`
+  width: 2px;
+  height: 21px;
+  margin: 0 20px;
+
+  background-color: ${props => props.theme.colors.bgHighlight};
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    display: none;
+  }
+`;
+
+const Message = styled.div`
+  margin: 45px 0 10px;
+
+  font-size: 16px;
+  text-align: center;
+  color: ${props => props.theme.colors.textSecondary};
+
+  strong {
+    color: #85c5f9;
+  }
+
+  @media screen and (max-width: ${responsive.tabletSmall}) {
+    margin-top: 30px;
+
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    margin-top: 120px;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+
+  margin: 30px 0;
+
+  @media screen and (max-width: ${responsive.smartphoneSmall}) {
+    justify-content: space-between;
+
+    padding: 0 20px;
+  }
+`;
+
+const SpinerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+const BridgeButton = styled(Modal.SecondaryButton)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  width: auto;
+  height: auto;
+  padding: 16px 40px;
+
+  font-size: 14px;
+  white-space: nowrap;
+`;
+
+const BridgeButtonPrimary = styled(Modal.PrimaryButton)`
+  width: auto;
+  height: auto;
+  padding: 16px 40px;
+
+  font-size: 14px;
+  white-space: nowrap;
+
+  @media screen and (max-width: ${responsive.smartphone}) {
+    padding: 16px 20px;
+  }
 `;
 
 const Options = styled.div`
@@ -96,20 +453,29 @@ const Options = styled.div`
 `;
 
 const OptionBtn = styled.button<{ active: boolean }>`
-  padding: 12px 16px;
+  padding: 8px 12px;
+
   background-color: ${props =>
     props.active ? props.theme.colors.bgHighlightBorder : 'transparent'};
   border: 1px solid ${props => props.theme.colors.bgHighlightBorder};
   border-radius: 22px;
-  font-size: 14px;
-  font-weight: 500;
+
+  font-size: 12px;
   color: ${props =>
     props.active ? props.theme.colors.textPrimary : props.theme.colors.textSecondary};
-  &:hover {
+
+  &:hover:enabled {
     background-color: ${props => props.theme.colors.bgHighlightBorder_lighten};
   }
+
   &:active {
     background-color: ${props => props.theme.colors.bgHighlightBorder_darken};
+  }
+
+  &:disabled {
+    color: #656273;
+
+    cursor: not-allowed;
   }
 `;
 
@@ -143,6 +509,9 @@ export default function ApproveTokensBridgeModal({
   const [successMessage, setSuccessMessage] = useState('');
   const [isTransactionCompleted, setIsTransactionCompleted] = useState(false);
   const { bondingCurve } = useOnomyEth();
+
+  const BreakpointSmartphone = useMediaQuery({ minWidth: responsive.smartphone });
+  const BreakpointSmartphoneLarge = useMediaQuery({ minWidth: responsive.smartphoneLarge });
 
   useEffect(() => {
     if (amountValue && allowanceAmountGravity) {
@@ -242,83 +611,124 @@ export default function ApproveTokensBridgeModal({
   }
 
   return (
-    <Modal.BridgeSectionWrapper>
-      <header>
-        <ModalBtn
-          onClick={onCancelHandler}
-          disabled={isBtnDisabled}
-          data-testid="bridge-mobile-info-modal-button"
-        >
-          <FontAwesomeIcon icon={faChevronLeft as unknown as any} />
-        </ModalBtn>
-        <Caption>Approve Bridge Transaction</Caption>
-      </header>
-
-      <main>
-        {infoMessage}
-        <ApproveTokensWrapper>
-          <div>
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label htmlFor="">Approve tokens (bNOM)</label>
-            <input
-              type="text"
-              placeholder="0.00"
-              value={approveAmountInputValue}
-              onChange={handleApproveAmountInputChange}
-            />
-          </div>
-          <MaxBtn onClick={maxBtnHandler}>MAX</MaxBtn>
-        </ApproveTokensWrapper>
-      </main>
-      {errorMessage && <Modal.ErrorSection>{errorMessage}</Modal.ErrorSection>}
-      {successMessage && <Modal.SuccessSection>{successMessage}</Modal.SuccessSection>}
-      {showLoader && (
-        <Modal.ApprovedModalLoadingWrapper>
-          <LoadingSpinner />
-        </Modal.ApprovedModalLoadingWrapper>
-      )}
-      <div>
-        <OptionCaption>Gas Fee</OptionCaption>
-        <Options>
-          {gasOptions.map(gasPriceOption => (
-            <OptionBtn
-              active={gasPriceChoice === gasPriceOption.id}
-              key={gasPriceOption.id}
-              onClick={e => {
-                e.preventDefault();
-                setGasPriceChoice(gasPriceOption.id);
-              }}
+    <ModalBody>
+      <BridgeWrapper>
+        {BreakpointSmartphoneLarge ? (
+          <Link to="/">
+            <CloseButton
+              disabled={isBtnDisabled}
+              data-testid="approve-tokens-modal-secondary-button"
             >
-              {gasPriceOption.text}
-            </OptionBtn>
-          ))}
-        </Options>
-      </div>
-      <footer>
-        {!isTransactionCompleted && (
+              <Close />
+            </CloseButton>
+          </Link>
+        ) : (
           <>
-            <Modal.SecondaryButton
+            <ModalBtn
               onClick={onCancelHandler}
               disabled={isBtnDisabled}
               data-testid="approve-tokens-modal-secondary-button"
             >
-              Cancel
-            </Modal.SecondaryButton>
-            <Modal.PrimaryButton
-              onClick={confirmApproveHandler}
-              disabled={isBtnDisabled}
-              data-testid="approve-tokens-modal-primary-button"
-            >
-              Confirm ({count})
-            </Modal.PrimaryButton>
+              <FontAwesomeIcon icon={faChevronLeft as IconProp} />
+            </ModalBtn>
+
+            <Link to="/bridge-initial">
+              <BridgeButtonSecondary type="button">What is Onomy Bridge?</BridgeButtonSecondary>
+            </Link>
           </>
         )}
-        {isTransactionCompleted && (
-          <Modal.PrimaryButton onClick={onCancelHandler} style={{ margin: 'auto' }}>
-            Return to Bridge Screen
-          </Modal.PrimaryButton>
+        <BridgeBackground>
+          <img src={BridgeBackgroundImage} alt="" />
+        </BridgeBackground>
+        <Warning>
+          <ImageWrapper>
+            <img src={WarningIcon} alt="" />
+          </ImageWrapper>
+        </Warning>
+        <BridgeContentWrapper>
+          <BridgeTitle>Approve additional wNOM for bridging</BridgeTitle>
+          <WnomMaxContainer>
+            <Wnom>Wnom</Wnom>
+            <InputValue
+              type="text"
+              placeholder="0 .00"
+              value={approveAmountInputValue}
+              onChange={handleApproveAmountInputChange}
+              disabled={isBtnDisabled}
+            />
+            <ChangeButtom type="button" onClick={maxBtnHandler} disabled={isBtnDisabled}>
+              Change
+            </ChangeButtom>
+          </WnomMaxContainer>
+          <MessageWrapper>
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+            {successMessage && <SuccessMesage>{successMessage}</SuccessMesage>}
+          </MessageWrapper>
+          <TotalApprovedWrapper>
+            <Row>
+              {BreakpointSmartphone ? 'Total wNOM Balance' : 'Balance'}
+              <span>30 329 wNOM</span>
+            </Row>
+            <CellDivider />
+            <Row>
+              {BreakpointSmartphone ? 'Approved  wNOM' : 'Approved'}
+              <span>30 329 wNOM</span>
+            </Row>
+          </TotalApprovedWrapper>
+          {infoMessage}
+        </BridgeContentWrapper>
+        <Row>
+          Gas Fee
+          <Options>
+            {gasOptions.map(gasPriceOption => (
+              <OptionBtn
+                active={gasPriceChoice === gasPriceOption.id}
+                key={gasPriceOption.id}
+                onClick={e => {
+                  e.preventDefault();
+                  setGasPriceChoice(gasPriceOption.id);
+                }}
+                disabled={isBtnDisabled}
+              >
+                {gasPriceOption.text}
+              </OptionBtn>
+            ))}
+          </Options>
+        </Row>
+      </BridgeWrapper>
+      <ButtonWrapper>
+        {showLoader ? (
+          <SpinerWrapper>
+            <LoadingSpinner />
+          </SpinerWrapper>
+        ) : (
+          <>
+            {!isTransactionCompleted && (
+              <>
+                <BridgeButton
+                  onClick={onCancelHandler}
+                  disabled={isBtnDisabled}
+                  data-testid="approve-tokens-modal-secondary-button"
+                >
+                  Back
+                </BridgeButton>
+                <BridgeButtonPrimary
+                  onClick={confirmApproveHandler}
+                  disabled={isBtnDisabled}
+                  data-testid="approve-tokens-modal-primary-button"
+                >
+                  Approve & Bridge ({count})
+                </BridgeButtonPrimary>
+              </>
+            )}
+            {isTransactionCompleted && (
+              <BridgeButtonPrimary onClick={onCancelHandler} style={{ margin: 'auto' }}>
+                Return to Bridge Screen
+              </BridgeButtonPrimary>
+            )}
+          </>
         )}
-      </footer>
-    </Modal.BridgeSectionWrapper>
+      </ButtonWrapper>
+    </ModalBody>
   );
 }

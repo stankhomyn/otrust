@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200.501" height="169.918" viewBox="0 0 200.501 169.918">
+    <defs>
+        <radialGradient id="p9m8ws73eb" cx=".491" cy=".759" r=".7" gradientTransform="matrix(1 0 0 .649 0 .236)" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#302e3d"/>
+            <stop offset=".32" stop-color="#302e3d"/>
+            <stop offset="1" stop-color="#302e3d" stop-opacity="0"/>
+        </radialGradient>
+        <clipPath id="fjfo0ct9za">
+            <path style="fill:none" d="M0 0h111.993v123.975H0z"/>
+        </clipPath>
+    </defs>
+    <g data-name="Сгруппировать 18596" style="opacity:.6">
+        <g data-name="Повторяющаяся сетка 152" transform="translate(53.983 14.816)" style="clip-path:url(#fjfo0ct9za)">
+            <path data-name="Контур 48838" d="M104.585 126.076H75.526L16.984 55.444v70.632H-7.408V-22.4h24.392v66.6l56.421-66.6h29.059L42.437 49.929z" transform="translate(12.408 22.4)" style="fill:#282633"/>
+            <path data-name="Контур 48837" d="M104.585 126.076H75.526L16.984 55.444v70.632H-7.408V-22.4h24.392v66.6l56.421-66.6h29.059L42.437 49.929z" transform="translate(7.408 22.4)" style="fill:#383746"/>
+        </g>
+        <path data-name="Прямоугольник 4934" style="fill:url(#p9m8ws73eb)" d="M0 0h200.501v169.918H0z"/>
+    </g>
+</svg>

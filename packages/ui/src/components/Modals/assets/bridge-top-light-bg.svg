@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="681.247" height="363.538" viewBox="0 0 681.247 363.538">
+    <defs>
+        <radialGradient id="clnn9f8t7c" cx=".473" cy=".774" r=".7" gradientTransform="matrix(1 0 0 .485 0 .398)" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#1a1723"/>
+            <stop offset=".517" stop-color="#1a1723"/>
+            <stop offset="1" stop-color="#1a1723" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="9v8on95ybb" x1=".5" x2=".5" y2=".675" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#1a1723" stop-opacity="0"/>
+            <stop offset="1" stop-color="#1a1723"/>
+        </linearGradient>
+        <clipPath id="ohx65xjd1a">
+            <path style="fill:none" d="M0 0h681.247v321.538H0z"/>
+        </clipPath>
+    </defs>
+    <g data-name="Сгруппировать 18568">
+        <g data-name="Повторяющаяся сетка 109" style="clip-path:url(#ohx65xjd1a)">
+            <path data-name="Контур 22781" d="M810.719 214.314c186.571-64.6 76.377 266.262-165.948 266.262S292.252 149.711 478.825 214.314c-203.342-105.63-256.046 159.06-12.24 303.831C539.018 561.155 612 640.374 515.242 719.74c61.281-30.5 76.452-85.644 129.528-85.644s68.252 55.145 129.53 85.644c-96.753-79.366-23.779-158.585 48.657-201.595 243.803-144.771 191.102-409.461-12.238-303.831z" transform="translate(-304.147 -190.044)" style="fill:#302e3d"/>
+        </g>
+        <path data-name="Прямоугольник 4806" transform="translate(1.247 121.538)" style="fill:url(#9v8on95ybb)" d="M0 0h680v200H0z"/>
+        <path data-name="Контур 48833" d="M0 0h424v181H103.423z" transform="translate(129.247 182.538)" style="fill:url(#clnn9f8t7c)"/>
+    </g>
+</svg>

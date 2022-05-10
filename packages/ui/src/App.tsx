@@ -13,6 +13,10 @@ import MainHeader from 'components/MainHeader';
 import SelectValidator from 'components/Modals/BridgeStaking/SelectValidator';
 import ValidatorNode from 'components/Modals/BridgeStaking/ValidatorNode';
 import BridgeSwapMain from 'components/Modals/components/BridgeSwapMain';
+import BridgeInitial from 'components/Modals/components/BridgeInitial';
+import BridgeWallets from 'components/Modals/BridgeStaking/BridgeWallets';
+import BridgeConnectOnomy from 'components/Modals/BridgeStaking/BridgeConnectOnomy';
+import BridgeWelcome from 'components/Modals/BridgeStaking/BridgeWelcome';
 import './assets/font-faces.css';
 
 function App() {
@@ -30,6 +34,10 @@ function App() {
                 <Route path="/validators/" element={<SelectValidator />} />
                 <Route path="/validators/:id/*" element={<ValidatorNode />} />
                 <Route path="/bridge" element={<BridgeSwapMain />} />
+                <Route path="/bridge-initial" element={<BridgeInitial />} />
+                <Route path="/bridge-wallets" element={<BridgeWallets />} />
+                <Route path="/bridge-connect-onomy" element={<BridgeConnectOnomy />} />
+                <Route path="/bridge-welcome" element={<BridgeWelcome />} />
               </Routes>
             </ModalProvider>
           </ExchangeProvider>
