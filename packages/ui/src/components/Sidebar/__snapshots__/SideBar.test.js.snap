@@ -912,7 +912,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are NOT of B
             class="c19"
           >
             <a
-              href="/bridge"
+              href="/bridge-initial"
             >
               <button
                 class="c20"
@@ -1983,7 +1983,7 @@ exports[`Given the Sidebar component and strongBalance, weakBalance are of BigNu
             class="c19"
           >
             <a
-              href="/bridge"
+              href="/bridge-initial"
             >
               <button
                 class="c20"

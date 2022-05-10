@@ -453,7 +453,7 @@ exports[`Given the SidebarBalances component when the component is rendered shou
       class="c13"
     >
       <a
-        href="/bridge"
+        href="/bridge-initial"
       >
         <button
           class="c14"
