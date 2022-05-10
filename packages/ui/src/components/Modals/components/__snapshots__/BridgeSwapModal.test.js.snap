@@ -249,7 +249,7 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
 }
 
 .c1 {
-  width: 1300px;
+  width: auto;
 }
 
 .c28 {
@@ -420,8 +420,14 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
 }
 
 .c3 {
-  display: grid;
-  grid-template-columns: 520px 1fr;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .c3 > main {
@@ -723,15 +729,11 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
 }
 
 @media screen and (max-width:1440px) {
-  .c1 {
-    width: 1010px;
-  }
+
 }
 
 @media screen and (max-width:700px) {
-  .c1 {
-    display: none;
-  }
+
 }
 
 @media screen and (max-width:1180px) {
@@ -854,15 +856,11 @@ exports[`Given the BridgeSwapModal component when the component is rendered shou
 }
 
 @media screen and (max-width:1440px) {
-  .c3 {
-    grid-template-columns: 400px 1fr;
-  }
+
 }
 
 @media screen and (max-width:1180px) {
-  .c3 {
-    grid-template-columns: none;
-  }
+
 }
 
 @media screen and (max-width:700px) {

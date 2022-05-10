@@ -5,7 +5,7 @@ import { useOnomy } from '@onomy/react-client';
 import { useOnomyEth } from '@onomy/react-eth';
 import { OnomyAddress } from '@onomy/client';
 
-import BridgeSwapModal from './BridgeSwapModal';
+import BridgeModal from './BridgeModal';
 import { NOTIFICATION_MESSAGES } from '../../../constants/NotificationMessages';
 import { useGasPriceSelection } from 'hooks/useGasPriceSelection';
 import { ConnectKeplr } from 'components/ConnectKeplr';
@@ -224,7 +224,7 @@ export default function BridgeSwapMain() {
   return (
     <>
       <ConnectKeplr />
-      <BridgeSwapModal {...Props} />
+      <BridgeModal {...Props} />
     </>
   );
 }
