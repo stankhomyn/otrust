@@ -12,11 +12,11 @@ import ModalProvider from 'context/modal/ModalContext';
 import MainHeader from 'components/MainHeader';
 import SelectValidator from 'components/Modals/BridgeStaking/SelectValidator';
 import ValidatorNode from 'components/Modals/BridgeStaking/ValidatorNode';
-import BridgeSwapMain from 'components/Modals/components/BridgeSwapMain';
-import BridgeInitial from 'components/Modals/components/BridgeInitial';
-import BridgeWallets from 'components/Modals/BridgeStaking/BridgeWallets';
-import BridgeConnectOnomy from 'components/Modals/BridgeStaking/BridgeConnectOnomy';
-import BridgeWelcome from 'components/Modals/BridgeStaking/BridgeWelcome';
+import BridgeSwapMain from 'components/Modals/BridgeModals/BridgeSwapMain';
+import BridgeInitial from 'components/Modals/BridgeModals/BridgeInitial';
+import BridgeWallets from 'components/Modals/BridgeModals/BridgeWallets';
+import BridgeConnectOnomy from 'components/Modals/BridgeModals/BridgeConnectOnomy';
+import BridgeWelcome from 'components/Modals/BridgeModals/BridgeWelcome';
 import './assets/font-faces.css';
 
 function App() {

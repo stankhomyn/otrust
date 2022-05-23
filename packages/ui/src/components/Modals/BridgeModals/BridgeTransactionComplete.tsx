@@ -5,7 +5,7 @@ import { useOnomy } from '@onomy/react-client';
 import { responsive } from 'theme/constants';
 import { BridgeProgress } from 'components/BridgeProgress';
 import * as Modal from '../styles';
-import BridgeSuccess from '../BridgeStaking/BridgeSuccess';
+import BridgeSuccess from './BridgeSuccess';
 import {
   MyBridgedNomBalanceDisplay,
   MyWrappedNomBalanceDisplay,

@@ -240,6 +240,7 @@ const MessageWrapper = styled.div`
   margin-top: 10px;
 
   font-size: 14px;
+  overflow-wrap: break-word;
 `;
 
 const ErrorMessage = styled.div`
@@ -479,7 +480,7 @@ const OptionBtn = styled.button<{ active: boolean }>`
   }
 `;
 
-export default function ApproveTokensBridgeModal({
+export default function BridgeApproveTokens({
   amountValue, // string
   allowanceAmountGravity, // BigNumber
   onCancelHandler, // () => void

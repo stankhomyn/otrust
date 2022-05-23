@@ -11,7 +11,7 @@ import { useMediaQuery } from 'react-responsive';
 
 import { Dimmer } from 'components/UI/Dimmer';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
-import ApproveTokensBridgeModal from './ApproveTokensBridgeModal';
+import BridgeApproveTokens from './BridgeApproveTokens';
 import BridgeTransactionComplete from './BridgeTransactionComplete';
 import { getFirstMessage } from '../../../utils/helpers';
 import { Close } from '../Icons';
@@ -363,6 +363,7 @@ const ErrorMessage = styled.div`
 
   font-size: 14px;
   color: ${props => props.theme.colors.highlightRed};
+  overflow-wrap: break-word;
 `;
 
 const TotalApprovedWrapper = styled.div`
@@ -712,7 +713,7 @@ export default function BridgeSwapModal({ ...props }: BridgeSwapModalProps) {
                     type="text"
                     value={values.amountValue}
                     onChange={handlers.amountChangeHandler}
-                    disabled={!!bridgeProgress}
+                    disabled={flags.isTransactionPending}
                   />
                   <MaxButtom
                     onClick={handlers.maxBtnClickHandler}
@@ -785,7 +786,7 @@ export default function BridgeSwapModal({ ...props }: BridgeSwapModalProps) {
                         <HintButtonSecondary
                           type="button"
                           onClick={() => setActiveHint(false)}
-                          disabled={!!bridgeProgress}
+                          disabled={flags.isTransactionPending}
                         >
                           No, thanks
                         </HintButtonSecondary>
@@ -793,7 +794,7 @@ export default function BridgeSwapModal({ ...props }: BridgeSwapModalProps) {
                           <BridgeButtonPrimary
                             type="button"
                             onClick={closeModal}
-                            disabled={!!bridgeProgress}
+                            disabled={flags.isTransactionPending}
                           >
                             Change wallet
                           </BridgeButtonPrimary>
@@ -826,7 +827,7 @@ export default function BridgeSwapModal({ ...props }: BridgeSwapModalProps) {
       </ModalBody>
 
       {flags.showApproveModal && (
-        <ApproveTokensBridgeModal
+        <BridgeApproveTokens
           {...props}
           onCancelHandler={handlers.onCancelClickHandler}
           amountValue={values.amountValue}
